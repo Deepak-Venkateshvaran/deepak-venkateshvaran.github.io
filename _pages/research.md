@@ -12,7 +12,14 @@ author_profile: true
 Why does this matter? The materials behind flexible displays, wearable sensors, and printed solar cells are soft, disordered, and only nanometres thick — and how stiff or pliable they are at that scale governs how well they work and how long they last. By measuring mechanics on the molecular level, we connect a material's physical structure to the way it carries charge and heat, which helps in designing better devices.
 
 **Techniques**  
-We implement cutting-edge force mapping using atomic force microscopes, based on multifrequency intermodulation, higher eigenmodes, and quasi-static nanoindentation. We have visualised high-contrast elasticity at the scale of a few nanometres [see Nature Communications 13, 3076 (2022)] and resolved the elastic contribution of individual molecules within a molecular lattice [see Nature Communications 17, 1621 (2026)]. Current projects track how elasticity evolves through temperature-induced and cooperative phase transitions, at reduced dimensions, at the limits of charge conduction, and within prototype microfabricated devices.
+We implement cutting-edge force mapping using atomic force microscopes, based on multifrequency intermodulation, higher eigenmodes, and quasi-static nanoindentation. We have visualised high-contrast elasticity at the scale of a few nanometres [see Nature Communications 13, 3076 (2022)] and resolved the elastic contribution of individual molecules within a molecular lattice [see Nature Communications 17, 1621 (2026)]. Current projects track how elasticity evolves through temperature-induced and cooperative phase transitions, at reduced dimensions, at the limits of charge conduction, and within prototype microfabricated devices.  
+
+**What a stick does for terrain on the macroscale, PinPoint Nanomechanical mode does for surfaces on the nanoscale.**
+
+<div style="position:relative; width:100%; height:60vh; overflow:hidden;">
+  <video style="width:100%; height:100%; object-fit:cover;"
+         src="https://deepak-venkateshvaran.github.io/files/StickPoint-Mode.mp4" autoplay loop muted playsinline></video>
+</div>
 
 **The underlying physics**  
 Macroscopic stiffness is the long-wavelength, zero-frequency limit of the acoustic phonon response. Macroscopic stiffness is thus not a concept separate from phonons. It is what phonons become in the limit.
