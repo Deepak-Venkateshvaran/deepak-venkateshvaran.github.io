@@ -14,8 +14,8 @@ Why does this matter? The materials behind flexible displays, wearable sensors, 
 **Techniques**  
 We implement cutting-edge force mapping using atomic force microscopes, based on multifrequency intermodulation, higher eigenmodes, and quasi-static nanoindentation. We have visualised high-contrast elasticity at the scale of a few nanometres [see Nature Communications 13, 3076 (2022)] and resolved the elastic contribution of individual molecules within a molecular lattice [see Nature Communications 17, 1621 (2026)]. Current projects track how elasticity evolves through temperature-induced and cooperative phase transitions, at reduced dimensions, at the limits of charge conduction, and within prototype microfabricated devices.  
 
-**As seen below, we judge ground stiffness on the macroscale by prodding it with a stick.**
-**PinPoint nanomechanical measurements apply the same principle, point by point, only at the nanoscale**
+**We judge ground stiffness on the macroscale by prodding it with a stick.**  
+**PinPoint nanomechanical measurements apply the same principle, at the nanoscale**
 
 <div style="position:relative; width:100%; height:60vh; overflow:hidden;">
   <video style="width:100%; height:100%; object-fit:cover;"
