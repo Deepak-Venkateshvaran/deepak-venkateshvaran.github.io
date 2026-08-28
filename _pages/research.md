@@ -18,7 +18,7 @@ We implement cutting-edge force mapping using atomic force microscopes, based on
 **Similar point-by-point measurement principles are applied at the nanoscale**
 
 <div style="position:relative; width:100%; height:60vh; overflow:hidden;" >
-  <video style="width:100%; height:100%; object-fit:cover; padding-right: 30px; padding-left: 30px; padding-bottom: 10px; padding-top: 10px;"
+  <video style="width:100%; height:100%; object-fit:cover; padding-right: 10px; padding-left: 10px; padding-bottom: 1px; padding-top: 1px;"
          src="https://deepak-venkateshvaran.github.io/files/StickPoint-Mode.mp4" autoplay loop muted playsinline></video>
 </div>
 
