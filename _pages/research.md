@@ -7,17 +7,17 @@ author_profile: true
 
 <img src="https://deepak-venkateshvaran.github.io/images/Lab-Life.png" width="1000" style="padding-right: 1px; padding-left: 1px; padding-bottom: 1px; padding-top: 1px;">
 
-**We measure the mechanical properties of molecular semiconductors on the nanoscale.**  
+**We measure the mechanical properties of molecular semiconductors on the nanoscale**  
 
 Why does this matter? The materials behind flexible displays, wearable sensors, and printed solar cells are soft, disordered, and only nanometres thick — and how stiff or pliable they are at that scale governs how well they work and how long they last. By measuring mechanics on the molecular level, we connect a material's physical structure to the way it carries charge and heat, which helps in designing better devices.
 
 **Techniques**  
 We implement cutting-edge force mapping using atomic force microscopes, based on multifrequency intermodulation, higher eigenmodes, and quasi-static nanoindentation. We have visualised high-contrast elasticity at the scale of a few nanometres [see Nature Communications 13, 3076 (2022)] and resolved the elastic contribution of individual molecules within a molecular lattice [see Nature Communications 17, 1621 (2026)]. Current projects track how elasticity evolves through temperature-induced and cooperative phase transitions, at reduced dimensions, at the limits of charge conduction, and within prototype microfabricated devices.  
 
-**Stiffness of a macroscale surface is judged by prodding it with a stick.**  
+**Stiffness of a macroscale surface is judged by prodding it with a stick**  
 **Similar point-by-point measurement principles are applied at the nanoscale**
 
-<div style="position:relative; width:100%; height:60vh; overflow:hidden;">
+<div style="position:relative; width:100%; height:60vh;">
   <video style="width:100%; height:100%; object-fit:cover;"
          src="https://deepak-venkateshvaran.github.io/files/StickPoint-Mode.mp4" autoplay loop muted playsinline></video>
 </div>
