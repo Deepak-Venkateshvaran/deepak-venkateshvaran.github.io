@@ -17,7 +17,7 @@ We implement cutting-edge force mapping using atomic force microscopes, based on
 **Stiffness of a macroscale surface is judged by prodding it with a stick**  
 **Similar point-by-point measurement principles are applied at the nanoscale**
 
-<div style="position:relative; width:100%; height:60vh;">
+<div style="position:relative; width:100%; height:60vh; overflow:hidden;" >
   <video style="width:100%; height:100%; object-fit:cover;"
          src="https://deepak-venkateshvaran.github.io/files/StickPoint-Mode.mp4" autoplay loop muted playsinline></video>
 </div>
