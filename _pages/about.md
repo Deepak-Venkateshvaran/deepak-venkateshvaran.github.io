@@ -6,6 +6,7 @@ author_profile: true
 redirect_from: 
   - /about/
   - /about.html
+  - /portfolio/
 ---
 
 Welcome — happy to have you here.  
