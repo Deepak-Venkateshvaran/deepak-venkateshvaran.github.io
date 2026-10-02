@@ -25,7 +25,7 @@ We implement cutting-edge force mapping using atomic force microscopes, based on
 **The underlying physics**  
 Macroscopic stiffness is the long-wavelength, zero-frequency limit of the acoustic phonon response. Macroscopic stiffness is thus not a concept separate from phonons. It is what phonons become in the limit.
 
-At a fundamental level, we are interested in how carrier mobility, electrical conductivity, the Seebeck coefficient, and elasticity interlock within a single multifunctional material — treating mechanics not as a separate engineering concern but as one face of the same underlying physics that sets electronic and thermal transport. One framework we have proposed is summarised in the schematic below.  
+At a fundamental level, we are interested in how carrier mobility, electrical conductivity, thermal properties, and elasticity interlock within a single multifunctional molecular material — treating mechanics not as a separate engineering concern but as one face of the same underlying physics that sets electronic and thermal transport. One framework we have proposed is summarised in the schematic below.  
 
 <img align = "middle" src="https://deepak-venkateshvaran.github.io/images/ETN-connection.png" width="1000" style="padding-right: 1px; padding-left: 1px; padding-bottom: 20px; padding-top: 20px;">  
 
