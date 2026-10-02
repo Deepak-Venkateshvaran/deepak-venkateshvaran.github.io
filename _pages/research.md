@@ -29,11 +29,17 @@ At a fundamental level, we are interested in how carrier mobility, electrical co
 
 <img align = "middle" src="https://deepak-venkateshvaran.github.io/images/ETN-connection.png" width="1000" style="padding-right: 30px; padding-left: 30px; padding-bottom: 20px; padding-top: 20px;">  
 
+Room-temperature charge carrier mobility has risen roughly tenfold every 15 years as shown in the plot below. In the last five years, crystal structure, phonons, and mechanics, have dominated the design guidelines for newer materials. It is at this forefront where we work, inspiring new ides for molecular design based on intrinsic molecular mechanics that ensures continual improvement in device mobilities.
+
+<img align = "middle" src="https://deepak-venkateshvaran.github.io/images/Venkateshvaran_Organic_Mobility_Timeline" width="1000" style="padding-right: 30px; padding-left: 30px; padding-bottom: 20px; padding-top: 20px;">  
+
 The mechanistic flow that connects the shear modulus with its charge carrier mobility arises when combining the shear elastic constant c<sub>44</sub> with transient localisation theory. Click the interactive illustration below to see how such a mechanism plays out. The sliders can be used to tune the shear modulus of an organic molecular semiconductor and look at its impact on the mobility.  This interactive plot is phenomenologically correct, but does not include quantum corrections to displacements at very low temperatures.  
 
 <a href="https://deepak-venkateshvaran.github.io/files/one-lattice-three-faces.html" target="_blank" rel="noopener">
   <img align = "middle" src="https://deepak-venkateshvaran.github.io/files/one-lattice-three-faces.gif" width="1000" style="padding-right: 30px; padding-left: 30px; padding-bottom: 20px; padding-top: 20px;" alt="One phonon bath, three observables — interactive figure">
 </a>  
+
+
 
 
 **Collaborations**  
