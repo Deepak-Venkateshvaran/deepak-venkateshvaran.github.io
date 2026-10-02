@@ -12,13 +12,13 @@ author_profile: true
 Why does this matter? The materials behind flexible displays, wearable sensors, and printed solar cells are soft, disordered, and only nanometres thick — and how stiff or pliable they are at that scale governs how well they work and how long they last. By measuring mechanics on the molecular level, we connect a material's physical structure to the way it carries charge and heat, which helps in designing better devices.
 
 **Techniques**  
-We implement cutting-edge force mapping using atomic force microscopes, based on multifrequency intermodulation, higher eigenmodes, and quasi-static nanoindentation. We have visualised high-contrast elasticity at the scale of a few nanometres [see Nature Communications 13, 3076 (2022)] and resolved the elastic contribution of individual molecules within a molecular lattice [see Nature Communications 17, 1621 (2026)]. Current projects track how elasticity evolves through temperature-induced and cooperative phase transitions, at reduced dimensions, at the limits of charge conduction, and within prototype microfabricated devices.  
+We implement cutting-edge force mapping using atomic force microscopes, based on multifrequency intermodulation, higher Eigen modes, and quasi-static nanoindentation. We have visualised high-contrast elasticity at the scale of a few nanometres [see Nature Communications 13, 3076 (2022)] and resolved the elastic contribution of individual molecules within a molecular lattice [see Nature Communications 17, 1621 (2026)]. Current projects track how elasticity evolves through temperature-induced and cooperative phase transitions, through generative crystal design, at the limits of charge conduction, and within prototype microfabricated devices.  
 
 **Stiffness of a macroscale surface is judged by prodding it with a stick**  
 **Similar point-by-point measurement principles are applied at the nanoscale**
 
 <div style="position:relative; width:100%; height:60vh; overflow:hidden;" >
-  <video style="width:100%; height:100%; object-fit:cover; padding-right: 10px; padding-left: 10px; padding-bottom: 1px; padding-top: 1px;"
+  <video style="width:100%; height:100%; object-fit:cover; padding-right: 1px; padding-left: 1px; padding-bottom: 1px; padding-top: 1px;"
          src="https://deepak-venkateshvaran.github.io/files/StickPoint-Mode.mp4" autoplay loop muted playsinline></video>
 </div>
 
@@ -27,16 +27,16 @@ Macroscopic stiffness is the long-wavelength, zero-frequency limit of the acoust
 
 At a fundamental level, we are interested in how carrier mobility, electrical conductivity, the Seebeck coefficient, and elasticity interlock within a single multifunctional material — treating mechanics not as a separate engineering concern but as one face of the same underlying physics that sets electronic and thermal transport. One framework we have proposed is summarised in the schematic below.  
 
-<img align = "middle" src="https://deepak-venkateshvaran.github.io/images/ETN-connection.png" width="1000" style="padding-right: 30px; padding-left: 30px; padding-bottom: 20px; padding-top: 20px;">  
+<img align = "middle" src="https://deepak-venkateshvaran.github.io/images/ETN-connection.png" width="1000" style="padding-right: 1px; padding-left: 1px; padding-bottom: 20px; padding-top: 20px;">  
 
-During the last three decades, room-temperature charge carrier mobility has risen roughly tenfold every 15 years as shown in the plot below. Since 2020, crystal structure, phonons, and mechanics, have dominated the design guidelines for newer materials. It is at this forefront where we work, inspiring new ideas for molecular design based on intrinsic molecular mechanics, ensuring continual improvement in device mobilities.
+During the last three decades, room-temperature charge carrier mobility has risen roughly tenfold every 15 years as shown in the plot below. Crystal structure, phonons, and mechanics, have dominated the design guidelines for newer materials recently. It is at this forefront where we work, inspiring new ideas for molecular design based on intrinsic molecular mechanics, ensuring continual improvement in device mobilities.
 
-<img align = "middle" src="https://deepak-venkateshvaran.github.io/images/Venkateshvaran_Organic_Mobility_Timeline.png" width="1000" style="padding-right: 30px; padding-left: 30px; padding-bottom: 20px; padding-top: 20px;">  
+<img align = "middle" src="https://deepak-venkateshvaran.github.io/images/Venkateshvaran_Organic_Mobility_Timeline.png" width="1000" style="padding-right: 1px; padding-left: 1px; padding-bottom: 20px; padding-top: 20px;">  
 
 The mechanistic flow that connects the shear modulus with its charge carrier mobility arises when combining the shear elastic constant c<sub>44</sub> with transient localisation theory. Click the interactive illustration below to see how such a mechanism plays out. The sliders can be used to tune the shear modulus of an organic molecular semiconductor and look at its impact on the mobility.  This interactive plot is phenomenologically correct, but does not include quantum corrections to displacements at very low temperatures.  
 
 <a href="https://deepak-venkateshvaran.github.io/files/one-lattice-three-faces.html" target="_blank" rel="noopener">
-  <img align = "middle" src="https://deepak-venkateshvaran.github.io/files/one-lattice-three-faces.gif" width="1000" style="padding-right: 30px; padding-left: 30px; padding-bottom: 20px; padding-top: 20px;" alt="One phonon bath, three observables — interactive figure">
+  <img align = "middle" src="https://deepak-venkateshvaran.github.io/files/one-lattice-three-faces.gif" width="1000" style="padding-right: 1px; padding-left: 1px; padding-bottom: 20px; padding-top: 20px;" alt="One phonon bath, three observables — interactive figure">
 </a>  
 
 
