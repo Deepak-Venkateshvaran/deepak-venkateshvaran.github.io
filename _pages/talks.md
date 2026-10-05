@@ -10,7 +10,8 @@ author_profile: true
 
 The following is an account of invited seminars, keynote lectures, and plenary talks since beginning my Royal Society University Research Fellowship in January 2021. These talks focused on soft semiconductors (transport, thermoelectrics, nanomechanics) and occasionally, on Science Policy in Government.  
 
-**Saitama, Japan, November 2026**  <br />  RIKEN Seminar <br /> Invitation from Prof Kazuo Takimiya
+**Saitama, Japan, November 2026**  <br />  RIKEN Seminar <br /> _Unraveling the link between molecular mechanics and charge
+transport in organic semiconductors_ <br /> Invitation from Prof Kazuo Takimiya
 
 **Tokyo, Japan, November 2026**  <br />  Lectures at the Institute of Science Tokyo <br /> Supported by the World Research Hub (WRH) Program <br /> Invitation from Prof Hiroaki Iino  
 
