@@ -29,7 +29,7 @@ At a fundamental level, we are interested in how carrier mobility, electrical co
 
 <img align = "middle" src="https://deepak-venkateshvaran.github.io/images/ETN-connection.png" width="1000" style="padding-right: 1px; padding-left: 1px; padding-bottom: 20px; padding-top: 20px;">  
 
-During the last three decades, room-temperature charge carrier mobility has risen roughly tenfold every 15 years as shown in the plot below. Crystal structure, phonons, and mechanics, have dominated the design guidelines for newer materials recently. It is at this forefront where we work, inspiring new ideas for molecular design based on intrinsic molecular mechanics, ensuring continual improvement in device mobilities.
+During the last three decades, room-temperature charge carrier mobility has risen roughly tenfold every 15 years as shown in the plot below. Molecular structure, phonons, and mechanics, have dominated the design guidelines for newer materials in recent years. It is at this forefront where we work, inspiring new ideas for molecular design based on intrinsic molecular mechanics, ensuring continual improvement in device mobilities.
 
 <img align = "middle" src="https://deepak-venkateshvaran.github.io/images/Venkateshvaran_Organic_Mobility_Timeline.png" width="1000" style="padding-right: 1px; padding-left: 1px; padding-bottom: 20px; padding-top: 20px;">  
 
