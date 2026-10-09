@@ -10,7 +10,7 @@
 <style>
   :root{
     --ink:#0A0E1A; --ink2:#0F1426; --ink3:#0C1120; --line:#1E2740; --line2:#2A3552;
-    --bone:#EAEEF8; --mist:#8A93AD; --mist2:#69728C;
+    --bone:#EAEEF8; --mist:#9AA3BD; --mist2:#7C86A2;
     --violet:#9C8CFF; --cyan:#54D6FF; --amber:#FF9A52;
     --serif:'Fraunces','Iowan Old Style',Georgia,'Times New Roman',serif;
     --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
@@ -21,340 +21,768 @@
   body{
     font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
     height:100vh;overflow:hidden;display:flex;flex-direction:column;
-    padding:clamp(12px,1.8vh,20px) clamp(16px,2.2vw,34px);
+    padding:clamp(12px,1.6vh,18px) clamp(16px,2vw,30px);
     background:
       radial-gradient(1100px 540px at 28% -8%, rgba(84,214,255,.05), transparent 60%),
       radial-gradient(820px 460px at 92% 110%, rgba(255,154,82,.035), transparent 60%),
       var(--ink);
   }
-  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 
   /* ---- header ---- */
-  .top{flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(10px,1.4vh,16px)}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--mist);text-transform:lowercase;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  .top{flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(8px,1.2vh,14px)}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;color:var(--mist);text-transform:lowercase;margin-bottom:7px;display:flex;align-items:center;gap:10px}
   .eyebrow::before{content:"";width:24px;height:1px;background:var(--line2)}
-  h1{font-family:var(--serif);font-weight:400;font-size:clamp(25px,3vw,40px);line-height:1.02;letter-spacing:-.015em}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.7vw,36px);line-height:1.02;letter-spacing:-.015em}
   h1 em{font-style:italic;color:var(--cyan)}
-  .sub{font-family:var(--sans);color:var(--mist);font-size:15px;max-width:52ch;text-align:right;line-height:1.5}
+  .sub{font-family:var(--sans);color:var(--mist);font-size:14px;max-width:60ch;text-align:right;line-height:1.5}
   .sub b{color:var(--bone);font-weight:500}
 
   /* ---- board ---- */
-  .board{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(310px,1fr) minmax(420px,1.55fr) minmax(370px,1.2fr);gap:clamp(14px,1.6vw,26px)}
+  .board{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(300px,1fr) minmax(420px,1.55fr) minmax(340px,1.15fr);gap:clamp(14px,1.5vw,24px)}
   .col{min-width:0;min-height:0;display:flex;flex-direction:column}
-  .panel-h{font-family:var(--mono);font-size:13px;letter-spacing:.13em;color:var(--mist);margin-bottom:11px;display:flex;align-items:center;gap:10px;flex:0 0 auto}
-  .panel-h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .panel-h{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--mist);margin-bottom:7px;display:flex;align-items:center;gap:10px;flex:0 0 auto;white-space:nowrap}
+  .panel-h::after{content:"";flex:1;height:1px;background:var(--line);order:1}
+  .panel-h .sbar{order:2;letter-spacing:.04em;color:var(--bone);display:inline-flex;align-items:center;gap:6px}
+  .sbar i{display:inline-block;height:7px;border:solid var(--cyan);border-width:0 2px 2px 2px;width:40px}
+  .panel-h + .stage + .panel-h{margin-top:9px}
 
   /* ladder */
   .ladder{display:flex;flex-direction:column;flex:0 0 auto}
-  .step{display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:12px;padding:clamp(4px,0.7vh,9px) 0}
+  .step{display:grid;grid-template-columns:16px 1fr auto;align-items:center;gap:11px;padding:clamp(3px,0.6vh,8px) 0}
   .step + .step{border-top:1px solid rgba(30,39,64,.6)}
-  .g{font-family:var(--mono);font-size:14px;color:var(--mist2);text-align:center}
-  .rel{font-family:var(--mono);font-size:13.5px;color:var(--bone);line-height:1.3}
+  .g{font-family:var(--mono);font-size:13px;color:var(--mist2);text-align:center}
+  .rel{font-family:var(--mono);font-size:13px;color:var(--bone);line-height:1.3}
   .lab{font-family:var(--mono);font-size:11px;color:var(--mist);letter-spacing:.02em;margin-top:2px}
   .val{font-family:var(--mono);text-align:right;white-space:nowrap}
-  .val b{font-size:19px;font-weight:500}
-  .val span{font-size:11.5px;color:var(--mist);margin-left:5px}
+  .val b{font-size:18px;font-weight:500}
+  .val span{font-size:11px;color:var(--mist);margin-left:5px}
   .v-mech b{color:var(--violet)} .v-elec b{color:var(--cyan)} .v-therm b{color:var(--amber)} .v-neu b{color:var(--bone)}
-  .step.branch{margin:3px 0;padding:8px 11px;border:1px solid rgba(255,154,82,.22);border-left:2px solid var(--amber);border-radius:0 10px 10px 0;background:rgba(255,154,82,.04)}
+  .step.branch{margin:3px 0;padding:7px 10px;border:1px solid rgba(255,154,82,.22);border-left:2px solid var(--amber);border-radius:0 10px 10px 0;background:rgba(255,154,82,.04)}
   .step.branch .g{color:var(--amber)}
-  .step.out{margin-top:6px;padding:10px 12px;border:1px solid rgba(84,214,255,.28);border-radius:12px;background:rgba(84,214,255,.05)}
-  .step.out .val b{font-size:22px}
-  .modelnote{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;color:var(--mist);line-height:1.6}
+  .step.out{margin-top:6px;padding:9px 11px;border:1px solid rgba(84,214,255,.28);border-radius:12px;background:rgba(84,214,255,.05)}
+  .step.out .val b{font-size:21px}
+  .modelnote{margin-top:auto;padding-top:12px;font-family:var(--mono);font-size:11px;color:var(--mist);line-height:1.55}
   .modelnote b{color:var(--bone);font-weight:500}
 
   /* stages */
-  .stage{flex:1 1 auto;min-height:0;position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--ink2)}
+  .stage{flex:1 1 0;min-height:0;position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--ink2)}
   .stage.plot{background:var(--ink3)}
   canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-  .ovl{position:absolute;font-family:var(--mono);font-size:13px;letter-spacing:.02em;color:var(--bone);background:rgba(10,14,26,.45);padding:5px 9px;border-radius:8px;border:1px solid var(--line);z-index:2}
-  #u2lab{top:12px;left:12px;color:var(--mist)} #u2lab b{color:var(--bone);font-weight:500}
-  #ltlab{top:12px;right:12px;color:var(--cyan)} #ltlab b{font-weight:500}
-  .pcap{flex:0 0 auto;font-family:var(--mono);font-size:12.5px;color:var(--mist);line-height:1.55;margin-top:10px}
-  .pcap b{color:var(--cyan);font-weight:500}
+  .pcap{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--mist);line-height:1.55;margin-top:8px}
+  .pcap b{color:var(--bone);font-weight:500}
+  .pcap .c{color:var(--cyan)}
 
   /* ---- controls ---- */
-  .controls{flex:0 0 auto;display:flex;flex-direction:column;margin-top:clamp(10px,1.4vh,16px);padding-top:clamp(10px,1.4vh,16px);border-top:1px solid var(--line)}
-  .controls-lead{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;color:var(--mist);margin-bottom:clamp(8px,1.1vh,14px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 16px}
-  .lead-left{display:inline-flex;align-items:center;gap:9px}
-  .credit{letter-spacing:.04em;color:var(--mist)}
+  .controls{flex:0 0 auto;display:flex;flex-direction:column;margin-top:clamp(8px,1.2vh,14px);padding-top:clamp(8px,1.2vh,14px);border-top:1px solid var(--line)}
+  .ctrl-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin-bottom:clamp(8px,1.1vh,13px)}
+  .segs{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .seg{display:inline-flex;border:1px solid var(--line2);border-radius:9px;overflow:hidden}
+  .seg button{background:transparent;border:0;border-right:1px solid var(--line2);color:var(--mist);
+    font-family:var(--mono);font-size:12px;padding:6px 12px;cursor:pointer;white-space:nowrap}
+  .seg button:last-child{border-right:0}
+  .seg button:hover{color:var(--bone)}
+  .seg button[aria-pressed="true"]{background:rgba(84,214,255,.12);color:var(--bone)}
+  .seg button:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
+  .credit{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--mist)}
   .credit b{color:var(--bone);font-weight:500}
-  .controls-lead b{color:var(--bone);font-weight:500}
-  .pip{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px 1px rgba(84,214,255,.7)}
-  .controls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.6vw,48px)}
-  .ctl label{display:flex;justify-content:space-between;align-items:baseline;font-size:15.5px;font-weight:500;margin-bottom:13px}
-  .ctl .val{font-family:var(--mono);font-size:14.5px;color:var(--mist);font-weight:400}
-  .ctl .val b{color:var(--bone);font-weight:500}
-  .ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--mist2);margin-top:9px}
+  .credit-wrap{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap}
+  .conf{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--bone);
+    background:rgba(84,214,255,.10);border:1px solid rgba(84,214,255,.6);border-radius:999px;padding:4px 12px 4px 6px;cursor:pointer;white-space:nowrap;
+    animation:confPulse 2.4s ease-out 1.5s 3}
+  .conf svg{flex:0 0 auto;display:block}
+  .conf b{color:var(--cyan);font-weight:500;font-size:13.5px}
+  .conf .go{color:var(--cyan);font-size:14px;line-height:1}
+  .conf:hover{background:rgba(84,214,255,.2)} .conf:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+  @keyframes confPulse{0%{box-shadow:0 0 0 0 rgba(84,214,255,.55)}70%{box-shadow:0 0 0 10px rgba(84,214,255,0)}100%{box-shadow:0 0 0 0 rgba(84,214,255,0)}}
+  @media (prefers-reduced-motion:reduce){.conf{animation:none}}
+  /* confidence breakdown (opens on request; never covers the page otherwise) */
+  #confDlg{margin:auto;width:min(720px,94vw);max-height:88vh;overflow:auto;background:var(--ink2);color:var(--bone);border:1px solid var(--line2);border-radius:14px;padding:22px 24px 18px}
+  #confDlg::backdrop{background:rgba(5,8,16,.72)}
+  #confDlg h2{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:4px}
+  #confDlg .who{font-family:var(--mono);font-size:11.5px;color:var(--mist);margin-bottom:14px;line-height:1.5}
+  #confDlg table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.45}
+  #confDlg td{padding:8px 6px;border-top:1px solid var(--line);vertical-align:top;text-align:left}
+  #confDlg td.s{font-family:var(--mono);white-space:nowrap;width:86px}
+  #confDlg td.s b{font-size:15px;font-weight:500}
+  #confDlg td.s i{display:block;height:3px;margin-top:5px;border-radius:2px;background:var(--line2)}
+  #confDlg td.s i span{display:block;height:3px;border-radius:2px;background:var(--cyan)}
+  #confDlg td.k{width:34%;color:var(--bone);font-weight:500}
+  #confDlg td.n{color:var(--mist)}
+  #confDlg tr.tot td{border-top:1px solid var(--line2)}
+  #confDlg .foot{font-size:12px;color:var(--mist);margin-top:12px;line-height:1.5}
+  #confDlg .x{float:right;background:transparent;border:1px solid var(--line2);border-radius:8px;color:var(--mist);font-family:var(--mono);font-size:12px;padding:4px 10px;cursor:pointer}
+  #confDlg .x:hover{color:var(--bone)}
+  @media (max-width:620px){
+    #confDlg{padding:18px 16px 14px} #confDlg h2{font-size:19px}
+    #confDlg tr{display:grid;grid-template-columns:70px 1fr;border-top:1px solid var(--line)}
+    #confDlg tr.tot{border-top:1px solid var(--line2)}
+    #confDlg td{border-top:0} #confDlg td.s{width:auto} #confDlg td.k{width:auto} #confDlg td.n{grid-column:1/-1;padding-top:0}
+  }
+  .controls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,44px)}
+  .ctl label{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;font-weight:500;margin-bottom:11px;white-space:nowrap;gap:10px}
+  .ctl .val{font-family:var(--mono);font-size:13px;color:var(--mist);font-weight:400}
+  .ctl .val b{color:var(--bone);font-weight:500;font-size:13px}
+  .ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--mist2);margin-top:8px}
 
   input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;background:var(--line2);border-radius:8px;outline:none;cursor:pointer}
   input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:8px;background:transparent}
   input[type=range]::-moz-range-track{height:8px;border-radius:8px;background:transparent}
   input[type=range]::-moz-range-progress{height:8px;border-radius:8px;background:transparent}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:var(--bone);border:3px solid var(--ink);margin-top:-8px;cursor:grab;transition:transform .12s}
-  input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--bone);border:3px solid var(--ink);cursor:grab;transition:transform .12s}
-  #temp::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(255,154,82,.16),0 0 16px 2px rgba(255,154,82,.55)}
-  #temp::-moz-range-thumb{box-shadow:0 0 0 5px rgba(255,154,82,.16),0 0 16px 2px rgba(255,154,82,.55)}
-  #c44::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(156,140,255,.16),0 0 16px 2px rgba(156,140,255,.55)}
-  #c44::-moz-range-thumb{box-shadow:0 0 0 5px rgba(156,140,255,.16),0 0 16px 2px rgba(156,140,255,.55)}
-  #jint::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(84,214,255,.16),0 0 16px 2px rgba(84,214,255,.55)}
-  #jint::-moz-range-thumb{box-shadow:0 0 0 5px rgba(84,214,255,.16),0 0 16px 2px rgba(84,214,255,.55)}
-  input[type=range]:hover::-webkit-slider-thumb,input[type=range]:focus-visible::-webkit-slider-thumb{transform:scale(1.16)}
-  input[type=range]:hover::-moz-range-thumb,input[type=range]:focus-visible::-moz-range-thumb{transform:scale(1.16)}
-  input[type=range]:active::-webkit-slider-thumb{cursor:grabbing}
-  @keyframes thumbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-  @media (prefers-reduced-motion:no-preference){
-    input[type=range]:not(:hover):not(:focus)::-webkit-slider-thumb{animation:thumbPulse 2.6s ease-in-out infinite}
-    input[type=range]:not(:hover):not(:focus)::-moz-range-thumb{animation:thumbPulse 2.6s ease-in-out infinite}
-    .pip{animation:thumbPulse 2.6s ease-in-out infinite}
-  }
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--bone);border:3px solid var(--ink);margin-top:-7px;cursor:grab;transition:transform .12s}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--bone);border:3px solid var(--ink);cursor:grab;transition:transform .12s}
+  #temp::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(255,154,82,.16)}
+  #temp::-moz-range-thumb{box-shadow:0 0 0 5px rgba(255,154,82,.16)}
+  #c44::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(156,140,255,.16)}
+  #c44::-moz-range-thumb{box-shadow:0 0 0 5px rgba(156,140,255,.16)}
+  #jint::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(84,214,255,.16)}
+  #jint::-moz-range-thumb{box-shadow:0 0 0 5px rgba(84,214,255,.16)}
+  input[type=range]:hover::-webkit-slider-thumb,input[type=range]:focus-visible::-webkit-slider-thumb{transform:scale(1.14)}
+  input[type=range]:hover::-moz-range-thumb,input[type=range]:focus-visible::-moz-range-thumb{transform:scale(1.14)}
 
-  @media (max-width:920px),(max-height:640px){
+  .col.left{overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+  @media (max-height:860px){
+    h1{font-size:clamp(22px,2.3vw,30px)} .sub{font-size:13px} .eyebrow{margin-bottom:4px}
+    .step{padding:2px 0;gap:9px} .rel{font-size:12px} .lab{font-size:10.5px;margin-top:1px}
+    .val b{font-size:16px} .step.out .val b{font-size:18px} .step.branch{padding:5px 9px} .step.out{padding:7px 10px}
+    .modelnote{font-size:10.5px;line-height:1.45;padding-top:8px}
+    .ctl label{margin-bottom:8px} .ends{margin-top:6px} .ctrl-top{margin-bottom:8px}
+  }
+  @media (max-height:740px){
+    .top{margin-bottom:6px} .step{padding:1px 0} .modelnote{font-size:10px;line-height:1.36;padding-top:0}
+    .step.out .val b{font-size:16px} .val span{font-size:10px;margin-left:4px} .step.out{padding:5px 7px;gap:6px}
+    .controls{margin-top:6px;padding-top:6px}
+  }
+  @media (max-width:1100px),(max-height:660px){
     body{height:auto;min-height:100vh;overflow:auto}
     .top{flex-direction:column;align-items:flex-start}
     .sub{text-align:left}
-    .board{grid-template-columns:1fr;gap:24px}
-    .stage{height:44vh;min-height:300px}
+    .board{grid-template-columns:1fr;gap:22px}
+    .col.mid .stage{flex:0 0 auto;height:34vh;min-height:230px}
+    .stage.plot{flex:0 0 auto;height:40vh;min-height:280px}
     .controls-grid{grid-template-columns:1fr}
+    .ctrl-top{flex-direction:column;align-items:flex-start}
+    .panel-h{white-space:normal;flex-wrap:wrap;row-gap:4px}
+    .panel-h::after{min-width:20px}
   }
 </style>
 </head>
 <body>
   <div class="top">
     <div>
-      <div class="eyebrow">transient localisation · molecular crystal</div>
+      <div class="eyebrow">transient localisation &middot; molecular crystals</div>
       <h1>One phonon bath, <em>three observables</em></h1>
     </div>
-    <p class="sub">The soft intermolecular phonons fix the <b>elastic constants</b>, dress the transfer integral as <b>dynamic disorder</b>, and carry the <b>lattice heat</b>. Drive C&#8324;&#8324;, T and J below.</p>
+    <p class="sub">The same soft intermolecular phonons set the <b>shear stiffness</b>, modulate the transfer integrals as <b>dynamic disorder</b>, and carry the <b>lattice heat</b>. Choose a crystal, then drive C&#8324;&#8324;, T and J.</p>
   </div>
 
   <div class="board">
-    <!-- LEFT -->
-    <div class="col">
-      <div class="panel-h">mechanistic chain</div>
+    <!-- LEFT: the chain -->
+    <div class="col left">
+      <div class="panel-h"><span>mechanistic chain &middot; <span id="chainMat">MT-pyrene</span></span></div>
       <div class="ladder">
         <div class="step">
           <div class="g">&#9679;</div>
           <div><div class="rel">C&#8324;&#8324; &mdash; shear elastic modulus</div><div class="lab">mechanical face &middot; input</div></div>
-          <div class="val v-mech"><b id="vC44">2.00</b><span>GPa</span></div>
+          <div class="val v-mech"><b id="vC44">&ndash;</b><span>GPa</span></div>
         </div>
         <div class="step">
           <div class="g">&#8595;</div>
-          <div><div class="rel">&#8463;&omega;<sub>sh</sub> &prop; &radic;(C&#8324;&#8324;/&rho;)</div><div class="lab">soft shear phonon</div></div>
-          <div class="val v-neu"><b id="vOmega">5.00</b><span>meV</span></div>
+          <div><div class="rel">&#8463;&omega;<sub>sh</sub> = 2&#8463;v<sub>T</sub>/a, v<sub>T</sub> = &radic;(C&#8324;&#8324;/&rho;)</div><div class="lab">zone-boundary shear &middot; a = plane spacing</div></div>
+          <div class="val v-neu"><b id="vOmega">&ndash;</b><span>meV</span></div>
         </div>
         <div class="step branch">
           <div class="g">&#8627;</div>
-          <div><div class="rel">&kappa;<sub>L</sub> &asymp; &#8531;C<sub>v</sub>v<sub>s</sub>&#178;&tau;<sub>ph</sub> &prop; C&#8324;&#8324;/T</div><div class="lab">lattice heat &middot; thermal face</div></div>
-          <div class="val v-therm"><b id="vKappa">0.50</b><span>W m&#8315;&#185;K&#8315;&#185;</span></div>
+          <div><div class="rel">&kappa;<sub>L</sub>/&kappa;<sub>L,0</sub> = (C&#8324;&#8324;/C&#8324;&#8324;<sub>,0</sub>)<sup>3/2</sup>&middot;300 K/T</div><div class="lab">thermal face &middot; 0: default C&#8324;&#8324;, 300 K</div></div>
+          <div class="val v-therm"><b id="vKappa">&ndash;</b><span></span></div>
         </div>
         <div class="step">
           <div class="g">&#8595;</div>
-          <div><div class="rel">&#10216;u&#178;&#10217; = k<sub>B</sub>T / (M&omega;&#178;)</div><div class="lab">thermal displacement</div></div>
-          <div class="val v-neu"><b id="vU2">0.050</b><span>&#197;&#178;</span></div>
+          <div><div class="rel">&#10216;u&#178;&#10217; = k<sub>B</sub>T/(M&omega;<sub>sh</sub>&#178;), M = &rho;V</div><div class="lab">displacement per molecule</div></div>
+          <div class="val v-neu"><b id="vU2">&ndash;</b><span>&#197;&#178;</span></div>
         </div>
         <div class="step">
           <div class="g">&#8595;</div>
-          <div><div class="rel">&sigma;<sub>J</sub> = |&part;J/&part;u|&middot;&radic;&#10216;u&#178;&#10217;</div><div class="lab">dynamic disorder (off-diagonal e&ndash;ph)</div></div>
-          <div class="val v-neu"><b id="vSigma">25.0</b><span>meV</span></div>
+          <div><div class="rel">&sigma;<sub>J</sub> = g&middot;&delta;u, &delta;u&#178; = &#8308;&#8260;&#8323;&#10216;u&#178;&#10217;</div><div class="lab">g from DFT &middot; largest bond</div></div>
+          <div class="val v-neu"><b id="vSigma">&ndash;</b><span>meV</span></div>
         </div>
         <div class="step">
           <div class="g">&#8595;</div>
-          <div><div class="rel">&Delta; = &sigma;<sub>J</sub> / J</div><div class="lab">localisation parameter</div></div>
-          <div class="val v-neu"><b id="vDelta">0.31</b><span></span></div>
+          <div><div class="rel">&Delta; = &sigma;<sub>J</sub>/J</div><div class="lab">localisation parameter</div></div>
+          <div class="val v-neu"><b id="vDelta">&ndash;</b><span></span></div>
         </div>
         <div class="step">
           <div class="g">&#8595;</div>
-          <div><div class="rel">L<sub>T</sub>(&Delta;) &mdash; shrinks as &Delta; grows</div><div class="lab">transient localisation length</div></div>
-          <div class="val v-elec"><b id="vLT">2.21</b><span>nm</span></div>
+          <div><div class="rel">L<sub>&tau;</sub> &mdash; TLT spread at t = &tau;</div><div class="lab" id="ltLab">transient localisation length</div></div>
+          <div class="val v-elec"><b id="vLT">&ndash;</b><span>nm</span></div>
         </div>
         <div class="step out">
           <div class="g">&#8595;</div>
-          <div><div class="rel">&mu; = eL<sub>T</sub>&#178; / (2k<sub>B</sub>T&tau;), &tau;&#8764;&#8463;/(&#8463;&omega;<sub>sh</sub>)</div><div class="lab">charge mobility &middot; electronic face</div></div>
-          <div class="val v-elec"><b id="vMu">7.16</b><span>cm&#178;V&#8315;&#185;s&#8315;&#185;</span></div>
+          <div><div class="rel">&mu; = eL<sub>&tau;</sub>&#178;/(2k<sub>B</sub>T&tau;)</div><div class="lab" id="muLab">electronic face &middot; &tau; = 1/&omega;<sub>sh</sub></div></div>
+          <div class="val v-elec"><b id="vMu">&ndash;</b><span>cm&#178;V&#8315;&#185;s&#8315;&#185;</span></div>
         </div>
       </div>
-      <p class="modelnote"><b>Model.</b> Semiclassical TLT (D = L<sub>T</sub>&#178;/(2&tau;), &mu; = eD/(k<sub>B</sub>T)). Stiffening C&#8324;&#8324; lifts &mu; and &kappa;<sub>L</sub> together &mdash; not independent. Prefactors representative; the dependences are the content. Regime &sigma;<sub>J</sub>&#8764;J.</p>
+      <p class="modelnote" id="modelnote"><b>Model.</b> &nbsp;</p>
     </div>
 
-    <!-- CENTER -->
-    <div class="col">
-      <div class="panel-h"><span>shared lattice &middot; &#10216;u&#178;&#10217; and L<sub>T</sub></span></div>
-      <div class="stage">
-        <canvas id="c" role="img" aria-label="A glowing herringbone lattice of organic molecules whose thermal vibration amplitude tracks the mean-square displacement. A cyan halo marks the transient localisation length of a charge carrier and shrinks as temperature rises or the lattice softens. A faint amber heat wavefront crosses with a speed set by the sound velocity."></canvas>
-        <div class="ovl" id="u2lab">&#10216;u&#178;&#10217; = <b>0.050</b> &#197;&#178;</div>
-        <div class="ovl" id="ltlab">L<sub>T</sub> = <b>2.21</b> nm</div>
-      </div>
+    <!-- CENTRE: the crystal, two views at one scale -->
+    <div class="col mid">
+      <div class="panel-h"><span id="hSide">side view</span><span class="sbar"><i id="sb1"></i>1 nm</span></div>
+      <div class="stage"><canvas id="cs" role="img" aria-label="Side view of the crystal at true molecular scale. Neighbouring molecules slide past one another in antiphase: the zone-boundary shear phonon."></canvas></div>
+      <div class="panel-h"><span id="hTop">top view</span><span class="sbar"><i id="sb2"></i>1 nm</span></div>
+      <div class="stage"><canvas id="ct" role="img" aria-label="Top view onto the substrate at the same scale."></canvas></div>
+      <p class="pcap" id="latcap">&nbsp;</p>
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT: mobility versus temperature -->
     <div class="col">
-      <div class="panel-h">band-like transport &mu;(T)</div>
+      <div class="panel-h"><span>mobility &mu;(T)</span></div>
       <div class="stage plot">
-        <canvas id="p" role="img" aria-label="Log-log plot of charge mobility versus temperature showing a power-law decrease, with a dashed reference curve for the stiffest lattice setting lying above the solid current curve."></canvas>
+        <canvas id="p" role="img" aria-label="Log-log plot of charge mobility versus temperature for the selected crystal. Solid curve: current shear modulus; dashed curve: the stiffest setting."></canvas>
       </div>
-      <p class="pcap">Log&ndash;log. Solid: current C&#8324;&#8324;. Dashed: the stiffest setting, C&#8324;&#8324; = 5 GPa. Here <b>&mu; &prop; T<sup>&minus;<span id="alpha">1.6</span></sup></b> &mdash; the band-like signature, no activated hopping.</p>
+      <p class="pcap" id="pcap">&nbsp;</p>
     </div>
   </div>
 
   <!-- CONTROLS -->
   <div class="controls">
-    <div class="controls-lead">
-      <span class="lead-left"><span class="pip"></span>parameters &mdash; <b>drag to explore</b></span>
-      <span class="credit"><b>Deepak Venkateshvaran</b> &mdash; June 2026</span>
+    <div class="ctrl-top">
+      <div class="segs">
+        <div class="seg" role="group" aria-label="Crystal">
+          <button id="mD" aria-pressed="false">DNTT</button><button id="mC" aria-pressed="false">C8-DNTT-C8</button><button id="mP" aria-pressed="true">MT-pyrene</button>
+        </div>
+        <div class="seg" role="group" aria-label="Motion">
+          <button id="mAll" aria-pressed="true">thermal</button><button id="mShear" aria-pressed="false">shear only</button>
+        </div>
+        <div class="seg" role="group" aria-label="Displacement magnification">
+          <button id="x1" aria-pressed="false">&times;1</button><button id="x6" aria-pressed="true">&times;6</button><button id="x15" aria-pressed="false">&times;15</button>
+        </div>
+      </div>
+      <div class="credit-wrap">
+        <button class="conf" id="confBtn" aria-haspopup="dialog" title="How far to trust this illustration: open the assessment"><svg width="20" height="20" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="14" fill="none" stroke="#2A3552" stroke-width="5"/><circle cx="18" cy="18" r="14" fill="none" stroke="#54D6FF" stroke-width="5" stroke-linecap="round" stroke-dasharray="65.97 87.96" transform="rotate(-90 18 18)"/></svg>confidence <b>75</b>/100 <span class="go">&rsaquo;</span></button>
+        <span class="credit"><b>Deepak Venkateshvaran</b> &mdash; June 2026, revised October 2026</span>
+      </div>
     </div>
     <div class="controls-grid">
       <div class="ctl">
-        <label>Temperature <span class="val">T = <b id="tVal">300</b> K</span></label>
-        <input type="range" id="temp" min="50" max="400" step="5" value="300" aria-label="Temperature in kelvin">
+        <label for="temp">Temperature <span class="val">T = <b id="tVal">300</b> K</span></label>
+        <input type="range" id="temp" min="50" max="400" step="5" value="300">
         <div class="ends"><span>50 K</span><span>400 K</span></div>
       </div>
       <div class="ctl">
-        <label>Shear modulus <span class="val">C&#8324;&#8324; = <b id="cVal">2.0</b> GPa</span></label>
-        <input type="range" id="c44" min="0.4" max="5" step="0.1" value="2" aria-label="Shear modulus C44 in gigapascal">
-        <div class="ends"><span>soft</span><span>stiff</span></div>
+        <label for="c44">Shear modulus <span class="val">C&#8324;&#8324; = <b id="cVal">2.674</b> GPa</span></label>
+        <input type="range" id="c44" min="0.29" max="5" step="0.001" value="2.674">
+        <div class="ends"><span id="c44lo">0.290 GPa &middot; soft</span><span>stiff &middot; 5 GPa</span></div>
       </div>
       <div class="ctl">
-        <label>Transfer integral <span class="val">J = <b id="jVal">80</b> meV</span></label>
-        <input type="range" id="jint" min="35" max="120" step="5" value="80" aria-label="Transfer integral J in millielectronvolt">
-        <div class="ends"><span>35 meV</span><span>120 meV</span></div>
+        <label for="jint">Largest transfer integral <span class="val">J = <b id="jVal">114</b> meV</span></label>
+        <input type="range" id="jint" min="60" max="150" step="1" value="114">
+        <div class="ends"><span>60 meV</span><span>150 meV</span></div>
       </div>
     </div>
   </div>
 
+<dialog id="confDlg" aria-labelledby="confTitle">
+  <button class="x" id="confClose" aria-label="Close">close</button>
+  <h2 id="confTitle">How far to trust this illustration</h2>
+  <p class="who">Assessment by Claude (AI), October 2026, on a 0&ndash;100 scale: how confident one can be that each part represents the physics.</p>
+  <table>
+    <tr><td class="s"><b>95</b><i><span style="width:95%"></span></i></td><td class="k">The page computes the chain it states</td>
+      <td class="n">Every number matches an independent Python version to 0.1&nbsp;%; the transport tables match direct calculations to 3&ndash;4&nbsp;% (worst 9&nbsp;%).</td></tr>
+    <tr><td class="s"><b>60</b><i><span style="width:60%"></span></i></td><td class="k">C&#8324;&#8324; &rarr; &#8463;&omega;<sub>sh</sub>: one shear mode sets the lattice timescale</td>
+      <td class="n">Coupling fluctuations come from a band of low-frequency modes, librations included. Simulations (Giannini et al. 2023) give &#8463;/&tau; &asymp; 9&nbsp;meV for DNTT and 16&nbsp;meV for C8-DNTT-C8; the chain gives 2.7&nbsp;meV for C8-DNTT-C8.</td></tr>
+    <tr><td class="s"><b>80</b><i><span style="width:80%"></span></i></td><td class="k">&#10216;u&#178;&#10217; from C&#8324;&#8324;</td>
+      <td class="n">Classical harmonic lattice. For MT-pyrene the CIF displacement parameters (100&ndash;300&nbsp;K) give a slide within about 13&nbsp;% of the chain&rsquo;s.</td></tr>
+    <tr><td class="s"><b>70</b><i><span style="width:70%"></span></i></td><td class="k">&sigma;<sub>J</sub> = g&middot;&delta;u</td>
+      <td class="n">g is computed (DFT gradients of every bond, weighted by the measured motion), not fitted. C8-DNTT-C8 gets &sigma;<sub>J</sub> = J/5.4; molecular dynamics give J/4&ndash;5. Assumes all rigid-body motion softens with C&#8324;&#8324;.</td></tr>
+    <tr><td class="s"><b>85</b><i><span style="width:85%"></span></i></td><td class="k">Transient localisation &rarr; L<sub>&tau;</sub>, &mu;</td>
+      <td class="n">Established theory, solved on each crystal&rsquo;s own network of transfer integrals. The weak-disorder correction is an interpolation, so the stiffest settings are the least secure.</td></tr>
+    <tr><td class="s"><b>80</b><i><span style="width:80%"></span></i></td><td class="k">Trends: stiffer is faster; &mu; &prop; T<sup>&minus;n</sup></td>
+      <td class="n">&mu; rises with C&#8324;&#8324; at every setting. C8-DNTT-C8 gives n &asymp; 1.1 at 300&nbsp;K; experiment gives 1.0 &plusmn; 0.1 (Giannini et al., Nat. Mater. 2023).</td></tr>
+    <tr><td class="s"><b>45</b><i><span style="width:45%"></span></i></td><td class="k">Absolute mobility</td>
+      <td class="n">Intrinsic values (no traps) run above measured ones: C8-DNTT-C8 15 against 4.8, MT-pyrene 47 against 30&nbsp;cm&#178;V&#8315;&#185;s&#8315;&#185;. DNTT uses a placeholder C&#8324;&#8324;.</td></tr>
+    <tr><td class="s"><b>45</b><i><span style="width:45%"></span></i></td><td class="k">&kappa;<sub>L</sub>/&kappa;<sub>L,0</sub></td>
+      <td class="n">A scaling estimate (&kappa; &prop; sound velocity cubed): right in direction, not in size.</td></tr>
+    <tr><td class="s"><b>90</b><i><span style="width:90%"></span></i></td><td class="k">Drawing</td>
+      <td class="n">The CIF molecules in their crystal orientations; slide from the chain, sideways motion and rocking in the measured proportions. DNTT moves too much because of its placeholder C&#8324;&#8324;.</td></tr>
+    <tr class="tot"><td class="s"><b>75</b><i><span style="width:75%"></span></i></td><td class="k">Overall</td>
+      <td class="n">A faithful, internally consistent picture of the hypothesis and of how stiffness controls mobility; trends more reliable than absolute numbers.</td></tr>
+  </table>
+  <p class="foot">Not included: traps, local electron&ndash;phonon coupling, and MT-pyrene&rsquo;s couplings between layers (10&ndash;23&nbsp;meV by DFT), which the two-dimensional network leaves out.</p>
+</dialog>
+
 <script>
 (function(){
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var C0=2,T0=300,hbar=0.6582,kBe=11604.5;
-  function chainOf(T,C44,J){
-    var omega=5.0*Math.sqrt(C44/C0);
-    var u2=0.05*(T/T0)/(C44/C0);
-    var sigma=111.8*Math.sqrt(u2);
-    var Delta=sigma/J;
-    var LT=3.5/(1+6*Delta*Delta);
-    var tau=hbar/omega;
-    var D=Math.pow(LT*1e-7,2)/(2*(tau*1e-12));
-    var mu=D/(T/kBe);
-    var kappa=0.5*(C44/C0)/(T/T0);
-    return {omega:omega,u2:u2,sigma:sigma,Delta:Delta,LT:LT,mu:mu,kappa:kappa};
-  }
-  function muOf(T,C44,J){return chainOf(T,C44,J).mu;}
+'use strict';
+var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var T=300,C44=2,J=80,chain=chainOf(T,C44,J);
-  var temp=document.getElementById('temp'),c44=document.getElementById('c44'),jint=document.getElementById('jint');
-  var ACC={temp:'#FF9A52',c44:'#9C8CFF',jint:'#54D6FF'};
-  function fill(el,key){var mn=+el.min,mx=+el.max,p=(+el.value-mn)/(mx-mn)*100;
-    el.style.background='linear-gradient(90deg,'+ACC[key]+' 0%,'+ACC[key]+' '+p+'%, #2A3552 '+p+'%, #2A3552 100%)';}
-  function fmt(x,d){return x.toFixed(d);}
-  function setT(id,v){document.getElementById(id).textContent=v;}
-  function update(){
-    T=+temp.value;C44=+c44.value;J=+jint.value;chain=chainOf(T,C44,J);
-    fill(temp,'temp');fill(c44,'c44');fill(jint,'jint');
-    setT('tVal',T);setT('cVal',fmt(C44,1));setT('jVal',J);
-    setT('vC44',fmt(C44,2));setT('vOmega',fmt(chain.omega,2));setT('vKappa',fmt(chain.kappa,2));
-    setT('vU2',fmt(chain.u2,3));setT('vSigma',fmt(chain.sigma,1));setT('vDelta',fmt(chain.Delta,2));
-    setT('vLT',fmt(chain.LT,2));setT('vMu',chain.mu>=10?fmt(chain.mu,1):fmt(chain.mu,2));
-    document.querySelector('#u2lab b').textContent=fmt(chain.u2,3);
-    document.querySelector('#ltlab b').textContent=fmt(chain.LT,2);
-    var Thi=T*1.04,Tlo=T*0.96;
-    var a=-(Math.log(muOf(Thi,C44,J))-Math.log(muOf(Tlo,C44,J)))/(Math.log(Thi)-Math.log(Tlo));
-    setT('alpha',a.toFixed(1));
-    drawPlot(); if(reduce) drawLattice(time);
-  }
-  temp.addEventListener('input',update);c44.addEventListener('input',update);jint.addEventListener('input',update);
+/* =====================================================================
+   1. CONSTANTS AND MATERIALS
+   ===================================================================== */
+var KB=1.380649e-23, HBAR=1.054571817e-34, QE=1.602176634e-19;     // SI
+var HBAR_MEVPS=0.6582119569, KB_MEV=0.08617333262, K_PER_V=11604.518;
 
-  /* lattice */
-  var cv=document.getElementById('c'),ctx=cv.getContext('2d');
-  var W=0,H=0,dpr=1,cols=14,rows=9,sp=0,ox=0,oy=0,nodes=[],centerIdx=0,a_nm=0.6;
-  function build(){
-    var r=cv.getBoundingClientRect();W=Math.max(40,r.width);H=Math.max(40,r.height);
-    dpr=Math.min(window.devicePixelRatio||1,2);cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-    var m=Math.round(Math.min(W,H)*0.06),s0=46;
-    cols=Math.max(8,Math.min(24,Math.round((W-2*m)/s0)+1));
-    rows=Math.max(5,Math.min(18,Math.round((H-2*m)/s0)+1));
-    sp=Math.min((W-2*m)/(cols-1),(H-2*m)/(rows-1));
-    var gw=(cols-1)*sp+sp*0.5,gh=(rows-1)*sp;ox=(W-gw)/2;oy=(H-gh)/2;
-    nodes=[];
-    for(var rr=0;rr<rows;rr++)for(var c=0;c<cols;c++){var off=(rr%2)?sp*0.5:0;
-      nodes.push({rx:ox+c*sp+off,ry:oy+rr*sp,phx:c*1.7+rr*0.9,phy:c*0.6-rr*1.3,tilt:((c+rr)%2?1:-1)*0.38,x:0,y:0});}
-    centerIdx=Math.round((rows-1)/2)*cols+Math.round((cols-1)/2);
-  }
-  var time=0;
-  function drawLattice(t){
-    var bg=ctx.createRadialGradient(W*.5,H*.42,0,W*.5,H*.42,Math.max(W,H)*.75);
-    bg.addColorStop(0,'#0E1426');bg.addColorStop(1,'#070A14');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    var amp=sp*0.9*Math.sqrt(chain.u2),w1=0.0011,w2=0.0014;
-    for(var i=0;i<nodes.length;i++){var n=nodes[i];
-      n.x=n.rx+amp*(Math.sin(t*w1+n.phx)+0.5*Math.sin(t*w2*1.7+n.phy));
-      n.y=n.ry+amp*(Math.cos(t*w2+n.phy)+0.5*Math.cos(t*w1*1.9+n.phx));}
-    ctx.lineWidth=1;
-    for(var rr=0;rr<rows;rr++)for(var c=0;c<cols;c++){var idx=rr*cols+c,a=nodes[idx];
-      if(c<cols-1)spring(a,nodes[idx+1]);if(rr<rows-1)spring(a,nodes[idx+cols]);}
-    function spring(a,b){var dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),s=Math.min(1,Math.abs(len-sp)/(sp*0.5));
-      ctx.strokeStyle='rgba('+(120+s*90)+','+(140+s*30)+','+(185-s*40)+','+(0.07+s*0.10)+')';
-      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
-    ctx.globalCompositeOperation='lighter';
-    var L=sp*0.55,lw=sp*0.16;
-    for(var i=0;i<nodes.length;i++){var n=nodes[i];var ang=Math.PI/2+n.tilt,hx=Math.cos(ang)*L*0.5,hy=Math.sin(ang)*L*0.5;
-      ctx.lineCap='round';
-      ctx.strokeStyle='rgba(150,180,230,0.10)';ctx.lineWidth=lw*2.2;ctx.beginPath();ctx.moveTo(n.x-hx,n.y-hy);ctx.lineTo(n.x+hx,n.y+hy);ctx.stroke();
-      ctx.strokeStyle='rgba(228,236,250,0.82)';ctx.lineWidth=lw;ctx.beginPath();ctx.moveTo(n.x-hx,n.y-hy);ctx.lineTo(n.x+hx,n.y+hy);ctx.stroke();}
-    var cn=nodes[centerIdx],Lpx=(chain.LT/a_nm)*sp;
-    var cg=ctx.createRadialGradient(cn.x,cn.y,0,cn.x,cn.y,Math.max(Lpx,2));
-    cg.addColorStop(0,'rgba(84,214,255,0.55)');cg.addColorStop(0.5,'rgba(84,214,255,0.20)');cg.addColorStop(1,'rgba(84,214,255,0)');
-    ctx.fillStyle=cg;ctx.beginPath();ctx.arc(cn.x,cn.y,Math.max(Lpx,2),0,7);ctx.fill();
-    var band=sp*3.2,speed=0.05+Math.sqrt(C44/C0)*0.07,span=W+band*2,hx2=((t*speed)%span)-band;
-    var hg=ctx.createLinearGradient(hx2-band,0,hx2+band,0);
-    hg.addColorStop(0,'rgba(255,154,82,0)');hg.addColorStop(0.5,'rgba(255,154,82,0.20)');hg.addColorStop(1,'rgba(255,154,82,0)');
-    ctx.fillStyle=hg;ctx.fillRect(hx2-band,0,band*2,H);
-    ctx.globalCompositeOperation='source-over';
-    var barpx=(1/a_nm)*sp,bx=W-26-barpx,by=H-24;
-    ctx.strokeStyle='rgba(84,214,255,0.8)';ctx.lineWidth=2;ctx.lineCap='butt';
-    ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx+barpx,by);
-    ctx.moveTo(bx,by-4);ctx.lineTo(bx,by+4);ctx.moveTo(bx+barpx,by-4);ctx.lineTo(bx+barpx,by+4);ctx.stroke();
-    ctx.fillStyle='rgba(138,147,173,0.95)';ctx.font='12px "IBM Plex Mono", monospace';ctx.textAlign='center';
-    ctx.fillText('1 nm',bx+barpx/2,by-10);
-  }
+/* Crystal data from the CIFs. aeff = spacing of the planes that slide against each other in the drawn
+   zone-boundary shear wave: b/2 for the herringbones (the (020) planes; A and B molecules slide along
+   their long axes in antiphase, a C44 shear); d_pi for MT-pyrene (the wave runs along the pi-plane normal
+   and the pi-planes slide along the long axis, the shear with planes parallel to the substrate); V = volume per molecule;
+   rho = density; dNN = nearest-neighbour centroid distance (for the Lindemann guard);
+   J0 = largest transfer integral of the published network (meV); c44 = default (GPa). */
+var MAT={
+  dntt:{key:'dntt', name:'DNTT', aeff:3.8310, aname:'b/2', V:383.85, rho:1.4728, dNN:4.883, J0:117.9, c44:null},
+  c8:  {key:'c8', name:'C8-DNTT-C8', aeff:3.9306, aname:'b/2', V:789.86, rho:1.1876, dNN:4.941, J0:93.1, c44:0.796},
+  mtp: {key:'mtp', name:'MT-pyrene', aeff:3.5416, aname:'d&pi;', V:434.11, rho:1.4788, dNN:6.553, J0:114.0, c44:2.674}
+};
 
-  /* plot */
-  var pc=document.getElementById('p'),pg=pc.getContext('2d');
-  var PW=0,PH=0,padL=56,padR=14,padT=14,padB=34,plotW=0,plotH=0;
-  var Tmn=50,Tmx=400,Mmn=0.01,Mmx=300;
-  function pbuild(){var r=pc.getBoundingClientRect();PW=Math.max(40,r.width);PH=Math.max(40,r.height);
-    pc.width=PW*dpr;pc.height=PH*dpr;pg.setTransform(dpr,0,0,dpr,0,0);plotW=PW-padL-padR;plotH=PH-padT-padB;}
-  function PX(t){return padL+(Math.log(t)-Math.log(Tmn))/(Math.log(Tmx)-Math.log(Tmn))*plotW;}
-  function PY(m){m=Math.max(Mmn,Math.min(Mmx,m));return padT+(1-(Math.log(m)-Math.log(Mmn))/(Math.log(Mmx)-Math.log(Mmn)))*plotH;}
-  function drawPlot(){
-    pg.clearRect(0,0,PW,PH);pg.fillStyle='#0C1120';pg.fillRect(0,0,PW,PH);
-    pg.font='11px "IBM Plex Mono", monospace';
-    var decs=[0.01,0.1,1,10,100];pg.textAlign='right';pg.textBaseline='middle';
-    for(var i=0;i<decs.length;i++){var y=PY(decs[i]);
-      pg.strokeStyle='rgba(30,39,64,0.9)';pg.lineWidth=1;pg.beginPath();pg.moveTo(padL,y);pg.lineTo(PW-padR,y);pg.stroke();
-      pg.fillStyle='#69728C';pg.fillText(''+decs[i],padL-9,y);}
-    var xt=[50,100,200,400];pg.textAlign='center';pg.textBaseline='top';
-    for(var i=0;i<xt.length;i++){var x=PX(xt[i]);
-      pg.strokeStyle='rgba(30,39,64,0.6)';pg.beginPath();pg.moveTo(x,padT);pg.lineTo(x,PH-padB);pg.stroke();
-      pg.fillStyle='#69728C';pg.fillText(''+xt[i],x,PH-padB+8);}
-    pg.font='12px "IBM Plex Mono", monospace';pg.fillStyle='#8A93AD';
-    pg.textAlign='center';pg.textBaseline='top';pg.fillText('T (K)',padL+plotW/2,PH-15);
-    pg.save();pg.translate(14,padT+plotH/2);pg.rotate(-Math.PI/2);pg.textBaseline='middle';
-    pg.fillText('\u03BC  (cm\u00B2 V\u207B\u00B9 s\u207B\u00B9)',0,0);pg.restore();
-    var Cg=5;
-    pg.strokeStyle='rgba(84,214,255,0.35)';pg.setLineDash([5,5]);pg.lineWidth=1.5;pg.beginPath();curve(Cg);pg.stroke();pg.setLineDash([]);
-    pg.strokeStyle='rgba(84,214,255,0.95)';pg.lineWidth=2.2;pg.beginPath();curve(C44);pg.stroke();
-    function curve(cc){var first=true;for(var t=Tmn;t<=Tmx;t+=3){var x=PX(t),y=PY(muOf(t,cc,J));if(first){pg.moveTo(x,y);first=false;}else pg.lineTo(x,y);}}
-    var ox2=PX(T),oy2=PY(chain.mu);
-    pg.fillStyle='#0C1120';pg.strokeStyle='rgba(84,214,255,1)';pg.lineWidth=2.5;
-    pg.beginPath();pg.arc(ox2,oy2,6,0,7);pg.fill();pg.stroke();
-  }
+/* Transient-localisation spread L_x^2, L_y^2 (A^2), precomputed by exact diagonalisation of each
+   crystal's own network of transfer integrals (each bond b fluctuating by sigma_b = r_b sigma_J, r_b from
+   the DFT gradients), on a grid in Delta = sigma_J/J (largest bond), theta = kB T/J and w = hbar*omega/J.
+   Stored as log10. */
+var TLT={"d0":-1.804697,"dd":0.105727,"nd":22,"t0":-1.60206,"dt":0.128634,"nt":12,"w0":-2.221849,"dw":0.23299,"nw":7,"dntt":{"cs":4.96,"x":[4.652,4.226,3.785,3.331,2.87,2.406,1.944,4.772,4.348,3.908,3.455,2.994,2.531,2.069,4.895,4.473,4.034,3.582,3.121,2.657,2.195,5.02,4.6,4.162,3.71,3.249,2.785,2.323,5.146,4.727,4.289,3.838,3.377,2.913,2.451,5.272,4.854,4.417,3.965,3.505,3.041,2.578,5.395,4.978,4.541,4.09,3.629,3.165,2.703,5.516,5.099,4.661,4.21,3.749,3.285,2.823,5.631,5.214,4.777,4.325,3.864,3.4,2.939,5.743,5.324,4.886,4.434,3.974,3.51,3.048,5.844,5.425,4.986,4.534,4.074,3.611,3.15,5.937,5.517,5.078,4.626,4.166,3.703,3.241,4.599,4.196,3.768,3.322,2.865,2.403,1.943,4.72,4.319,3.892,3.446,2.988,2.526,2.066,4.845,4.445,4.019,3.573,3.115,2.653,2.193,4.972,4.573,4.146,3.7,3.242,2.781,2.322,5.099,4.701,4.275,3.829,3.371,2.909,2.45,5.227,4.827,4.401,3.955,3.497,3.035,2.577,5.352,4.951,4.524,4.078,3.621,3.16,2.702,5.473,5.072,4.645,4.199,3.742,3.281,2.822,5.59,5.186,4.759,4.314,3.858,3.396,2.937,5.696,5.295,4.868,4.423,3.966,3.504,3.045,5.798,5.396,4.97,4.524,4.067,3.605,3.146,5.891,5.489,5.062,4.616,4.159,3.697,3.238,4.564,4.169,3.748,3.31,2.858,2.4,1.941,4.681,4.288,3.87,3.432,2.981,2.523,2.064,4.801,4.412,3.996,3.558,3.107,2.649,2.192,4.924,4.537,4.122,3.686,3.235,2.778,2.32,5.047,4.664,4.25,3.814,3.363,2.905,2.448,5.171,4.789,4.376,3.94,3.49,3.032,2.575,5.292,4.91,4.498,4.064,3.614,3.157,2.699,5.41,5.03,4.619,4.185,3.735,3.277,2.819,5.523,5.145,4.735,4.3,3.85,3.392,2.934,5.631,5.254,4.843,4.409,3.958,3.5,3.043,5.733,5.355,4.945,4.51,4.06,3.601,3.144,5.825,5.448,5.037,4.602,4.151,3.693,3.236,4.453,4.1,3.709,3.289,2.848,2.394,1.938,4.564,4.219,3.831,3.412,2.971,2.518,2.061,4.69,4.343,3.956,3.537,3.097,2.644,2.188,4.81,4.469,4.084,3.666,3.225,2.772,2.316,4.941,4.596,4.21,3.792,3.352,2.899,2.444,5.066,4.723,4.338,3.92,3.479,3.026,2.571,5.195,4.85,4.463,4.044,3.603,3.15,2.695,5.318,4.971,4.583,4.164,3.723,3.271,2.815,5.436,5.087,4.699,4.279,3.838,3.386,2.931,5.548,5.197,4.807,4.387,3.947,3.494,3.039,5.649,5.298,4.908,4.488,4.048,3.595,3.14,5.74,5.389,4.999,4.58,4.139,3.687,3.232,4.368,4.034,3.661,3.257,2.829,2.385,1.931,4.488,4.155,3.783,3.38,2.953,2.509,2.055,4.598,4.274,3.907,3.506,3.078,2.634,2.181,4.726,4.401,4.034,3.633,3.206,2.762,2.308,4.847,4.525,4.16,3.76,3.333,2.889,2.436,4.974,4.651,4.286,3.886,3.46,3.016,2.563,5.093,4.776,4.412,4.011,3.584,3.139,2.687,5.214,4.896,4.531,4.131,3.703,3.259,2.808,5.332,5.012,4.646,4.245,3.818,3.374,2.923,5.443,5.121,4.755,4.354,3.927,3.484,3.032,5.543,5.221,4.854,4.454,4.027,3.584,3.133,5.633,5.311,4.945,4.545,4.119,3.676,3.225,4.256,3.946,3.596,3.211,2.799,2.367,1.921,4.358,4.059,3.714,3.333,2.922,2.49,2.046,4.485,4.183,3.839,3.458,3.048,2.616,2.17,4.6,4.306,3.965,3.584,3.174,2.742,2.298,4.724,4.432,4.091,3.712,3.302,2.87,2.425,4.846,4.556,4.217,3.838,3.428,2.996,2.552,4.973,4.679,4.339,3.961,3.552,3.121,2.675,5.092,4.799,4.459,4.08,3.671,3.24,2.796,5.207,4.913,4.573,4.195,3.786,3.356,2.911,5.315,5.021,4.682,4.304,3.895,3.465,3.02,5.415,5.121,4.781,4.403,3.995,3.565,3.122,5.505,5.211,4.871,4.494,4.087,3.657,3.213,4.05,3.799,3.493,3.141,2.753,2.338,1.906,4.175,3.919,3.612,3.261,2.875,2.462,2.029,4.298,4.042,3.736,3.386,3.0,2.587,2.154,4.429,4.17,3.862,3.511,3.126,2.713,2.281,4.561,4.3,3.99,3.639,3.254,2.841,2.408,4.691,4.428,4.116,3.765,3.379,2.967,2.535,4.816,4.551,4.239,3.888,3.503,3.091,2.658,4.94,4.673,4.36,4.008,3.623,3.211,2.778,5.054,4.787,4.475,4.123,3.738,3.326,2.893,5.161,4.895,4.584,4.232,3.847,3.435,3.002,5.263,4.996,4.684,4.332,3.947,3.535,3.102,5.353,5.086,4.774,4.423,4.038,3.627,3.194,3.825,3.609,3.344,3.033,2.683,2.297,1.881,3.963,3.742,3.471,3.157,2.804,2.418,2.004,4.098,3.87,3.596,3.281,2.929,2.544,2.13,4.235,3.999,3.723,3.408,3.057,2.672,2.257,4.365,4.129,3.851,3.535,3.183,2.798,2.384,4.498,4.26,3.981,3.663,3.31,2.924,2.51,4.626,4.389,4.108,3.789,3.434,3.048,2.633,4.751,4.513,4.231,3.911,3.556,3.168,2.752,4.872,4.632,4.349,4.028,3.671,3.282,2.866,4.984,4.742,4.459,4.136,3.779,3.39,2.974,5.086,4.844,4.56,4.238,3.88,3.491,3.074,5.179,4.936,4.651,4.328,3.971,3.582,3.165,3.59,3.391,3.155,2.882,2.572,2.224,1.837,3.718,3.521,3.286,3.011,2.699,2.348,1.961,3.874,3.665,3.422,3.142,2.827,2.476,2.089,4.015,3.803,3.557,3.276,2.959,2.607,2.218,4.154,3.94,3.691,3.408,3.089,2.735,2.345,4.291,4.076,3.825,3.539,3.218,2.862,2.471,4.428,4.21,3.957,3.668,3.344,2.986,2.594,4.555,4.336,4.081,3.79,3.465,3.105,2.713,4.678,4.457,4.201,3.908,3.581,3.22,2.826,4.794,4.571,4.312,4.018,3.689,3.327,2.933,4.898,4.674,4.414,4.119,3.79,3.427,3.032,4.992,4.766,4.505,4.209,3.88,3.518,3.124,3.238,3.072,2.881,2.661,2.404,2.105,1.758,3.423,3.244,3.042,2.811,2.546,2.241,1.89,3.597,3.413,3.203,2.963,2.688,2.376,2.021,3.763,3.579,3.362,3.112,2.828,2.508,2.154,3.933,3.737,3.512,3.256,2.967,2.643,2.283,4.084,3.883,3.654,3.393,3.1,2.773,2.411,4.226,4.022,3.789,3.525,3.229,2.9,2.535,4.362,4.154,3.917,3.65,3.352,3.02,2.654,4.485,4.275,4.036,3.767,3.466,3.134,2.768,4.599,4.388,4.147,3.876,3.574,3.241,2.875,4.704,4.49,4.247,3.976,3.675,3.341,2.974,4.797,4.58,4.338,4.067,3.765,3.432,3.065,2.802,2.687,2.545,2.374,2.168,1.922,1.634,3.05,2.895,2.732,2.549,2.337,2.084,1.781,3.252,3.092,2.918,2.722,2.495,2.229,1.917,3.458,3.286,3.098,2.886,2.645,2.37,2.055,3.641,3.461,3.264,3.043,2.794,2.511,2.19,3.816,3.628,3.422,3.193,2.936,2.647,2.322,3.976,3.783,3.57,3.335,3.072,2.778,2.449,4.122,3.926,3.709,3.468,3.2,2.902,2.571,4.258,4.057,3.836,3.591,3.32,3.02,2.687,4.381,4.177,3.953,3.705,3.432,3.13,2.795,4.49,4.284,4.058,3.808,3.533,3.229,2.895,4.587,4.379,4.151,3.9,3.624,3.32,2.985,2.335,2.254,2.157,2.036,1.885,1.696,1.463,2.584,2.481,2.367,2.233,2.07,1.87,1.623,2.837,2.709,2.574,2.422,2.243,2.029,1.768,3.066,2.914,2.762,2.597,2.408,2.183,1.911,3.273,3.117,2.952,2.772,2.568,2.333,2.058,3.479,3.31,3.133,2.94,2.724,2.479,2.197,3.669,3.492,3.303,3.099,2.872,2.618,2.33,3.839,3.657,3.461,3.248,3.012,2.75,2.458,3.997,3.807,3.605,3.385,3.143,2.876,2.578,4.137,3.942,3.734,3.509,3.262,2.99,2.689,4.259,4.061,3.848,3.618,3.366,3.091,2.789,4.362,4.161,3.945,3.712,3.458,3.181,2.878,1.846,1.785,1.733,1.673,1.584,1.45,1.249,2.048,2.023,1.965,1.876,1.753,1.598,1.41,2.342,2.266,2.178,2.071,1.938,1.771,1.564,2.576,2.483,2.381,2.262,2.117,1.938,1.717,2.842,2.723,2.597,2.456,2.295,2.104,1.877,3.08,2.944,2.801,2.645,2.469,2.265,2.028,3.306,3.155,2.996,2.824,2.633,2.418,2.171,3.525,3.355,3.179,2.992,2.789,2.562,2.308,3.709,3.533,3.348,3.15,2.934,2.698,2.436,3.873,3.69,3.496,3.288,3.063,2.819,2.553,4.013,3.822,3.621,3.406,3.176,2.926,2.655,4.119,3.926,3.721,3.502,3.268,3.015,2.742,1.372,1.393,1.384,1.344,1.27,1.159,1.008,1.615,1.604,1.567,1.505,1.416,1.298,1.151,1.811,1.797,1.756,1.688,1.592,1.468,1.314,2.086,2.044,1.98,1.892,1.78,1.642,1.477,2.36,2.285,2.199,2.097,1.975,1.827,1.648,2.624,2.528,2.423,2.303,2.165,2.003,1.812,2.885,2.767,2.642,2.505,2.35,2.173,1.969,3.14,2.997,2.851,2.695,2.525,2.335,2.12,3.368,3.21,3.046,2.874,2.688,2.485,2.26,3.568,3.394,3.216,3.031,2.834,2.621,2.386,3.725,3.545,3.36,3.165,2.958,2.736,2.495,3.845,3.662,3.471,3.269,3.056,2.828,2.585,1.182,1.127,1.068,1.003,0.929,0.844,0.745,1.269,1.224,1.181,1.131,1.067,0.981,0.865,1.443,1.4,1.349,1.288,1.215,1.13,1.029,1.626,1.593,1.546,1.484,1.406,1.311,1.199,1.836,1.803,1.755,1.69,1.607,1.501,1.37,2.117,2.059,1.99,1.908,1.809,1.689,1.546,2.401,2.319,2.231,2.131,2.015,1.88,1.722,2.661,2.567,2.463,2.347,2.214,2.063,1.891,2.922,2.804,2.679,2.544,2.396,2.232,2.049,3.16,3.025,2.882,2.73,2.565,2.387,2.191,3.368,3.215,3.056,2.889,2.711,2.52,2.314,3.531,3.366,3.194,3.015,2.826,2.626,2.413,0.697,0.677,0.664,0.648,0.616,0.558,0.46,0.74,0.74,0.739,0.728,0.701,0.649,0.567,0.864,0.868,0.871,0.866,0.843,0.795,0.713,1.059,1.048,1.044,1.037,1.015,0.968,0.886,1.306,1.296,1.276,1.244,1.197,1.133,1.05,1.58,1.55,1.514,1.467,1.407,1.331,1.234,1.867,1.821,1.769,1.708,1.633,1.542,1.431,2.168,2.102,2.03,1.95,1.858,1.75,1.622,2.464,2.379,2.288,2.187,2.075,1.948,1.804,2.742,2.637,2.526,2.406,2.275,2.13,1.97,2.997,2.87,2.738,2.599,2.451,2.291,2.117,3.205,3.06,2.911,2.756,2.593,2.42,2.235,0.96,0.99,0.887,0.702,0.486,0.291,0.167,0.833,0.838,0.755,0.62,0.469,0.337,0.26,0.731,0.718,0.668,0.594,0.513,0.438,0.385,0.739,0.727,0.708,0.68,0.644,0.601,0.55,0.871,0.85,0.837,0.824,0.803,0.768,0.709,1.102,1.088,1.072,1.05,1.018,0.97,0.905,1.38,1.362,1.335,1.297,1.25,1.191,1.12,1.714,1.668,1.617,1.56,1.495,1.419,1.332,2.031,1.97,1.904,1.83,1.746,1.649,1.538,2.344,2.263,2.176,2.082,1.978,1.863,1.732,2.636,2.533,2.426,2.312,2.19,2.056,1.91,2.89,2.768,2.641,2.509,2.369,2.219,2.059,0.041,0.035,0.025,0.009,-0.017,-0.056,-0.112,0.084,0.053,0.05,0.057,0.057,0.031,-0.04,0.186,0.165,0.164,0.167,0.159,0.125,0.049,0.331,0.333,0.327,0.311,0.286,0.25,0.204,0.527,0.512,0.504,0.494,0.475,0.439,0.381,0.738,0.737,0.73,0.714,0.687,0.647,0.592,1.015,1.011,0.99,0.954,0.91,0.862,0.814,1.316,1.295,1.262,1.218,1.165,1.105,1.038,1.636,1.595,1.547,1.492,1.428,1.352,1.264,1.967,1.907,1.842,1.769,1.686,1.593,1.487,2.289,2.211,2.126,2.034,1.933,1.821,1.697,2.6,2.5,2.394,2.281,2.16,2.03,1.89,-0.203,-0.217,-0.209,-0.204,-0.227,-0.305,-0.461,-0.156,-0.103,-0.105,-0.146,-0.212,-0.286,-0.354,-0.106,-0.055,-0.048,-0.073,-0.122,-0.185,-0.251,-0.014,0.001,0.014,0.018,0.003,-0.037,-0.111,0.18,0.208,0.208,0.19,0.16,0.128,0.101,0.384,0.407,0.41,0.398,0.376,0.347,0.315,0.702,0.681,0.662,0.642,0.616,0.579,0.528,0.95,0.949,0.935,0.909,0.87,0.819,0.757,1.272,1.25,1.219,1.178,1.128,1.067,0.994,1.605,1.566,1.52,1.466,1.401,1.326,1.24,1.954,1.897,1.833,1.76,1.678,1.586,1.481,2.323,2.243,2.156,2.061,1.958,1.845,1.722,-0.807,-0.804,-0.81,-0.818,-0.824,-0.822,-0.809,-0.662,-0.662,-0.668,-0.673,-0.672,-0.659,-0.63,-0.493,-0.498,-0.503,-0.504,-0.498,-0.478,-0.442,-0.312,-0.318,-0.32,-0.317,-0.311,-0.302,-0.291,-0.122,-0.115,-0.108,-0.103,-0.099,-0.099,-0.103,0.131,0.123,0.117,0.112,0.107,0.1,0.091,0.349,0.344,0.35,0.358,0.356,0.335,0.283,0.633,0.624,0.621,0.617,0.601,0.567,0.504,0.937,0.931,0.914,0.887,0.85,0.801,0.741,1.256,1.237,1.209,1.172,1.124,1.066,0.996,1.626,1.585,1.539,1.485,1.421,1.347,1.26,2.04,1.978,1.91,1.833,1.747,1.652,1.545,-0.131,-0.154,-0.175,-0.221,-0.317,-0.491,-0.768,0.016,-0.024,-0.057,-0.109,-0.205,-0.37,-0.63,0.059,0.056,0.019,-0.052,-0.159,-0.305,-0.492,0.107,0.106,0.075,0.014,-0.074,-0.189,-0.327,0.178,0.134,0.072,0.001,-0.071,-0.134,-0.181,0.098,0.131,0.136,0.116,0.074,0.014,-0.062,0.329,0.316,0.293,0.259,0.216,0.164,0.104,0.454,0.446,0.429,0.405,0.374,0.338,0.297,0.655,0.649,0.638,0.62,0.594,0.561,0.517,0.944,0.928,0.91,0.887,0.856,0.815,0.761,1.301,1.272,1.24,1.202,1.158,1.103,1.036,1.734,1.687,1.637,1.579,1.514,1.438,1.349,-1.028,-1.026,-1.026,-1.027,-1.028,-1.029,-1.029,-0.812,-0.812,-0.814,-0.815,-0.817,-0.819,-0.819,-0.63,-0.633,-0.634,-0.634,-0.634,-0.636,-0.642,-0.472,-0.474,-0.475,-0.475,-0.476,-0.477,-0.479,-0.327,-0.326,-0.323,-0.319,-0.318,-0.323,-0.337,-0.169,-0.171,-0.172,-0.173,-0.174,-0.176,-0.181,-0.02,-0.015,-0.016,-0.019,-0.023,-0.022,-0.016,0.171,0.173,0.171,0.167,0.162,0.156,0.151,0.398,0.389,0.382,0.376,0.367,0.354,0.334,0.664,0.651,0.635,0.616,0.594,0.57,0.543,0.978,0.964,0.942,0.914,0.882,0.846,0.808,1.386,1.356,1.323,1.285,1.241,1.189,1.125],"y":[4.436,4.009,3.566,3.112,2.651,2.188,1.725,4.559,4.134,3.692,3.239,2.777,2.313,1.851,4.683,4.26,3.819,3.365,2.904,2.44,1.978,4.809,4.386,3.946,3.493,3.032,2.568,2.106,4.934,4.513,4.074,3.621,3.16,2.696,2.234,5.059,4.639,4.2,3.748,3.287,2.823,2.361,5.182,4.764,4.326,3.873,3.412,2.948,2.487,5.304,4.887,4.449,3.997,3.536,3.072,2.611,5.424,5.007,4.57,4.118,3.657,3.193,2.732,5.541,5.123,4.686,4.235,3.775,3.312,2.85,5.653,5.236,4.799,4.349,3.889,3.426,2.964,5.76,5.344,4.908,4.457,3.998,3.535,3.073,4.401,3.988,3.555,3.105,2.646,2.184,1.723,4.52,4.11,3.677,3.229,2.771,2.309,1.85,4.642,4.235,3.804,3.356,2.898,2.436,1.977,4.766,4.36,3.931,3.484,3.026,2.564,2.104,4.89,4.486,4.058,3.611,3.153,2.691,2.232,5.015,4.612,4.184,3.738,3.28,2.818,2.359,5.138,4.736,4.309,3.863,3.406,2.944,2.484,5.259,4.858,4.431,3.986,3.529,3.067,2.607,5.378,4.977,4.551,4.107,3.65,3.188,2.728,5.49,5.093,4.669,4.224,3.767,3.305,2.846,5.602,5.205,4.781,4.337,3.881,3.419,2.96,5.708,5.312,4.889,4.446,3.989,3.528,3.069,4.346,3.951,3.531,3.091,2.639,2.18,1.722,4.461,4.072,3.655,3.216,2.764,2.306,1.848,4.58,4.195,3.78,3.343,2.891,2.433,1.975,4.702,4.32,3.907,3.47,3.019,2.56,2.102,4.825,4.445,4.033,3.597,3.146,2.687,2.23,4.948,4.57,4.159,3.724,3.273,2.814,2.356,5.07,4.694,4.284,3.849,3.398,2.94,2.482,5.191,4.815,4.406,3.972,3.522,3.063,2.605,5.31,4.935,4.526,4.092,3.642,3.184,2.726,5.424,5.05,4.643,4.209,3.759,3.301,2.843,5.534,5.162,4.755,4.322,3.872,3.414,2.957,5.639,5.268,4.861,4.43,3.981,3.523,3.066,4.263,3.894,3.494,3.069,2.627,2.175,1.719,4.378,4.016,3.619,3.196,2.754,2.3,1.844,4.496,4.138,3.744,3.322,2.88,2.427,1.971,4.617,4.262,3.87,3.449,3.007,2.554,2.098,4.739,4.387,3.996,3.576,3.135,2.682,2.226,4.861,4.512,4.122,3.702,3.261,2.808,2.353,4.983,4.635,4.247,3.827,3.386,2.933,2.478,5.104,4.757,4.369,3.95,3.51,3.057,2.601,5.222,4.876,4.489,4.07,3.63,3.178,2.722,5.339,4.991,4.604,4.186,3.747,3.295,2.84,5.448,5.102,4.715,4.298,3.86,3.408,2.953,5.551,5.206,4.821,4.405,3.968,3.517,3.062,4.15,3.816,3.443,3.038,2.61,2.165,1.713,4.268,3.937,3.566,3.162,2.734,2.29,1.838,4.386,4.059,3.69,3.288,2.861,2.417,1.965,4.507,4.183,3.816,3.415,2.988,2.544,2.092,4.631,4.309,3.943,3.542,3.115,2.671,2.219,4.754,4.434,4.069,3.668,3.241,2.798,2.346,4.878,4.558,4.193,3.793,3.366,2.923,2.471,4.999,4.68,4.316,3.916,3.489,3.046,2.595,5.118,4.799,4.435,4.036,3.61,3.166,2.715,5.234,4.913,4.55,4.151,3.727,3.284,2.833,5.342,5.022,4.66,4.263,3.839,3.397,2.946,5.443,5.125,4.764,4.369,3.946,3.506,3.055,4.015,3.713,3.369,2.989,2.58,2.149,1.702,4.129,3.833,3.491,3.112,2.703,2.272,1.827,4.25,3.956,3.616,3.237,2.829,2.399,1.954,4.374,4.081,3.742,3.365,2.957,2.526,2.081,4.499,4.207,3.869,3.491,3.083,2.653,2.208,4.625,4.333,3.995,3.618,3.21,2.779,2.335,4.751,4.458,4.119,3.742,3.335,2.904,2.46,4.874,4.581,4.242,3.865,3.457,3.027,2.583,4.992,4.7,4.361,3.984,3.577,3.148,2.703,5.105,4.813,4.475,4.099,3.694,3.265,2.82,5.213,4.921,4.584,4.21,3.805,3.377,2.933,5.313,5.022,4.687,4.315,3.912,3.485,3.042,3.851,3.579,3.266,2.915,2.532,2.121,1.686,3.961,3.698,3.388,3.039,2.656,2.245,1.812,4.088,3.825,3.516,3.166,2.782,2.371,1.938,4.215,3.953,3.643,3.293,2.91,2.498,2.065,4.344,4.081,3.771,3.421,3.036,2.625,2.192,4.472,4.208,3.898,3.547,3.163,2.751,2.318,4.599,4.333,4.022,3.671,3.287,2.875,2.442,4.722,4.455,4.144,3.793,3.409,2.998,2.565,4.84,4.574,4.262,3.912,3.529,3.117,2.684,4.952,4.687,4.376,4.027,3.644,3.233,2.801,5.06,4.794,4.484,4.136,3.755,3.345,2.913,5.16,4.895,4.586,4.24,3.86,3.452,3.021,3.616,3.394,3.123,2.81,2.459,2.075,1.663,3.76,3.528,3.253,2.938,2.588,2.203,1.789,3.896,3.662,3.385,3.068,2.715,2.329,1.915,4.03,3.794,3.515,3.196,2.842,2.456,2.041,4.163,3.925,3.645,3.325,2.97,2.582,2.167,4.294,4.054,3.772,3.451,3.096,2.708,2.292,4.419,4.18,3.898,3.577,3.22,2.832,2.416,4.542,4.302,4.019,3.698,3.342,2.954,2.537,4.662,4.42,4.137,3.816,3.46,3.072,2.656,4.774,4.534,4.251,3.93,3.574,3.186,2.771,4.882,4.641,4.358,4.038,3.683,3.297,2.882,4.983,4.741,4.459,4.14,3.786,3.402,2.989,3.347,3.163,2.937,2.668,2.359,2.01,1.622,3.517,3.316,3.077,2.801,2.487,2.137,1.749,3.668,3.46,3.215,2.935,2.618,2.264,1.875,3.812,3.6,3.351,3.067,2.747,2.392,2.002,3.954,3.738,3.486,3.198,2.876,2.519,2.128,4.09,3.871,3.617,3.327,3.003,2.645,2.253,4.219,4.0,3.745,3.454,3.128,2.769,2.376,4.345,4.125,3.869,3.577,3.25,2.89,2.496,4.467,4.245,3.987,3.694,3.368,3.007,2.614,4.582,4.36,4.101,3.808,3.48,3.12,2.728,4.691,4.466,4.208,3.915,3.588,3.229,2.838,4.792,4.566,4.307,4.015,3.69,3.333,2.943,3.066,2.893,2.7,2.477,2.216,1.91,1.549,3.223,3.053,2.851,2.616,2.343,2.032,1.68,3.393,3.208,2.997,2.756,2.48,2.166,1.809,3.557,3.364,3.145,2.896,2.614,2.297,1.939,3.712,3.514,3.289,3.035,2.748,2.427,2.067,3.859,3.658,3.429,3.17,2.88,2.555,2.193,4.004,3.796,3.563,3.301,3.007,2.68,2.317,4.139,3.929,3.692,3.427,3.131,2.801,2.436,4.264,4.053,3.814,3.547,3.249,2.919,2.554,4.384,4.169,3.928,3.66,3.362,3.032,2.667,4.494,4.277,4.035,3.767,3.469,3.139,2.776,4.594,4.376,4.134,3.866,3.569,3.241,2.879,2.657,2.524,2.371,2.192,1.98,1.729,1.433,2.865,2.719,2.554,2.363,2.14,1.878,1.571,3.06,2.897,2.72,2.52,2.289,2.022,1.709,3.251,3.078,2.889,2.678,2.437,2.161,1.844,3.427,3.248,3.05,2.829,2.58,2.297,1.976,3.595,3.409,3.204,2.976,2.719,2.43,2.105,3.755,3.561,3.349,3.114,2.852,2.559,2.232,3.901,3.703,3.486,3.246,2.979,2.683,2.353,4.037,3.835,3.614,3.371,3.101,2.803,2.472,4.162,3.957,3.733,3.487,3.216,2.916,2.585,4.276,4.069,3.844,3.596,3.324,3.023,2.692,4.38,4.171,3.944,3.696,3.424,3.124,2.792,2.129,2.055,1.954,1.826,1.669,1.481,1.262,2.409,2.289,2.165,2.026,1.861,1.66,1.411,2.642,2.515,2.374,2.213,2.029,1.815,1.567,2.865,2.725,2.573,2.403,2.207,1.977,1.708,3.076,2.922,2.755,2.571,2.362,2.123,1.848,3.273,3.107,2.929,2.733,2.514,2.266,1.984,3.452,3.28,3.092,2.886,2.657,2.401,2.114,3.623,3.44,3.243,3.03,2.794,2.533,2.241,3.779,3.589,3.386,3.165,2.923,2.657,2.362,3.918,3.724,3.516,3.29,3.044,2.774,2.477,4.042,3.845,3.633,3.403,3.154,2.881,2.583,4.151,3.951,3.737,3.505,3.253,2.979,2.681,1.579,1.545,1.497,1.428,1.332,1.205,1.038,1.859,1.791,1.717,1.63,1.52,1.38,1.201,2.135,2.065,1.968,1.847,1.707,1.548,1.375,2.386,2.297,2.193,2.069,1.919,1.74,1.526,2.64,2.524,2.398,2.255,2.091,1.9,1.676,2.873,2.736,2.592,2.435,2.259,2.057,1.822,3.091,2.943,2.785,2.611,2.419,2.203,1.96,3.297,3.135,2.963,2.776,2.572,2.347,2.097,3.483,3.31,3.127,2.929,2.715,2.48,2.222,3.65,3.467,3.274,3.067,2.844,2.602,2.339,3.792,3.602,3.402,3.189,2.96,2.713,2.446,3.906,3.714,3.51,3.293,3.059,2.81,2.542,1.263,1.217,1.175,1.125,1.057,0.958,0.819,1.416,1.414,1.38,1.316,1.225,1.112,0.978,1.65,1.618,1.571,1.504,1.413,1.293,1.139,1.901,1.848,1.78,1.694,1.588,1.458,1.302,2.159,2.084,1.998,1.896,1.775,1.632,1.462,2.416,2.32,2.215,2.096,1.96,1.803,1.62,2.669,2.556,2.432,2.294,2.141,1.968,1.773,2.906,2.777,2.636,2.482,2.313,2.125,1.917,3.128,2.979,2.821,2.653,2.47,2.27,2.05,3.33,3.164,2.991,2.809,2.613,2.403,2.174,3.5,3.322,3.138,2.945,2.74,2.521,2.285,3.631,3.449,3.258,3.057,2.845,2.62,2.382,1.055,1.036,0.991,0.926,0.841,0.741,0.628,1.151,1.117,1.073,1.016,0.947,0.863,0.764,1.252,1.224,1.197,1.16,1.103,1.013,0.88,1.452,1.409,1.36,1.302,1.231,1.146,1.042,1.667,1.624,1.571,1.505,1.425,1.327,1.208,1.924,1.87,1.802,1.72,1.622,1.508,1.376,2.181,2.104,2.021,1.929,1.822,1.697,1.549,2.447,2.347,2.243,2.131,2.007,1.865,1.701,2.704,2.585,2.461,2.328,2.184,2.025,1.849,2.939,2.803,2.661,2.51,2.349,2.175,1.986,3.148,2.995,2.837,2.67,2.494,2.307,2.108,3.318,3.151,2.98,2.802,2.615,2.419,2.212,0.593,0.554,0.525,0.497,0.463,0.414,0.342,0.625,0.61,0.605,0.6,0.581,0.536,0.451,0.792,0.772,0.751,0.726,0.695,0.653,0.599,0.932,0.927,0.919,0.902,0.872,0.824,0.752,1.156,1.13,1.108,1.083,1.049,0.997,0.92,1.394,1.359,1.326,1.29,1.244,1.182,1.097,1.677,1.624,1.572,1.516,1.452,1.372,1.273,1.964,1.895,1.826,1.751,1.666,1.568,1.45,2.254,2.168,2.078,1.981,1.876,1.757,1.623,2.532,2.426,2.315,2.197,2.07,1.932,1.781,2.786,2.66,2.529,2.391,2.245,2.089,1.921,3.001,2.855,2.706,2.552,2.39,2.22,2.039,0.809,0.628,0.446,0.279,0.143,0.055,0.029,0.679,0.459,0.319,0.239,0.195,0.166,0.131,0.38,0.364,0.346,0.326,0.309,0.296,0.291,0.556,0.538,0.527,0.517,0.503,0.481,0.446,0.715,0.701,0.694,0.689,0.679,0.658,0.618,0.938,0.914,0.902,0.893,0.879,0.852,0.804,1.23,1.197,1.166,1.135,1.098,1.05,0.989,1.524,1.484,1.441,1.393,1.338,1.271,1.191,1.834,1.777,1.716,1.649,1.574,1.488,1.389,2.148,2.069,1.986,1.896,1.798,1.69,1.57,2.445,2.344,2.238,2.126,2.006,1.877,1.737,2.706,2.584,2.458,2.325,2.185,2.038,1.882,0.525,0.217,0.025,-0.082,-0.138,-0.174,-0.222,0.378,0.188,0.053,-0.037,-0.088,-0.108,-0.107,0.156,0.125,0.102,0.083,0.063,0.039,0.006,0.308,0.266,0.234,0.21,0.192,0.178,0.167,0.436,0.435,0.422,0.403,0.381,0.362,0.349,0.652,0.65,0.639,0.62,0.596,0.569,0.541,0.896,0.889,0.875,0.854,0.826,0.791,0.747,1.178,1.159,1.133,1.101,1.062,1.013,0.955,1.485,1.45,1.409,1.361,1.305,1.24,1.164,1.807,1.752,1.691,1.623,1.548,1.462,1.366,2.133,2.056,1.973,1.883,1.786,1.68,1.564,2.449,2.351,2.245,2.133,2.013,1.886,1.753,-0.324,-0.304,-0.306,-0.327,-0.361,-0.405,-0.454,-0.213,-0.2,-0.192,-0.196,-0.215,-0.256,-0.323,-0.022,-0.032,-0.055,-0.084,-0.114,-0.14,-0.156,0.098,0.099,0.096,0.086,0.068,0.04,0.002,0.276,0.264,0.256,0.247,0.234,0.211,0.176,0.468,0.451,0.441,0.431,0.418,0.396,0.361,0.673,0.669,0.658,0.641,0.618,0.588,0.552,0.921,0.912,0.895,0.87,0.838,0.798,0.752,1.199,1.178,1.15,1.114,1.07,1.018,0.957,1.506,1.469,1.427,1.377,1.319,1.252,1.174,1.844,1.787,1.725,1.657,1.58,1.495,1.399,2.22,2.138,2.052,1.961,1.861,1.752,1.63,-0.708,-0.723,-0.729,-0.727,-0.718,-0.703,-0.684,-0.445,-0.485,-0.512,-0.525,-0.522,-0.5,-0.458,-0.27,-0.299,-0.307,-0.303,-0.297,-0.297,-0.315,-0.009,-0.068,-0.106,-0.127,-0.136,-0.137,-0.134,0.168,0.121,0.092,0.075,0.063,0.052,0.036,0.323,0.298,0.28,0.264,0.249,0.231,0.208,0.528,0.499,0.479,0.464,0.449,0.429,0.4,0.724,0.717,0.702,0.679,0.652,0.621,0.588,0.956,0.943,0.923,0.896,0.862,0.821,0.772,1.236,1.213,1.184,1.15,1.108,1.056,0.995,1.564,1.527,1.485,1.436,1.379,1.313,1.237,1.954,1.896,1.83,1.756,1.674,1.585,1.491,-0.347,-0.156,-0.123,-0.198,-0.332,-0.475,-0.579,-0.203,-0.069,-0.029,-0.064,-0.156,-0.287,-0.439,0.048,0.078,0.027,-0.066,-0.165,-0.233,-0.234,-0.04,0.044,0.073,0.06,0.016,-0.046,-0.113,0.21,0.213,0.189,0.149,0.101,0.056,0.024,0.326,0.334,0.312,0.272,0.225,0.183,0.155,0.346,0.403,0.416,0.398,0.36,0.316,0.279,0.538,0.525,0.513,0.502,0.489,0.475,0.457,0.734,0.725,0.712,0.695,0.673,0.647,0.615,0.986,0.973,0.956,0.934,0.907,0.874,0.834,1.289,1.271,1.245,1.212,1.172,1.126,1.073,1.674,1.631,1.584,1.533,1.476,1.409,1.331,-0.95,-0.951,-0.95,-0.948,-0.946,-0.944,-0.943,-0.77,-0.772,-0.774,-0.776,-0.777,-0.777,-0.777,-0.603,-0.607,-0.607,-0.606,-0.605,-0.606,-0.611,-0.435,-0.44,-0.442,-0.444,-0.445,-0.446,-0.447,-0.282,-0.281,-0.28,-0.279,-0.278,-0.278,-0.279,-0.114,-0.115,-0.114,-0.111,-0.109,-0.108,-0.108,0.079,0.07,0.067,0.067,0.07,0.073,0.074,0.276,0.272,0.271,0.272,0.271,0.268,0.26,0.5,0.495,0.492,0.492,0.492,0.491,0.49,0.747,0.74,0.731,0.722,0.712,0.703,0.694,1.043,1.023,1.002,0.98,0.956,0.93,0.901,1.385,1.358,1.328,1.294,1.254,1.209,1.156],"alpha":170.74,"ratios":[0.4507,0.4507,1.0,1.0,0.4531,0.4531],"slide":[0.031,0.13,0.233]},"c8":{"cs":16.954,"x":[4.775,4.4,3.995,3.567,3.122,2.667,2.209,4.93,4.578,4.185,3.761,3.316,2.859,2.402,5.079,4.734,4.345,3.923,3.478,3.021,2.563,5.219,4.875,4.486,4.063,3.617,3.16,2.703,5.353,5.006,4.615,4.191,3.745,3.289,2.832,5.48,5.13,4.738,4.314,3.868,3.412,2.955,5.603,5.251,4.858,4.434,3.989,3.533,3.076,5.723,5.372,4.98,4.557,4.113,3.656,3.198,5.839,5.492,5.102,4.679,4.235,3.778,3.321,5.954,5.61,5.222,4.799,4.354,3.898,3.443,6.067,5.725,5.337,4.915,4.469,4.013,3.557,6.181,5.835,5.446,5.023,4.578,4.123,3.667,4.706,4.352,3.964,3.548,3.112,2.663,2.208,4.851,4.528,4.154,3.742,3.304,2.851,2.395,4.992,4.681,4.313,3.902,3.464,3.01,2.555,5.133,4.818,4.45,4.042,3.606,3.153,2.696,5.263,4.946,4.578,4.17,3.734,3.282,2.825,5.389,5.068,4.698,4.291,3.856,3.405,2.948,5.508,5.186,4.817,4.41,3.977,3.526,3.069,5.623,5.305,4.937,4.53,4.096,3.646,3.191,5.739,5.423,5.057,4.651,4.218,3.769,3.313,5.853,5.54,5.176,4.771,4.338,3.888,3.433,5.967,5.654,5.29,4.887,4.455,4.005,3.549,6.084,5.767,5.401,4.996,4.563,4.113,3.658,4.561,4.254,3.9,3.509,3.089,2.651,2.205,4.71,4.422,4.081,3.697,3.28,2.841,2.39,4.861,4.579,4.24,3.857,3.44,3.0,2.549,4.998,4.72,4.383,3.999,3.581,3.14,2.689,5.134,4.851,4.512,4.127,3.709,3.269,2.818,5.258,4.974,4.634,4.249,3.831,3.391,2.941,5.381,5.096,4.755,4.369,3.951,3.512,3.062,5.5,5.215,4.874,4.49,4.072,3.633,3.184,5.616,5.332,4.993,4.61,4.194,3.756,3.305,5.731,5.448,5.11,4.729,4.314,3.876,3.424,5.846,5.563,5.226,4.845,4.43,3.992,3.541,5.961,5.677,5.338,4.955,4.539,4.1,3.65,4.398,4.129,3.81,3.449,3.054,2.635,2.198,4.549,4.292,3.983,3.631,3.242,2.823,2.382,4.698,4.447,4.143,3.792,3.403,2.983,2.539,4.841,4.592,4.286,3.933,3.541,3.12,2.679,4.978,4.729,4.421,4.065,3.671,3.248,2.808,5.104,4.857,4.549,4.191,3.794,3.37,2.931,5.234,4.982,4.671,4.311,3.914,3.49,3.051,5.359,5.103,4.791,4.433,4.037,3.614,3.173,5.476,5.221,4.911,4.553,4.158,3.735,3.294,5.593,5.336,5.026,4.671,4.278,3.855,3.411,5.709,5.453,5.142,4.786,4.393,3.971,3.528,5.823,5.567,5.255,4.897,4.502,4.08,3.639,4.236,3.987,3.697,3.369,3.005,2.611,2.189,4.38,4.151,3.872,3.55,3.189,2.793,2.367,4.519,4.298,4.027,3.709,3.349,2.951,2.521,4.666,4.446,4.172,3.851,3.489,3.09,2.66,4.805,4.585,4.31,3.986,3.62,3.219,2.79,4.943,4.722,4.442,4.113,3.743,3.34,2.913,5.075,4.849,4.566,4.235,3.864,3.46,3.033,5.203,4.972,4.687,4.356,3.986,3.583,3.153,5.322,5.091,4.807,4.476,4.105,3.703,3.274,5.44,5.207,4.923,4.593,4.224,3.822,3.392,5.557,5.323,5.038,4.708,4.339,3.937,3.508,5.677,5.44,5.152,4.82,4.449,4.047,3.619,3.984,3.791,3.55,3.263,2.935,2.57,2.171,4.164,3.967,3.725,3.44,3.112,2.744,2.337,4.327,4.13,3.887,3.599,3.27,2.899,2.489,4.482,4.282,4.036,3.747,3.415,3.041,2.628,4.628,4.425,4.176,3.883,3.547,3.172,2.758,4.773,4.562,4.306,4.009,3.671,3.295,2.882,4.903,4.693,4.436,4.135,3.794,3.415,3.003,5.03,4.818,4.559,4.257,3.914,3.535,3.122,5.152,4.939,4.679,4.376,4.033,3.654,3.243,5.271,5.057,4.797,4.493,4.151,3.772,3.362,5.388,5.171,4.91,4.607,4.265,3.887,3.476,5.505,5.289,5.026,4.72,4.376,3.997,3.588,3.749,3.572,3.361,3.115,2.83,2.503,2.133,3.935,3.757,3.543,3.291,3.0,2.667,2.291,4.113,3.931,3.713,3.455,3.157,2.819,2.44,4.276,4.092,3.87,3.608,3.305,2.963,2.578,4.432,4.243,4.015,3.748,3.442,3.095,2.709,4.57,4.383,4.154,3.883,3.572,3.223,2.834,4.705,4.514,4.281,4.008,3.695,3.345,2.957,4.833,4.641,4.406,4.13,3.816,3.464,3.077,4.959,4.762,4.526,4.25,3.936,3.585,3.197,5.08,4.882,4.644,4.367,4.053,3.702,3.316,5.197,4.998,4.759,4.482,4.168,3.816,3.428,5.311,5.112,4.874,4.596,4.28,3.927,3.54,3.449,3.292,3.117,2.915,2.678,2.398,2.066,3.647,3.487,3.303,3.091,2.844,2.555,2.219,3.843,3.672,3.48,3.259,3.004,2.708,2.364,4.015,3.841,3.643,3.414,3.152,2.85,2.503,4.169,3.999,3.799,3.565,3.294,2.985,2.635,4.324,4.153,3.948,3.708,3.431,3.117,2.764,4.473,4.299,4.089,3.843,3.561,3.243,2.889,4.611,4.433,4.219,3.971,3.686,3.367,3.013,4.742,4.56,4.344,4.095,3.811,3.49,3.131,4.866,4.683,4.466,4.215,3.929,3.607,3.25,4.987,4.803,4.585,4.332,4.044,3.721,3.362,5.105,4.918,4.698,4.444,4.156,3.832,3.472,3.087,2.96,2.821,2.661,2.47,2.238,1.957,3.306,3.168,3.016,2.844,2.64,2.398,2.107,3.494,3.359,3.202,3.018,2.802,2.548,2.25,3.689,3.546,3.379,3.184,2.956,2.693,2.391,3.877,3.724,3.547,3.343,3.107,2.837,2.529,4.052,3.891,3.706,3.494,3.252,2.976,2.663,4.215,4.049,3.858,3.64,3.391,3.11,2.793,4.367,4.197,4.002,3.779,3.526,3.241,2.92,4.508,4.336,4.139,3.912,3.656,3.366,3.04,4.642,4.468,4.266,4.037,3.777,3.485,3.159,4.769,4.592,4.389,4.156,3.894,3.6,3.273,4.891,4.71,4.503,4.269,4.006,3.71,3.38,2.713,2.622,2.511,2.376,2.214,2.019,1.788,2.933,2.827,2.705,2.561,2.39,2.184,1.937,3.166,3.035,2.893,2.734,2.55,2.335,2.082,3.371,3.236,3.084,2.911,2.714,2.487,2.227,3.561,3.422,3.264,3.083,2.877,2.642,2.377,3.745,3.598,3.433,3.246,3.034,2.793,2.52,3.918,3.769,3.599,3.406,3.186,2.938,2.659,4.092,3.935,3.757,3.557,3.33,3.076,2.791,4.254,4.091,3.907,3.699,3.466,3.206,2.917,4.406,4.237,4.047,3.834,3.596,3.332,3.039,4.544,4.369,4.175,3.958,3.717,3.451,3.156,4.665,4.489,4.292,4.073,3.829,3.56,3.263,2.294,2.25,2.172,2.061,1.92,1.751,1.556,2.477,2.411,2.32,2.203,2.061,1.894,1.701,2.656,2.589,2.496,2.377,2.23,2.055,1.851,2.846,2.765,2.664,2.541,2.393,2.215,2.005,3.08,2.972,2.854,2.722,2.566,2.382,2.161,3.309,3.19,3.058,2.909,2.739,2.543,2.317,3.532,3.402,3.258,3.095,2.912,2.704,2.47,3.746,3.605,3.449,3.274,3.078,2.86,2.616,3.945,3.796,3.628,3.442,3.235,3.007,2.757,4.123,3.967,3.792,3.598,3.383,3.146,2.886,4.281,4.118,3.936,3.735,3.514,3.272,3.008,4.413,4.246,4.059,3.852,3.626,3.381,3.117,1.727,1.656,1.606,1.561,1.504,1.421,1.297,1.861,1.816,1.768,1.711,1.639,1.546,1.427,2.057,2.002,1.944,1.878,1.799,1.701,1.579,2.291,2.221,2.156,2.085,1.998,1.886,1.737,2.542,2.459,2.377,2.289,2.186,2.058,1.898,2.8,2.715,2.622,2.514,2.389,2.24,2.063,3.071,2.964,2.85,2.723,2.581,2.418,2.231,3.325,3.207,3.077,2.934,2.774,2.596,2.395,3.57,3.437,3.292,3.133,2.958,2.765,2.553,3.795,3.649,3.489,3.316,3.126,2.92,2.695,3.983,3.828,3.658,3.474,3.274,3.058,2.826,4.13,3.969,3.793,3.602,3.396,3.175,2.94,1.641,1.667,1.612,1.499,1.351,1.19,1.04,1.645,1.622,1.578,1.511,1.419,1.298,1.146,1.724,1.7,1.661,1.603,1.523,1.418,1.283,1.875,1.847,1.801,1.737,1.655,1.555,1.439,2.056,2.036,1.989,1.92,1.831,1.723,1.601,2.302,2.248,2.185,2.111,2.02,1.909,1.775,2.569,2.498,2.419,2.329,2.224,2.099,1.952,2.843,2.755,2.659,2.552,2.43,2.291,2.13,3.116,3.01,2.896,2.771,2.633,2.478,2.302,3.376,3.252,3.12,2.977,2.821,2.651,2.465,3.608,3.47,3.322,3.163,2.992,2.807,2.608,3.792,3.645,3.487,3.317,3.134,2.939,2.731,1.482,1.382,1.305,1.228,1.127,0.98,0.763,1.423,1.381,1.324,1.248,1.148,1.021,0.861,1.411,1.406,1.372,1.312,1.226,1.114,0.978,1.481,1.481,1.452,1.397,1.322,1.229,1.125,1.617,1.622,1.597,1.547,1.475,1.387,1.287,1.827,1.798,1.759,1.708,1.644,1.564,1.466,2.06,2.026,1.981,1.923,1.85,1.758,1.647,2.333,2.276,2.214,2.143,2.059,1.956,1.832,2.613,2.54,2.461,2.373,2.272,2.155,2.016,2.891,2.8,2.702,2.596,2.478,2.346,2.199,3.159,3.05,2.933,2.808,2.672,2.523,2.359,3.399,3.274,3.14,2.997,2.844,2.678,2.499,0.79,0.764,0.734,0.694,0.639,0.563,0.464,0.779,0.762,0.75,0.734,0.703,0.645,0.551,0.885,0.847,0.83,0.819,0.799,0.753,0.667,1.006,0.981,0.97,0.961,0.94,0.894,0.81,1.191,1.145,1.122,1.106,1.085,1.045,0.971,1.369,1.357,1.337,1.308,1.267,1.214,1.147,1.575,1.565,1.543,1.511,1.465,1.405,1.328,1.832,1.802,1.768,1.726,1.672,1.604,1.517,2.105,2.062,2.014,1.958,1.891,1.809,1.708,2.389,2.33,2.266,2.194,2.111,2.015,1.903,2.675,2.596,2.514,2.425,2.326,2.213,2.084,2.975,2.872,2.765,2.653,2.533,2.401,2.255,0.354,0.357,0.329,0.278,0.217,0.156,0.104,0.446,0.439,0.409,0.365,0.315,0.269,0.236,0.503,0.512,0.498,0.468,0.432,0.397,0.372,0.616,0.617,0.609,0.593,0.571,0.544,0.514,0.758,0.757,0.753,0.744,0.729,0.705,0.671,0.936,0.933,0.929,0.92,0.903,0.876,0.834,1.149,1.136,1.123,1.107,1.086,1.056,1.015,1.379,1.365,1.347,1.323,1.291,1.251,1.202,1.634,1.612,1.585,1.551,1.51,1.458,1.395,1.918,1.882,1.843,1.797,1.741,1.673,1.589,2.233,2.179,2.12,2.054,1.979,1.893,1.794,2.584,2.505,2.421,2.331,2.234,2.127,2.01,0.175,0.18,0.116,0.013,-0.095,-0.179,-0.205,0.154,0.162,0.129,0.074,0.016,-0.026,-0.032,0.226,0.256,0.24,0.2,0.154,0.123,0.128,0.322,0.331,0.323,0.306,0.286,0.27,0.264,0.4,0.452,0.471,0.467,0.45,0.429,0.416,0.595,0.592,0.596,0.602,0.603,0.593,0.567,0.808,0.787,0.777,0.774,0.771,0.761,0.738,1.008,1.003,0.995,0.983,0.966,0.944,0.917,1.245,1.233,1.218,1.199,1.175,1.144,1.106,1.522,1.499,1.474,1.444,1.407,1.359,1.297,1.854,1.815,1.771,1.722,1.665,1.599,1.523,2.228,2.172,2.107,2.034,1.954,1.867,1.773,-0.334,-0.349,-0.339,-0.32,-0.312,-0.332,-0.399,-0.194,-0.185,-0.173,-0.163,-0.161,-0.175,-0.209,-0.0,-0.022,-0.027,-0.023,-0.019,-0.025,-0.048,0.137,0.116,0.112,0.115,0.119,0.113,0.091,0.256,0.255,0.257,0.26,0.26,0.253,0.235,0.399,0.391,0.394,0.4,0.403,0.398,0.377,0.568,0.56,0.56,0.562,0.561,0.551,0.527,0.744,0.746,0.746,0.743,0.734,0.716,0.688,0.966,0.957,0.95,0.94,0.925,0.9,0.863,1.226,1.211,1.191,1.168,1.139,1.104,1.062,1.532,1.506,1.475,1.438,1.395,1.346,1.292,1.894,1.855,1.808,1.753,1.692,1.624,1.551,-0.143,-0.093,-0.099,-0.151,-0.241,-0.359,-0.496,0.27,0.153,0.061,-0.019,-0.1,-0.193,-0.311,0.024,0.134,0.135,0.066,-0.034,-0.126,-0.17,0.123,0.25,0.228,0.125,0.007,-0.058,-0.003,0.361,0.276,0.219,0.18,0.153,0.127,0.096,0.304,0.295,0.29,0.286,0.278,0.262,0.233,0.412,0.425,0.435,0.437,0.428,0.403,0.358,0.567,0.572,0.578,0.58,0.571,0.546,0.499,0.773,0.765,0.76,0.752,0.737,0.708,0.66,1.007,0.995,0.977,0.954,0.927,0.899,0.87,1.258,1.243,1.222,1.195,1.163,1.126,1.085,1.578,1.55,1.521,1.487,1.445,1.393,1.325,-0.442,-0.449,-0.442,-0.436,-0.442,-0.474,-0.544,-0.301,-0.299,-0.281,-0.266,-0.273,-0.318,-0.423,-0.119,-0.138,-0.129,-0.117,-0.127,-0.184,-0.312,-0.024,-0.024,-0.013,-0.006,-0.02,-0.069,-0.17,0.11,0.124,0.124,0.108,0.075,0.022,-0.051,0.24,0.245,0.235,0.212,0.179,0.137,0.09,0.313,0.34,0.351,0.345,0.318,0.269,0.194,0.45,0.452,0.456,0.453,0.436,0.396,0.324,0.628,0.618,0.612,0.602,0.581,0.541,0.477,0.825,0.818,0.799,0.773,0.744,0.716,0.696,1.018,1.014,1.0,0.978,0.952,0.922,0.893,1.28,1.261,1.248,1.234,1.21,1.166,1.093,-0.624,-0.632,-0.633,-0.632,-0.633,-0.642,-0.664,-0.409,-0.433,-0.436,-0.436,-0.45,-0.498,-0.597,-0.252,-0.293,-0.291,-0.279,-0.287,-0.346,-0.489,-0.068,-0.101,-0.107,-0.111,-0.138,-0.214,-0.364,-0.004,0.005,0.011,0.001,-0.038,-0.118,-0.252,0.154,0.182,0.166,0.119,0.051,-0.025,-0.099,0.241,0.265,0.259,0.226,0.171,0.097,0.009,0.359,0.357,0.346,0.321,0.281,0.223,0.146,0.49,0.489,0.476,0.451,0.414,0.364,0.302,0.643,0.644,0.627,0.599,0.566,0.536,0.514,0.802,0.802,0.792,0.776,0.753,0.728,0.701,1.004,1.0,0.997,0.991,0.977,0.948,0.902,-0.098,-0.073,-0.145,-0.294,-0.495,-0.727,-0.967,-0.067,-0.04,-0.116,-0.267,-0.461,-0.67,-0.863,-0.041,-0.006,-0.08,-0.229,-0.417,-0.607,-0.764,-0.015,0.001,-0.067,-0.192,-0.35,-0.515,-0.662,0.041,0.037,-0.025,-0.129,-0.26,-0.401,-0.537,0.047,0.06,0.02,-0.059,-0.164,-0.281,-0.399,0.17,0.155,0.102,0.023,-0.069,-0.16,-0.237,0.263,0.261,0.215,0.143,0.062,-0.013,-0.064,0.319,0.342,0.319,0.266,0.204,0.148,0.118,0.42,0.44,0.432,0.405,0.367,0.329,0.299,0.593,0.598,0.591,0.574,0.55,0.524,0.498,0.792,0.791,0.781,0.765,0.746,0.728,0.714],"y":[4.49,4.134,3.737,3.309,2.861,2.403,1.945,4.609,4.256,3.861,3.434,2.986,2.528,2.07,4.729,4.38,3.987,3.56,3.113,2.655,2.199,4.851,4.504,4.112,3.687,3.24,2.783,2.326,4.973,4.628,4.238,3.813,3.367,2.909,2.453,5.095,4.752,4.363,3.939,3.492,3.035,2.579,5.217,4.874,4.486,4.062,3.616,3.159,2.703,5.336,4.994,4.606,4.184,3.739,3.282,2.825,5.451,5.111,4.724,4.303,3.858,3.401,2.945,5.563,5.224,4.838,4.417,3.973,3.517,3.061,5.671,5.332,4.947,4.528,4.084,3.629,3.172,5.772,5.435,5.051,4.632,4.19,3.735,3.279,4.439,4.097,3.712,3.293,2.852,2.398,1.942,4.55,4.216,3.835,3.418,2.977,2.523,2.068,4.667,4.336,3.957,3.543,3.103,2.649,2.191,4.784,4.457,4.081,3.667,3.228,2.774,2.318,4.903,4.579,4.205,3.792,3.354,2.901,2.445,5.021,4.699,4.327,3.916,3.479,3.027,2.571,5.137,4.817,4.447,4.039,3.603,3.151,2.696,5.253,4.935,4.566,4.158,3.724,3.273,2.818,5.365,5.049,4.682,4.276,3.842,3.392,2.937,5.474,5.16,4.795,4.39,3.957,3.508,3.053,5.58,5.267,4.904,4.5,4.068,3.619,3.164,5.68,5.37,5.008,4.606,4.175,3.726,3.271,4.315,4.013,3.658,3.26,2.833,2.387,1.934,4.435,4.133,3.778,3.382,2.956,2.511,2.06,4.553,4.254,3.901,3.507,3.081,2.637,2.185,4.671,4.375,4.025,3.631,3.206,2.763,2.312,4.788,4.496,4.148,3.756,3.332,2.889,2.439,4.907,4.617,4.27,3.879,3.457,3.014,2.565,5.028,4.737,4.391,4.001,3.58,3.138,2.689,5.143,4.853,4.508,4.12,3.7,3.26,2.811,5.256,4.967,4.623,4.237,3.818,3.379,2.93,5.364,5.076,4.734,4.35,3.933,3.494,3.045,5.468,5.181,4.841,4.458,4.043,3.605,3.156,5.568,5.282,4.944,4.563,4.149,3.712,3.262,4.174,3.897,3.569,3.198,2.794,2.366,1.924,4.292,4.02,3.695,3.324,2.92,2.491,2.048,4.41,4.142,3.818,3.448,3.045,2.617,2.176,4.53,4.262,3.94,3.573,3.171,2.744,2.303,4.648,4.383,4.063,3.697,3.296,2.87,2.429,4.767,4.504,4.186,3.821,3.421,2.995,2.554,4.886,4.624,4.306,3.943,3.543,3.118,2.677,5.003,4.741,4.424,4.062,3.664,3.24,2.799,5.116,4.855,4.54,4.179,3.782,3.358,2.917,5.226,4.965,4.651,4.291,3.896,3.473,3.032,5.332,5.071,4.757,4.4,4.006,3.584,3.143,5.433,5.172,4.859,4.503,4.111,3.69,3.249,4.002,3.763,3.468,3.127,2.748,2.339,1.908,4.127,3.883,3.587,3.247,2.869,2.462,2.032,4.246,4.003,3.708,3.369,2.993,2.587,2.16,4.37,4.124,3.83,3.493,3.119,2.714,2.286,4.491,4.247,3.954,3.617,3.244,2.84,2.411,4.609,4.366,4.074,3.74,3.368,2.965,2.535,4.72,4.483,4.194,3.862,3.491,3.087,2.658,4.837,4.6,4.313,3.982,3.612,3.209,2.779,4.95,4.715,4.43,4.099,3.73,3.327,2.897,5.061,4.827,4.542,4.212,3.843,3.441,3.012,5.171,4.936,4.65,4.32,3.952,3.551,3.122,5.276,5.038,4.752,4.422,4.055,3.655,3.228,3.778,3.581,3.328,3.024,2.676,2.292,1.878,3.908,3.708,3.452,3.147,2.799,2.415,2.004,4.043,3.837,3.578,3.271,2.923,2.54,2.129,4.173,3.965,3.703,3.395,3.047,2.665,2.255,4.302,4.09,3.828,3.52,3.172,2.791,2.381,4.429,4.215,3.951,3.643,3.296,2.915,2.505,4.552,4.337,4.073,3.765,3.419,3.038,2.627,4.67,4.454,4.191,3.885,3.539,3.159,2.748,4.784,4.568,4.306,4.0,3.656,3.277,2.866,4.894,4.678,4.416,4.112,3.769,3.39,2.98,4.999,4.782,4.522,4.219,3.877,3.5,3.089,5.099,4.882,4.621,4.319,3.978,3.602,3.194,3.496,3.326,3.11,2.851,2.549,2.208,1.827,3.645,3.468,3.247,2.984,2.68,2.336,1.955,3.795,3.611,3.385,3.118,2.811,2.464,2.08,3.938,3.751,3.521,3.25,2.939,2.591,2.207,4.078,3.887,3.653,3.38,3.068,2.719,2.334,4.21,4.018,3.784,3.509,3.195,2.844,2.458,4.339,4.146,3.91,3.634,3.32,2.968,2.581,4.465,4.27,4.032,3.756,3.44,3.089,2.702,4.585,4.389,4.151,3.873,3.557,3.205,2.819,4.7,4.501,4.263,3.986,3.67,3.319,2.932,4.807,4.607,4.369,4.092,3.778,3.427,3.04,4.905,4.706,4.468,4.192,3.878,3.529,3.144,3.155,3.014,2.841,2.632,2.383,2.089,1.746,3.331,3.179,2.995,2.776,2.519,2.219,1.874,3.493,3.337,3.146,2.92,2.656,2.351,2.005,3.655,3.491,3.294,3.062,2.793,2.485,2.135,3.809,3.642,3.44,3.202,2.927,2.615,2.264,3.961,3.787,3.579,3.337,3.059,2.744,2.391,4.103,3.926,3.715,3.469,3.187,2.87,2.515,4.236,4.058,3.845,3.596,3.311,2.991,2.636,4.363,4.18,3.964,3.715,3.43,3.11,2.752,4.482,4.299,4.082,3.83,3.544,3.222,2.864,4.594,4.409,4.19,3.938,3.651,3.329,2.972,4.698,4.51,4.291,4.038,3.751,3.43,3.073,2.766,2.664,2.532,2.367,2.163,1.915,1.618,2.963,2.844,2.698,2.52,2.306,2.052,1.753,3.143,3.018,2.863,2.674,2.451,2.191,1.892,3.325,3.187,3.022,2.827,2.599,2.333,2.027,3.494,3.348,3.176,2.976,2.742,2.471,2.16,3.659,3.509,3.33,3.122,2.881,2.605,2.291,3.821,3.663,3.477,3.263,3.017,2.737,2.42,3.976,3.81,3.619,3.399,3.148,2.863,2.543,4.119,3.951,3.755,3.529,3.272,2.983,2.661,4.252,4.079,3.878,3.649,3.389,3.098,2.773,4.371,4.195,3.991,3.758,3.496,3.204,2.88,4.478,4.298,4.092,3.859,3.597,3.305,2.979,2.349,2.282,2.181,2.045,1.875,1.671,1.434,2.545,2.46,2.348,2.206,2.032,1.825,1.582,2.746,2.647,2.522,2.369,2.187,1.973,1.727,2.949,2.837,2.7,2.537,2.345,2.123,1.868,3.154,3.026,2.876,2.702,2.501,2.271,2.008,3.346,3.207,3.047,2.864,2.654,2.416,2.147,3.529,3.382,3.214,3.022,2.804,2.558,2.283,3.703,3.548,3.371,3.172,2.947,2.695,2.414,3.865,3.703,3.519,3.313,3.082,2.823,2.537,4.011,3.843,3.653,3.441,3.205,2.942,2.653,4.139,3.967,3.773,3.557,3.317,3.052,2.762,4.245,4.071,3.876,3.659,3.418,3.151,2.858,1.942,1.865,1.779,1.677,1.553,1.401,1.215,2.092,2.022,1.936,1.832,1.703,1.547,1.359,2.287,2.201,2.106,1.995,1.861,1.699,1.502,2.485,2.396,2.292,2.17,2.025,1.853,1.65,2.706,2.605,2.488,2.352,2.194,2.011,1.8,2.929,2.815,2.684,2.535,2.365,2.171,1.951,3.148,3.021,2.878,2.717,2.535,2.33,2.099,3.355,3.218,3.064,2.891,2.697,2.481,2.243,3.552,3.401,3.235,3.051,2.848,2.624,2.377,3.727,3.571,3.396,3.202,2.989,2.755,2.502,3.879,3.715,3.533,3.332,3.113,2.873,2.613,3.994,3.827,3.641,3.437,3.213,2.97,2.709,1.578,1.471,1.389,1.315,1.232,1.122,0.969,1.656,1.576,1.507,1.436,1.352,1.243,1.097,1.804,1.733,1.667,1.594,1.505,1.389,1.235,1.981,1.914,1.845,1.764,1.666,1.544,1.389,2.193,2.124,2.045,1.953,1.843,1.71,1.548,2.434,2.353,2.26,2.153,2.028,1.881,1.709,2.686,2.588,2.479,2.357,2.216,2.055,1.869,2.94,2.824,2.698,2.558,2.401,2.225,2.027,3.179,3.049,2.907,2.75,2.577,2.387,2.178,3.392,3.248,3.091,2.922,2.736,2.534,2.313,3.567,3.416,3.249,3.069,2.872,2.66,2.432,3.702,3.545,3.372,3.184,2.98,2.763,2.533,1.241,1.198,1.132,1.046,0.943,0.826,0.698,1.259,1.222,1.17,1.103,1.022,0.926,0.817,1.347,1.307,1.265,1.215,1.15,1.064,0.95,1.5,1.46,1.417,1.367,1.302,1.217,1.107,1.69,1.649,1.603,1.546,1.475,1.385,1.27,1.923,1.873,1.816,1.748,1.665,1.563,1.437,2.181,2.116,2.043,1.959,1.86,1.744,1.606,2.451,2.367,2.276,2.174,2.058,1.925,1.771,2.713,2.615,2.507,2.386,2.251,2.101,1.933,2.959,2.844,2.717,2.58,2.429,2.265,2.085,3.174,3.046,2.905,2.753,2.588,2.409,2.217,3.35,3.211,3.058,2.893,2.716,2.527,2.326,0.894,0.885,0.837,0.758,0.656,0.538,0.414,0.889,0.883,0.846,0.786,0.708,0.621,0.532,0.937,0.93,0.906,0.867,0.812,0.745,0.664,1.066,1.051,1.028,0.995,0.951,0.893,0.818,1.229,1.212,1.189,1.157,1.114,1.056,0.982,1.438,1.413,1.384,1.348,1.3,1.236,1.151,1.68,1.645,1.604,1.554,1.493,1.417,1.324,1.936,1.888,1.833,1.769,1.693,1.602,1.494,2.205,2.14,2.069,1.988,1.895,1.786,1.661,2.475,2.394,2.303,2.202,2.09,1.965,1.827,2.733,2.633,2.523,2.404,2.274,2.132,1.978,2.965,2.846,2.718,2.581,2.435,2.277,2.109,0.641,0.629,0.572,0.482,0.371,0.251,0.133,0.575,0.573,0.539,0.482,0.41,0.332,0.256,0.584,0.591,0.577,0.546,0.502,0.449,0.39,0.691,0.691,0.681,0.661,0.631,0.59,0.54,0.833,0.831,0.822,0.806,0.782,0.747,0.701,1.017,1.008,0.997,0.982,0.957,0.921,0.868,1.232,1.218,1.2,1.176,1.144,1.1,1.042,1.465,1.443,1.417,1.383,1.34,1.285,1.214,1.731,1.692,1.65,1.602,1.545,1.475,1.389,2.011,1.957,1.899,1.833,1.756,1.666,1.559,2.301,2.228,2.147,2.059,1.962,1.854,1.736,2.59,2.496,2.394,2.285,2.168,2.042,1.907,0.225,0.203,0.166,0.115,0.049,-0.032,-0.125,0.227,0.22,0.201,0.17,0.127,0.072,0.005,0.288,0.29,0.281,0.26,0.23,0.19,0.142,0.388,0.392,0.389,0.377,0.357,0.326,0.286,0.527,0.527,0.524,0.515,0.5,0.476,0.442,0.69,0.687,0.683,0.676,0.662,0.64,0.607,0.879,0.874,0.868,0.858,0.842,0.816,0.778,1.098,1.089,1.076,1.057,1.031,0.997,0.954,1.351,1.33,1.305,1.275,1.239,1.195,1.142,1.631,1.598,1.561,1.517,1.465,1.403,1.329,1.945,1.894,1.838,1.774,1.702,1.621,1.53,2.293,2.219,2.138,2.051,1.956,1.852,1.739,-0.223,-0.232,-0.238,-0.246,-0.264,-0.295,-0.346,-0.08,-0.091,-0.094,-0.098,-0.113,-0.147,-0.21,0.059,0.052,0.045,0.034,0.014,-0.018,-0.066,0.172,0.173,0.171,0.163,0.146,0.117,0.073,0.315,0.313,0.31,0.304,0.289,0.263,0.222,0.465,0.465,0.462,0.454,0.439,0.416,0.384,0.634,0.632,0.63,0.623,0.61,0.588,0.552,0.838,0.834,0.826,0.813,0.794,0.768,0.735,1.07,1.062,1.047,1.027,1.0,0.968,0.931,1.343,1.323,1.298,1.267,1.231,1.188,1.138,1.661,1.627,1.588,1.544,1.491,1.428,1.355,2.039,1.982,1.92,1.852,1.776,1.69,1.593,-0.481,-0.457,-0.455,-0.467,-0.487,-0.508,-0.524,-0.25,-0.261,-0.263,-0.265,-0.278,-0.313,-0.379,-0.096,-0.098,-0.102,-0.112,-0.133,-0.169,-0.222,0.049,0.047,0.043,0.032,0.01,-0.028,-0.087,0.192,0.191,0.189,0.181,0.16,0.12,0.055,0.337,0.34,0.338,0.327,0.304,0.267,0.213,0.494,0.499,0.495,0.483,0.461,0.427,0.381,0.671,0.67,0.668,0.662,0.646,0.617,0.57,0.877,0.874,0.87,0.86,0.842,0.809,0.76,1.133,1.118,1.102,1.082,1.055,1.02,0.973,1.429,1.404,1.377,1.346,1.307,1.259,1.198,1.782,1.742,1.699,1.65,1.594,1.528,1.449,-0.518,-0.511,-0.524,-0.55,-0.584,-0.62,-0.652,-0.315,-0.323,-0.331,-0.347,-0.376,-0.426,-0.503,-0.184,-0.17,-0.174,-0.192,-0.225,-0.27,-0.326,-0.005,-0.009,-0.018,-0.036,-0.068,-0.119,-0.191,0.13,0.137,0.135,0.12,0.086,0.031,-0.051,0.273,0.283,0.28,0.263,0.229,0.175,0.099,0.424,0.435,0.43,0.408,0.372,0.323,0.264,0.566,0.568,0.572,0.571,0.557,0.52,0.453,0.746,0.744,0.748,0.748,0.735,0.697,0.627,0.967,0.96,0.953,0.941,0.919,0.884,0.829,1.225,1.209,1.192,1.17,1.141,1.102,1.051,1.52,1.498,1.471,1.438,1.399,1.351,1.294,-0.456,-0.52,-0.544,-0.552,-0.57,-0.622,-0.734,-0.343,-0.339,-0.35,-0.378,-0.426,-0.494,-0.584,-0.209,-0.192,-0.198,-0.226,-0.27,-0.327,-0.393,-0.022,-0.026,-0.041,-0.068,-0.11,-0.17,-0.248,0.103,0.11,0.106,0.086,0.046,-0.017,-0.109,0.24,0.247,0.244,0.226,0.188,0.126,0.036,0.38,0.394,0.385,0.357,0.313,0.258,0.195,0.495,0.494,0.501,0.503,0.489,0.448,0.367,0.648,0.638,0.646,0.655,0.648,0.608,0.517,0.812,0.823,0.826,0.82,0.799,0.761,0.702,1.029,1.029,1.022,1.007,0.983,0.95,0.908,1.269,1.263,1.246,1.221,1.189,1.155,1.122,-0.583,-0.579,-0.563,-0.555,-0.577,-0.648,-0.79,-0.362,-0.343,-0.351,-0.386,-0.445,-0.525,-0.625,-0.19,-0.179,-0.196,-0.236,-0.29,-0.354,-0.421,-0.034,-0.037,-0.058,-0.095,-0.142,-0.198,-0.256,0.076,0.081,0.068,0.04,0.0,-0.05,-0.106,0.197,0.2,0.191,0.17,0.137,0.091,0.033,0.32,0.326,0.315,0.29,0.255,0.213,0.169,0.423,0.42,0.42,0.415,0.398,0.363,0.302,0.551,0.539,0.542,0.546,0.537,0.504,0.432,0.672,0.691,0.698,0.692,0.672,0.638,0.589,0.849,0.858,0.856,0.845,0.826,0.798,0.764,1.042,1.044,1.033,1.012,0.987,0.962,0.941,-0.28,-0.262,-0.328,-0.448,-0.593,-0.733,-0.84,-0.219,-0.212,-0.261,-0.345,-0.447,-0.547,-0.626,-0.135,-0.149,-0.186,-0.239,-0.301,-0.364,-0.419,-0.073,-0.073,-0.101,-0.143,-0.187,-0.218,-0.222,0.02,0.013,-0.017,-0.053,-0.08,-0.083,-0.047,0.109,0.098,0.077,0.056,0.044,0.051,0.086,0.2,0.184,0.173,0.167,0.165,0.17,0.18,0.317,0.313,0.293,0.267,0.244,0.233,0.243,0.435,0.44,0.421,0.391,0.363,0.35,0.364,0.577,0.561,0.546,0.53,0.515,0.499,0.484,0.708,0.697,0.686,0.674,0.66,0.642,0.619,0.858,0.845,0.839,0.835,0.826,0.806,0.769],"alpha":93.71,"ratios":[1.0,1.0,1.904,1.904,1.904,1.904],"slide":[0.323,0.591]},"mtp":{"cs":4.863,"x":[5.125,4.701,4.259,3.806,3.345,2.881,2.418,5.248,4.826,4.385,3.932,3.47,3.006,2.543,5.373,4.951,4.512,4.059,3.598,3.133,2.67,5.499,5.078,4.639,4.186,3.725,3.26,2.798,5.623,5.203,4.764,4.312,3.85,3.386,2.924,5.745,5.326,4.887,4.435,3.974,3.51,3.047,5.863,5.444,5.006,4.554,4.094,3.63,3.167,5.976,5.557,5.12,4.668,4.208,3.744,3.282,6.082,5.664,5.227,4.776,4.316,3.853,3.39,6.18,5.763,5.327,4.877,4.417,3.954,3.491,6.269,5.853,5.417,4.967,4.508,4.044,3.583,6.346,5.932,5.498,5.049,4.59,4.126,3.664,5.082,4.677,4.247,3.799,3.34,2.876,2.416,5.202,4.8,4.372,3.924,3.466,3.002,2.542,5.326,4.926,4.499,4.051,3.591,3.128,2.67,5.449,5.05,4.623,4.177,3.719,3.256,2.797,5.573,5.175,4.749,4.303,3.844,3.382,2.923,5.694,5.297,4.871,4.426,3.967,3.505,3.046,5.812,5.416,4.991,4.545,4.087,3.624,3.165,5.924,5.528,5.104,4.659,4.201,3.739,3.28,6.03,5.635,5.211,4.766,4.309,3.847,3.388,6.131,5.735,5.311,4.866,4.409,3.947,3.488,6.219,5.824,5.401,4.957,4.5,4.039,3.579,6.298,5.903,5.48,5.037,4.581,4.119,3.66,5.029,4.639,4.222,3.784,3.333,2.874,2.415,5.15,4.763,4.347,3.91,3.458,3.0,2.541,5.271,4.886,4.472,4.036,3.585,3.127,2.668,5.397,5.014,4.601,4.164,3.712,3.253,2.795,5.518,5.137,4.725,4.289,3.838,3.379,2.92,5.639,5.259,4.847,4.412,3.961,3.502,3.043,5.755,5.377,4.966,4.531,4.08,3.621,3.163,5.868,5.49,5.079,4.645,4.194,3.735,3.277,5.972,5.596,5.186,4.752,4.301,3.843,3.385,6.065,5.692,5.284,4.851,4.401,3.942,3.485,6.152,5.78,5.374,4.942,4.492,4.034,3.576,6.228,5.858,5.452,5.021,4.572,4.114,3.657,4.925,4.574,4.184,3.764,3.323,2.87,2.412,5.05,4.701,4.311,3.89,3.448,2.994,2.538,5.179,4.829,4.439,4.018,3.575,3.121,2.664,5.302,4.954,4.565,4.144,3.702,3.248,2.791,5.428,5.081,4.692,4.27,3.827,3.373,2.917,5.553,5.203,4.813,4.392,3.95,3.496,3.04,5.669,5.32,4.931,4.51,4.069,3.615,3.159,5.779,5.432,5.044,4.624,4.182,3.729,3.274,5.883,5.537,5.149,4.73,4.289,3.836,3.382,5.979,5.632,5.245,4.828,4.389,3.937,3.481,6.065,5.719,5.333,4.917,4.479,4.028,3.573,6.137,5.794,5.411,4.996,4.559,4.108,3.653,4.834,4.511,4.142,3.738,3.307,2.86,2.406,4.96,4.636,4.267,3.863,3.432,2.985,2.531,5.087,4.763,4.394,3.989,3.558,3.111,2.658,5.208,4.887,4.519,4.115,3.684,3.237,2.785,5.331,5.01,4.643,4.239,3.809,3.362,2.91,5.448,5.129,4.763,4.36,3.931,3.485,3.033,5.563,5.244,4.879,4.478,4.05,3.605,3.153,5.674,5.354,4.99,4.59,4.163,3.719,3.267,5.776,5.457,5.094,4.695,4.27,3.826,3.375,5.87,5.552,5.191,4.793,4.369,3.926,3.475,5.954,5.637,5.277,4.881,4.458,4.017,3.566,6.025,5.712,5.353,4.959,4.537,4.097,3.646,4.731,4.429,4.081,3.695,3.28,2.844,2.397,4.849,4.55,4.204,3.819,3.404,2.968,2.521,4.969,4.672,4.327,3.943,3.529,3.094,2.647,5.093,4.796,4.452,4.068,3.655,3.22,2.774,5.211,4.915,4.572,4.191,3.779,3.346,2.9,5.325,5.033,4.692,4.312,3.901,3.468,3.023,5.439,5.147,4.807,4.429,4.019,3.587,3.142,5.547,5.255,4.917,4.54,4.132,3.701,3.255,5.647,5.357,5.02,4.645,4.238,3.809,3.363,5.738,5.451,5.116,4.742,4.336,3.907,3.463,5.821,5.535,5.201,4.828,4.424,3.996,3.553,5.894,5.608,5.276,4.905,4.503,4.076,3.633,4.555,4.292,3.979,3.624,3.235,2.819,2.383,4.672,4.413,4.103,3.749,3.359,2.943,2.507,4.797,4.537,4.227,3.874,3.486,3.069,2.633,4.927,4.664,4.352,3.999,3.611,3.195,2.759,5.05,4.787,4.476,4.123,3.735,3.32,2.884,5.175,4.91,4.597,4.244,3.857,3.442,3.006,5.289,5.025,4.713,4.36,3.974,3.56,3.124,5.393,5.132,4.823,4.471,4.086,3.672,3.238,5.494,5.233,4.925,4.575,4.191,3.778,3.344,5.588,5.327,5.019,4.671,4.288,3.876,3.443,5.671,5.41,5.103,4.755,4.374,3.964,3.533,5.744,5.482,5.176,4.83,4.451,4.044,3.612,4.306,4.091,3.827,3.518,3.168,2.78,2.361,4.468,4.236,3.962,3.647,3.295,2.907,2.485,4.608,4.375,4.097,3.778,3.422,3.032,2.611,4.742,4.506,4.226,3.905,3.548,3.157,2.737,4.871,4.636,4.354,4.031,3.672,3.28,2.861,4.995,4.757,4.474,4.152,3.793,3.402,2.982,5.112,4.875,4.592,4.269,3.909,3.518,3.1,5.23,4.987,4.702,4.379,4.02,3.629,3.211,5.332,5.089,4.804,4.481,4.123,3.734,3.317,5.422,5.18,4.896,4.575,4.218,3.831,3.414,5.505,5.262,4.979,4.659,4.304,3.917,3.503,5.575,5.332,5.05,4.731,4.379,3.994,3.581,4.114,3.904,3.661,3.384,3.07,2.716,2.319,4.245,4.041,3.799,3.518,3.2,2.842,2.447,4.395,4.183,3.935,3.65,3.328,2.97,2.574,4.533,4.32,4.069,3.781,3.456,3.096,2.7,4.67,4.454,4.2,3.909,3.582,3.22,2.824,4.795,4.578,4.323,4.031,3.704,3.341,2.944,4.917,4.699,4.443,4.149,3.82,3.457,3.061,5.03,4.811,4.554,4.26,3.93,3.567,3.172,5.135,4.915,4.656,4.362,4.033,3.671,3.276,5.231,5.009,4.75,4.455,4.126,3.765,3.372,5.314,5.091,4.832,4.539,4.211,3.851,3.459,5.385,5.16,4.901,4.608,4.283,3.925,3.536,3.807,3.649,3.449,3.208,2.927,2.607,2.249,3.975,3.8,3.589,3.342,3.059,2.738,2.38,4.13,3.946,3.729,3.479,3.193,2.871,2.51,4.281,4.091,3.87,3.616,3.327,3.002,2.638,4.43,4.232,4.006,3.748,3.457,3.129,2.763,4.575,4.373,4.141,3.878,3.582,3.252,2.886,4.705,4.498,4.263,3.998,3.701,3.369,3.003,4.822,4.615,4.379,4.112,3.813,3.48,3.114,4.93,4.723,4.485,4.216,3.916,3.583,3.218,5.029,4.818,4.579,4.31,4.01,3.678,3.313,5.113,4.901,4.661,4.393,4.094,3.763,3.398,5.184,4.97,4.73,4.462,4.164,3.835,3.472,3.363,3.246,3.098,2.916,2.697,2.439,2.138,3.586,3.445,3.279,3.083,2.853,2.584,2.272,3.783,3.628,3.451,3.245,3.006,2.728,2.407,3.972,3.802,3.612,3.396,3.149,2.866,2.541,4.14,3.961,3.763,3.541,3.288,3.0,2.671,4.3,4.117,3.912,3.681,3.422,3.128,2.797,4.447,4.257,4.046,3.811,3.547,3.251,2.918,4.584,4.388,4.172,3.931,3.664,3.365,3.031,4.702,4.502,4.283,4.04,3.771,3.471,3.136,4.802,4.603,4.383,4.138,3.867,3.565,3.231,4.892,4.689,4.467,4.222,3.95,3.649,3.315,4.966,4.763,4.54,4.292,4.019,3.719,3.388,2.858,2.771,2.672,2.552,2.401,2.212,1.975,3.113,3.008,2.891,2.753,2.583,2.373,2.112,3.357,3.234,3.098,2.941,2.754,2.528,2.254,3.586,3.444,3.29,3.115,2.914,2.677,2.399,3.788,3.635,3.469,3.281,3.068,2.823,2.539,3.972,3.81,3.634,3.437,3.215,2.962,2.673,4.147,3.975,3.789,3.583,3.353,3.094,2.8,4.306,4.125,3.93,3.717,3.48,3.216,2.918,4.445,4.258,4.056,3.836,3.594,3.326,3.027,4.565,4.372,4.166,3.941,3.695,3.424,3.124,4.662,4.467,4.257,4.029,3.78,3.507,3.208,4.738,4.54,4.328,4.099,3.85,3.577,3.277,2.369,2.314,2.255,2.179,2.077,1.938,1.751,2.612,2.543,2.468,2.378,2.259,2.101,1.891,2.866,2.779,2.684,2.572,2.434,2.261,2.044,3.114,3.016,2.904,2.772,2.615,2.427,2.204,3.363,3.248,3.116,2.964,2.789,2.588,2.358,3.593,3.453,3.304,3.14,2.956,2.745,2.504,3.799,3.649,3.487,3.31,3.113,2.891,2.642,3.979,3.82,3.649,3.462,3.256,3.026,2.769,4.145,3.975,3.794,3.598,3.383,3.146,2.884,4.287,4.108,3.918,3.714,3.493,3.251,2.986,4.4,4.216,4.02,3.81,3.583,3.338,3.072,4.484,4.294,4.095,3.882,3.654,3.407,3.139,1.91,1.887,1.857,1.81,1.737,1.629,1.478,2.109,2.073,2.031,1.975,1.895,1.78,1.621,2.338,2.291,2.233,2.158,2.062,1.939,1.784,2.582,2.527,2.457,2.368,2.257,2.12,1.952,2.849,2.772,2.682,2.576,2.449,2.297,2.118,3.112,3.015,2.905,2.779,2.635,2.469,2.278,3.354,3.24,3.114,2.972,2.813,2.633,2.431,3.58,3.45,3.307,3.151,2.978,2.786,2.572,3.781,3.636,3.48,3.311,3.127,2.924,2.7,3.953,3.796,3.629,3.45,3.255,3.044,2.813,4.092,3.925,3.749,3.561,3.359,3.142,2.906,4.191,4.019,3.836,3.642,3.435,3.214,2.977,1.486,1.479,1.466,1.437,1.385,1.299,1.17,1.623,1.609,1.59,1.559,1.508,1.43,1.316,1.808,1.795,1.767,1.723,1.661,1.582,1.483,2.03,1.997,1.962,1.915,1.851,1.762,1.64,2.261,2.212,2.168,2.118,2.049,1.95,1.808,2.516,2.479,2.421,2.344,2.244,2.124,1.981,2.792,2.723,2.644,2.551,2.441,2.309,2.152,3.088,2.988,2.881,2.764,2.634,2.486,2.317,3.337,3.221,3.098,2.963,2.815,2.651,2.469,3.553,3.424,3.286,3.137,2.975,2.798,2.604,3.731,3.59,3.44,3.279,3.106,2.918,2.715,3.854,3.706,3.547,3.377,3.196,3.003,2.796,1.092,1.083,1.075,1.059,1.023,0.955,0.844,1.168,1.174,1.167,1.148,1.113,1.061,0.992,1.308,1.32,1.314,1.292,1.256,1.209,1.151,1.499,1.489,1.474,1.449,1.411,1.356,1.279,1.711,1.688,1.667,1.64,1.6,1.536,1.443,1.963,1.932,1.896,1.852,1.795,1.721,1.625,2.244,2.187,2.133,2.077,2.011,1.926,1.817,2.529,2.461,2.395,2.323,2.239,2.137,2.01,2.826,2.747,2.66,2.565,2.458,2.336,2.197,3.096,2.999,2.895,2.783,2.658,2.519,2.363,3.322,3.213,3.096,2.968,2.828,2.674,2.503,3.484,3.364,3.235,3.096,2.946,2.784,2.607,0.722,0.702,0.694,0.683,0.659,0.606,0.513,0.762,0.778,0.774,0.755,0.728,0.695,0.664,0.873,0.893,0.897,0.888,0.868,0.837,0.798,1.035,1.038,1.034,1.021,0.999,0.967,0.923,1.244,1.237,1.226,1.208,1.181,1.14,1.083,1.494,1.455,1.432,1.414,1.391,1.352,1.285,1.768,1.754,1.728,1.689,1.637,1.574,1.498,2.06,2.034,1.996,1.945,1.882,1.805,1.715,2.357,2.311,2.259,2.197,2.122,2.033,1.926,2.645,2.584,2.515,2.437,2.346,2.242,2.12,2.908,2.829,2.743,2.649,2.544,2.425,2.291,3.14,3.043,2.941,2.83,2.709,2.576,2.428,0.36,0.383,0.379,0.352,0.309,0.255,0.194,0.417,0.432,0.422,0.399,0.372,0.352,0.349,0.526,0.537,0.54,0.536,0.519,0.49,0.446,0.67,0.676,0.677,0.674,0.665,0.649,0.625,0.865,0.882,0.88,0.865,0.842,0.817,0.794,1.09,1.094,1.091,1.08,1.061,1.034,0.998,1.352,1.351,1.341,1.321,1.293,1.257,1.213,1.635,1.624,1.605,1.577,1.539,1.493,1.437,1.931,1.906,1.876,1.838,1.791,1.731,1.658,2.228,2.193,2.15,2.097,2.034,1.96,1.872,2.531,2.477,2.415,2.344,2.264,2.173,2.071,2.83,2.756,2.675,2.586,2.487,2.377,2.254,0.012,0.005,-0.005,-0.017,-0.033,-0.054,-0.081,0.12,0.118,0.109,0.097,0.085,0.077,0.075,0.26,0.242,0.239,0.24,0.235,0.213,0.164,0.407,0.405,0.408,0.411,0.412,0.407,0.391,0.589,0.595,0.596,0.593,0.588,0.581,0.575,0.786,0.807,0.813,0.807,0.795,0.78,0.766,1.02,1.007,1.003,1.001,0.998,0.989,0.969,1.276,1.261,1.252,1.245,1.235,1.215,1.183,1.566,1.553,1.535,1.512,1.484,1.449,1.406,1.872,1.847,1.818,1.783,1.74,1.689,1.629,2.202,2.164,2.119,2.065,2.002,1.932,1.852,2.548,2.492,2.429,2.357,2.276,2.184,2.082,-0.277,-0.282,-0.285,-0.285,-0.281,-0.275,-0.266,-0.097,-0.115,-0.112,-0.102,-0.093,-0.098,-0.127,0.073,0.053,0.049,0.054,0.058,0.053,0.03,0.243,0.239,0.239,0.239,0.237,0.231,0.216,0.42,0.401,0.398,0.404,0.414,0.419,0.415,0.611,0.594,0.589,0.591,0.596,0.598,0.594,0.809,0.799,0.795,0.794,0.793,0.788,0.776,1.04,1.027,1.021,1.016,1.009,0.997,0.975,1.302,1.289,1.276,1.26,1.241,1.217,1.188,1.597,1.572,1.548,1.522,1.492,1.455,1.409,1.917,1.888,1.856,1.818,1.772,1.716,1.647,2.286,2.24,2.19,2.133,2.068,1.993,1.908,-0.31,-0.269,-0.255,-0.26,-0.278,-0.3,-0.321,-0.134,-0.089,-0.089,-0.119,-0.161,-0.201,-0.221,-0.024,0.094,0.111,0.07,0.017,-0.006,0.045,0.165,0.173,0.173,0.166,0.15,0.124,0.087,0.324,0.389,0.404,0.385,0.349,0.311,0.29,0.503,0.54,0.548,0.535,0.509,0.479,0.454,0.7,0.722,0.722,0.705,0.68,0.653,0.631,0.917,0.924,0.913,0.891,0.863,0.835,0.813,1.123,1.109,1.097,1.084,1.066,1.041,1.004,1.362,1.35,1.335,1.315,1.29,1.258,1.218,1.655,1.628,1.608,1.588,1.56,1.518,1.454,2.013,1.971,1.931,1.889,1.843,1.787,1.719,-0.518,-0.519,-0.518,-0.515,-0.513,-0.511,-0.512,-0.327,-0.329,-0.33,-0.33,-0.329,-0.325,-0.317,-0.148,-0.161,-0.163,-0.16,-0.156,-0.158,-0.169,0.003,0.003,0.001,0.001,0.002,0.008,0.02,0.153,0.145,0.142,0.143,0.146,0.149,0.149,0.304,0.298,0.298,0.3,0.304,0.308,0.31,0.46,0.453,0.454,0.458,0.464,0.469,0.471,0.622,0.619,0.621,0.626,0.632,0.637,0.637,0.817,0.817,0.818,0.817,0.817,0.817,0.817,1.037,1.035,1.032,1.029,1.024,1.019,1.013,1.297,1.291,1.279,1.264,1.248,1.234,1.225,1.597,1.587,1.57,1.549,1.522,1.491,1.456],"y":[4.6,4.177,3.736,3.283,2.822,2.357,1.894,4.724,4.303,3.863,3.41,2.949,2.484,2.021,4.85,4.43,3.991,3.538,3.076,2.612,2.149,4.975,4.557,4.119,3.666,3.204,2.74,2.277,5.101,4.683,4.245,3.792,3.331,2.866,2.404,5.224,4.806,4.368,3.916,3.455,2.991,2.529,5.344,4.926,4.489,4.037,3.576,3.112,2.65,5.46,5.042,4.605,4.154,3.693,3.23,2.768,5.57,5.153,4.717,4.265,3.805,3.342,2.88,5.674,5.258,4.822,4.372,3.912,3.448,2.987,5.77,5.356,4.921,4.471,4.011,3.548,3.086,5.859,5.446,5.012,4.562,4.103,3.64,3.178,4.564,4.156,3.724,3.275,2.816,2.353,1.894,4.684,4.28,3.85,3.402,2.943,2.481,2.022,4.805,4.404,3.976,3.529,3.071,2.609,2.15,4.931,4.53,4.102,3.656,3.198,2.736,2.277,5.052,4.654,4.228,3.783,3.325,2.862,2.403,5.175,4.778,4.352,3.907,3.449,2.986,2.527,5.294,4.898,4.473,4.028,3.57,3.108,2.648,5.41,5.014,4.59,4.145,3.687,3.225,2.765,5.521,5.125,4.701,4.257,3.8,3.337,2.877,5.626,5.23,4.806,4.362,3.905,3.443,2.984,5.724,5.327,4.904,4.46,4.004,3.542,3.083,5.809,5.416,4.994,4.551,4.094,3.633,3.174,4.494,4.112,3.699,3.262,2.81,2.351,1.892,4.618,4.238,3.825,3.389,2.937,2.478,2.02,4.749,4.365,3.952,3.516,3.065,2.606,2.147,4.868,4.49,4.08,3.644,3.192,2.733,2.275,4.997,4.617,4.205,3.769,3.318,2.859,2.401,5.119,4.739,4.328,3.893,3.442,2.983,2.525,5.238,4.859,4.448,4.014,3.563,3.105,2.646,5.353,4.974,4.564,4.13,3.68,3.222,2.763,5.461,5.084,4.675,4.242,3.792,3.334,2.875,5.561,5.187,4.779,4.347,3.897,3.439,2.981,5.655,5.283,4.877,4.445,3.996,3.538,3.08,5.739,5.37,4.965,4.534,4.085,3.628,3.171,4.406,4.053,3.662,3.242,2.8,2.346,1.888,4.533,4.18,3.789,3.369,2.927,2.473,2.015,4.653,4.307,3.919,3.497,3.054,2.599,2.143,4.786,4.436,4.045,3.624,3.181,2.727,2.271,4.908,4.56,4.171,3.75,3.307,2.853,2.397,5.033,4.683,4.294,3.873,3.431,2.977,2.521,5.151,4.802,4.413,3.993,3.551,3.098,2.642,5.264,4.916,4.528,4.109,3.668,3.215,2.759,5.373,5.025,4.637,4.219,3.779,3.327,2.871,5.474,5.127,4.74,4.323,3.884,3.433,2.977,5.565,5.22,4.836,4.42,3.982,3.531,3.076,5.647,5.306,4.923,4.509,4.072,3.622,3.167,4.313,3.985,3.614,3.211,2.782,2.337,1.883,4.435,4.111,3.742,3.338,2.909,2.462,2.008,4.559,4.236,3.869,3.465,3.036,2.589,2.136,4.685,4.362,3.995,3.592,3.163,2.717,2.263,4.805,4.486,4.121,3.718,3.289,2.843,2.39,4.925,4.608,4.243,3.841,3.412,2.967,2.514,5.043,4.726,4.362,3.96,3.532,3.087,2.636,5.156,4.839,4.475,4.075,3.648,3.203,2.752,5.263,4.946,4.583,4.184,3.758,3.315,2.864,5.363,5.047,4.685,4.287,3.863,3.421,2.97,5.454,5.139,4.779,4.383,3.96,3.519,3.069,5.536,5.222,4.865,4.471,4.05,3.61,3.159,4.194,3.892,3.546,3.164,2.753,2.321,1.874,4.313,4.017,3.674,3.292,2.879,2.445,1.998,4.44,4.142,3.799,3.417,3.006,2.573,2.126,4.556,4.265,3.925,3.545,3.134,2.7,2.253,4.682,4.39,4.05,3.67,3.259,2.826,2.379,4.798,4.51,4.172,3.792,3.382,2.949,2.503,4.915,4.627,4.289,3.911,3.501,3.069,2.624,5.029,4.74,4.402,4.025,3.616,3.185,2.741,5.134,4.846,4.509,4.133,3.725,3.296,2.853,5.232,4.945,4.61,4.235,3.829,3.4,2.958,5.323,5.036,4.702,4.33,3.926,3.499,3.056,5.404,5.118,4.786,4.416,4.015,3.589,3.146,4.013,3.756,3.448,3.097,2.71,2.295,1.859,4.145,3.884,3.575,3.223,2.836,2.421,1.985,4.267,4.011,3.702,3.35,2.962,2.547,2.112,4.398,4.139,3.829,3.477,3.089,2.674,2.238,4.526,4.264,3.953,3.601,3.214,2.799,2.364,4.649,4.386,4.075,3.723,3.336,2.922,2.487,4.766,4.503,4.193,3.841,3.455,3.042,2.607,4.879,4.616,4.305,3.954,3.569,3.157,2.723,4.984,4.722,4.412,4.062,3.678,3.266,2.834,5.082,4.82,4.512,4.163,3.78,3.37,2.938,5.173,4.91,4.603,4.256,3.875,3.467,3.035,5.253,4.991,4.685,4.34,3.962,3.556,3.125,3.78,3.573,3.311,3.0,2.646,2.257,1.838,3.929,3.707,3.438,3.125,2.773,2.385,1.965,4.079,3.849,3.573,3.256,2.901,2.511,2.091,4.219,3.984,3.703,3.383,3.025,2.636,2.218,4.347,4.109,3.828,3.507,3.15,2.76,2.342,4.475,4.234,3.951,3.629,3.272,2.882,2.464,4.593,4.352,4.069,3.748,3.391,3.002,2.582,4.703,4.464,4.183,3.861,3.504,3.115,2.697,4.812,4.572,4.29,3.969,3.613,3.224,2.806,4.913,4.67,4.388,4.067,3.713,3.326,2.909,5.002,4.76,4.478,4.158,3.805,3.419,3.005,5.082,4.839,4.558,4.24,3.889,3.505,3.093,3.598,3.388,3.144,2.865,2.549,2.195,1.8,3.74,3.527,3.28,2.998,2.68,2.324,1.929,3.876,3.664,3.416,3.132,2.811,2.452,2.056,4.014,3.799,3.549,3.262,2.938,2.578,2.182,4.146,3.93,3.677,3.388,3.063,2.702,2.305,4.276,4.057,3.802,3.511,3.185,2.824,2.426,4.398,4.177,3.921,3.63,3.304,2.942,2.544,4.51,4.291,4.035,3.744,3.417,3.055,2.657,4.618,4.397,4.141,3.85,3.523,3.162,2.765,4.717,4.497,4.24,3.948,3.622,3.261,2.867,4.807,4.586,4.33,4.038,3.711,3.352,2.961,4.889,4.666,4.408,4.117,3.792,3.435,3.047,3.287,3.117,2.917,2.683,2.41,2.096,1.735,3.454,3.286,3.079,2.832,2.548,2.225,1.864,3.614,3.432,3.217,2.967,2.681,2.357,1.993,3.765,3.578,3.359,3.106,2.816,2.488,2.121,3.914,3.722,3.497,3.239,2.945,2.615,2.246,4.047,3.854,3.627,3.366,3.069,2.737,2.368,4.178,3.981,3.75,3.486,3.187,2.854,2.486,4.303,4.099,3.865,3.599,3.301,2.968,2.599,4.414,4.208,3.972,3.705,3.406,3.074,2.706,4.516,4.306,4.069,3.802,3.504,3.173,2.807,4.607,4.396,4.158,3.891,3.593,3.263,2.899,4.687,4.475,4.236,3.969,3.672,3.344,2.983,2.874,2.763,2.617,2.433,2.209,1.942,1.629,3.076,2.943,2.78,2.583,2.35,2.075,1.756,3.269,3.121,2.944,2.736,2.494,2.214,1.893,3.454,3.29,3.102,2.886,2.637,2.351,2.025,3.627,3.451,3.254,3.029,2.774,2.484,2.155,3.784,3.603,3.399,3.168,2.907,2.612,2.281,3.931,3.743,3.533,3.296,3.031,2.734,2.402,4.068,3.874,3.658,3.417,3.148,2.849,2.516,4.19,3.992,3.772,3.528,3.257,2.957,2.624,4.298,4.097,3.875,3.63,3.358,3.057,2.725,4.394,4.189,3.966,3.72,3.448,3.148,2.816,4.474,4.269,4.044,3.798,3.526,3.227,2.897,2.369,2.292,2.192,2.062,1.898,1.696,1.449,2.616,2.51,2.389,2.245,2.069,1.855,1.594,2.85,2.729,2.59,2.428,2.237,2.01,1.742,3.069,2.931,2.777,2.6,2.396,2.159,1.885,3.272,3.12,2.952,2.763,2.549,2.305,2.025,3.467,3.299,3.118,2.92,2.697,2.445,2.157,3.64,3.462,3.273,3.066,2.836,2.577,2.284,3.794,3.613,3.416,3.2,2.962,2.698,2.404,3.935,3.747,3.544,3.322,3.079,2.811,2.515,4.056,3.865,3.658,3.432,3.184,2.913,2.616,4.16,3.964,3.753,3.526,3.277,3.005,2.707,4.244,4.045,3.833,3.604,3.355,3.083,2.784,1.835,1.771,1.705,1.627,1.524,1.387,1.206,2.108,2.036,1.953,1.854,1.73,1.576,1.385,2.372,2.275,2.173,2.058,1.92,1.75,1.538,2.614,2.508,2.391,2.256,2.099,1.912,1.691,2.847,2.727,2.595,2.445,2.273,2.073,1.84,3.075,2.935,2.786,2.623,2.439,2.228,1.985,3.282,3.133,2.971,2.794,2.596,2.374,2.124,3.47,3.309,3.136,2.948,2.741,2.511,2.254,3.637,3.466,3.283,3.086,2.871,2.634,2.373,3.781,3.601,3.411,3.206,2.984,2.742,2.476,3.899,3.714,3.518,3.308,3.081,2.835,2.567,3.989,3.8,3.6,3.387,3.158,2.91,2.642,1.429,1.419,1.393,1.343,1.261,1.139,0.97,1.626,1.577,1.529,1.472,1.392,1.28,1.123,1.829,1.787,1.731,1.656,1.556,1.428,1.266,2.094,2.018,1.937,1.845,1.733,1.596,1.426,2.335,2.248,2.155,2.049,1.923,1.769,1.58,2.581,2.485,2.376,2.251,2.106,1.938,1.743,2.826,2.71,2.584,2.444,2.286,2.106,1.902,3.059,2.924,2.781,2.626,2.456,2.265,2.05,3.266,3.117,2.961,2.792,2.609,2.408,2.185,3.447,3.285,3.116,2.937,2.744,2.534,2.303,3.591,3.422,3.244,3.055,2.853,2.635,2.4,3.694,3.521,3.337,3.142,2.934,2.712,2.476,0.89,0.867,0.837,0.795,0.738,0.663,0.566,1.029,1.044,1.021,0.968,0.889,0.793,0.685,1.26,1.229,1.187,1.131,1.06,0.971,0.862,1.434,1.429,1.398,1.343,1.265,1.165,1.046,1.74,1.694,1.635,1.561,1.471,1.364,1.236,1.993,1.943,1.875,1.789,1.685,1.564,1.426,2.269,2.187,2.099,2.001,1.89,1.762,1.611,2.548,2.443,2.335,2.22,2.092,1.949,1.785,2.807,2.686,2.561,2.428,2.284,2.124,1.945,3.034,2.903,2.764,2.614,2.453,2.279,2.091,3.221,3.076,2.924,2.763,2.591,2.407,2.208,3.349,3.198,3.038,2.868,2.689,2.497,2.294,0.836,0.908,0.872,0.762,0.614,0.464,0.346,0.721,0.73,0.715,0.679,0.622,0.547,0.456,0.827,0.833,0.82,0.79,0.741,0.675,0.589,0.973,0.981,0.973,0.947,0.901,0.831,0.735,1.194,1.172,1.149,1.119,1.075,1.01,0.918,1.445,1.405,1.366,1.322,1.268,1.199,1.111,1.736,1.692,1.637,1.57,1.492,1.404,1.307,2.024,1.962,1.893,1.816,1.727,1.623,1.502,2.316,2.235,2.149,2.055,1.948,1.827,1.687,2.584,2.483,2.379,2.269,2.147,2.01,1.853,2.812,2.7,2.581,2.454,2.316,2.165,1.998,2.984,2.859,2.729,2.59,2.442,2.281,2.106,0.533,0.541,0.525,0.483,0.411,0.309,0.173,0.493,0.469,0.456,0.442,0.417,0.369,0.287,0.479,0.511,0.522,0.514,0.485,0.435,0.365,0.664,0.643,0.627,0.609,0.585,0.548,0.493,0.767,0.786,0.784,0.767,0.74,0.709,0.678,1.02,1.001,0.993,0.985,0.966,0.927,0.855,1.27,1.241,1.227,1.214,1.189,1.138,1.047,1.547,1.526,1.495,1.453,1.398,1.329,1.246,1.845,1.803,1.752,1.692,1.621,1.539,1.443,2.134,2.078,2.01,1.93,1.839,1.737,1.625,2.402,2.322,2.236,2.143,2.038,1.922,1.789,2.633,2.536,2.433,2.323,2.203,2.071,1.925,-0.039,-0.064,-0.066,-0.063,-0.071,-0.107,-0.188,0.052,0.03,0.023,0.02,0.012,-0.012,-0.06,0.095,0.113,0.122,0.122,0.11,0.085,0.044,0.281,0.263,0.252,0.243,0.233,0.218,0.196,0.404,0.423,0.426,0.419,0.405,0.389,0.376,0.635,0.631,0.632,0.632,0.624,0.602,0.557,0.865,0.855,0.853,0.851,0.839,0.809,0.752,1.146,1.13,1.112,1.088,1.056,1.013,0.956,1.435,1.407,1.376,1.339,1.293,1.236,1.164,1.727,1.685,1.64,1.59,1.53,1.458,1.368,2.023,1.969,1.908,1.838,1.758,1.666,1.563,2.321,2.248,2.167,2.077,1.977,1.867,1.747,-0.596,-0.602,-0.601,-0.597,-0.594,-0.595,-0.605,-0.432,-0.433,-0.433,-0.433,-0.436,-0.443,-0.456,-0.257,-0.267,-0.27,-0.271,-0.272,-0.276,-0.287,-0.095,-0.091,-0.088,-0.088,-0.089,-0.095,-0.104,0.114,0.105,0.105,0.109,0.109,0.097,0.068,0.311,0.311,0.308,0.3,0.29,0.277,0.262,0.541,0.548,0.538,0.518,0.494,0.473,0.462,0.823,0.795,0.775,0.757,0.738,0.711,0.671,1.094,1.068,1.045,1.02,0.989,0.946,0.888,1.379,1.334,1.303,1.274,1.239,1.187,1.11,1.689,1.652,1.607,1.552,1.489,1.417,1.336,2.042,1.986,1.92,1.845,1.762,1.67,1.571,-0.859,-0.849,-0.849,-0.854,-0.858,-0.858,-0.847,-0.676,-0.669,-0.667,-0.668,-0.671,-0.674,-0.676,-0.458,-0.47,-0.477,-0.479,-0.479,-0.479,-0.481,-0.296,-0.288,-0.282,-0.28,-0.281,-0.286,-0.296,-0.072,-0.088,-0.091,-0.088,-0.087,-0.095,-0.122,0.108,0.104,0.098,0.091,0.083,0.075,0.067,0.326,0.327,0.315,0.297,0.278,0.264,0.261,0.572,0.552,0.536,0.523,0.508,0.489,0.464,0.82,0.804,0.787,0.768,0.744,0.714,0.676,1.093,1.07,1.046,1.019,0.987,0.948,0.9,1.412,1.377,1.341,1.3,1.254,1.201,1.139,1.778,1.728,1.676,1.619,1.554,1.481,1.397,-0.754,-0.76,-0.76,-0.759,-0.765,-0.783,-0.82,-0.589,-0.601,-0.605,-0.606,-0.609,-0.618,-0.64,-0.482,-0.463,-0.454,-0.454,-0.462,-0.477,-0.496,-0.286,-0.304,-0.314,-0.321,-0.327,-0.336,-0.35,-0.171,-0.153,-0.155,-0.167,-0.179,-0.181,-0.161,0.015,0.012,0.015,0.019,0.02,0.015,-0.001,0.194,0.17,0.176,0.195,0.211,0.208,0.169,0.371,0.388,0.392,0.386,0.374,0.361,0.349,0.595,0.602,0.595,0.579,0.562,0.547,0.542,0.854,0.883,0.867,0.826,0.779,0.746,0.749,1.172,1.131,1.101,1.075,1.049,1.017,0.974,1.502,1.455,1.416,1.38,1.339,1.287,1.216,-1.009,-1.008,-1.007,-1.006,-1.005,-1.002,-0.999,-0.85,-0.849,-0.849,-0.849,-0.851,-0.853,-0.856,-0.691,-0.696,-0.698,-0.7,-0.701,-0.703,-0.706,-0.553,-0.551,-0.549,-0.549,-0.55,-0.552,-0.555,-0.394,-0.399,-0.398,-0.396,-0.394,-0.396,-0.406,-0.242,-0.242,-0.242,-0.243,-0.244,-0.244,-0.243,-0.074,-0.068,-0.07,-0.075,-0.081,-0.082,-0.074,0.118,0.11,0.107,0.107,0.107,0.108,0.106,0.325,0.318,0.315,0.314,0.312,0.308,0.299,0.56,0.542,0.537,0.538,0.538,0.531,0.509,0.824,0.824,0.816,0.802,0.783,0.761,0.737,1.135,1.133,1.117,1.091,1.058,1.022,0.988],"alpha":196.32,"ratios":[1.0,0.4511],"slide":[0.223,0.239]}};
+MAT.dntt.tab=TLT.dntt; MAT.c8.tab=TLT.c8; MAT.mtp.tab=TLT.mtp;
 
-  function loop(now){if(!reduce)time=now;drawLattice(time);requestAnimationFrame(loop);}
-  function sizeAll(){build();pbuild();drawPlot();if(reduce)drawLattice(time);}
-  if(window.ResizeObserver){
-    new ResizeObserver(function(){build();if(reduce)drawLattice(time);}).observe(cv);
-    new ResizeObserver(function(){pbuild();drawPlot();}).observe(pc);
+/* Molecular outlines and lattice offsets for drawing, projected from the CIF heavy atoms (A). */
+var GEO={"dntt":{"a":6.187,"b":7.662,"d":16.195,"off":[2.876,3.831,-0.948],"A":{"side":[[-0.76,0.87],[-0.72,-4.98],[-0.49,-6.3],[0.14,-6.73],[0.5,-5.83],[0.88,-0.86],[0.68,4.97],[0.41,6.28],[-0.25,6.72],[-0.6,5.81]],"top":[[0.88,1.7],[0.68,2.31],[0.41,2.11],[-0.25,0.94],[-0.6,-0.02],[-0.76,-1.75],[-0.72,-2.28],[-0.49,-2.08],[0.14,-0.9],[0.5,0.05]],"ax":[0.182,0.004,0.983],"ch":[],"mx":[0.887,0.4312,-0.1655],"nx":[-0.4247,0.9023,0.0747],"at":[-0.59,-0.145,-1.706,0.619,0.44,-2.165,-1.535,-0.55,-2.625,0.053,0.496,-5.835,0.853,0.649,-3.504,-0.117,0.264,-4.442,-1.325,-0.348,-3.995,-2.28,-0.724,-4.979,-2.076,-0.486,-6.301,-0.898,0.144,-6.732,-1.745,-0.761,0.869,0.528,0.342,0.289,-0.64,-0.401,2.179,0.564,0.221,1.719,-0.611,-0.149,-0.283,-0.84,-0.675,3.502,0.145,-0.328,4.446,-0.018,-0.601,5.814,0.939,-0.248,6.718,1.695,0.877,-0.865,2.31,0.676,4.974,1.339,0.319,4.004,1.524,0.579,2.639,2.109,0.411,6.281],"el":"CCCCCCCCCCSCCCCCCCCSCCCC","core":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"bd":[0,1,0,2,0,14,1,4,1,19,2,6,3,5,3,9,4,5,5,6,6,7,7,8,8,9,10,12,10,14,11,13,11,14,11,19,12,13,12,15,13,22,15,16,16,17,16,21,17,18,18,23,20,21,20,23,21,22]},"B":{"side":[[-0.72,4.98],[-0.76,-0.87],[-0.6,-5.81],[-0.25,-6.72],[0.41,-6.28],[0.68,-4.97],[0.88,0.86],[0.5,5.83],[0.14,6.73],[-0.49,6.3]],"top":[[0.68,-2.31],[0.88,-1.7],[0.5,-0.05],[0.14,0.9],[-0.49,2.08],[-0.72,2.28],[-0.76,1.75],[-0.6,0.02],[-0.25,-0.94],[0.41,-2.11]],"ax":[0.182,-0.004,0.983],"ch":[],"mx":[0.887,-0.4312,-0.1655],"nx":[0.4247,0.9023,-0.0747],"at":[-2.31,0.676,-4.974,-1.339,0.319,-4.004,-1.524,0.579,-2.639,-2.109,0.411,-6.281,-1.695,0.877,0.865,1.745,-0.761,-0.869,-0.528,0.342,-0.289,0.64,-0.401,-2.179,-0.564,0.221,-1.719,0.611,-0.149,0.283,0.84,-0.675,-3.502,-0.145,-0.328,-4.446,0.018,-0.601,-5.814,-0.939,-0.248,-6.718,0.59,-0.145,1.706,-0.619,0.44,2.165,1.535,-0.55,2.625,-0.053,0.496,5.835,-0.853,0.649,3.504,0.117,0.264,4.442,1.325,-0.348,3.995,2.28,-0.724,4.979,2.076,-0.486,6.301,0.898,0.144,6.732],"el":"CCCCSSCCCCCCCCCCCCCCCCCC","core":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"bd":[0,1,0,3,1,2,1,11,2,8,3,13,4,6,4,15,5,7,5,9,6,8,6,9,7,8,7,10,9,14,10,11,11,12,12,13,14,15,14,16,15,18,16,20,17,19,17,23,18,19,19,20,20,21,21,22,22,23]},"motion":{"rM":0.757,"rN":0.692,"kL":19.43,"kM":8.24,"kN":7.49,"src_uL":0.2103,"src_lib_deg":[4.09,1.73,1.57],"src":"DNTT.cif 293 K"}},"c8":{"a":5.987,"b":7.861,"d":33.563,"off":[2.994,3.931,0.0],"A":{"side":[[-0.59,5.86],[-0.91,0.85],[-0.8,-5.04],[-0.52,-6.38],[0.2,-6.8],[0.59,-5.86],[0.91,-0.85],[0.8,5.04],[0.52,6.38],[-0.2,6.8]],"top":[[0.91,1.72],[0.8,2.2],[0.52,1.98],[-0.2,0.83],[-0.59,-0.1],[-0.91,-1.72],[-0.8,-2.2],[-0.52,-1.98],[0.2,-0.83],[0.59,0.1]],"ax":[0.166,0.008,0.986],"ch":[{"side":[[0.2,-6.8],[0.55,-8.26],[-0.17,-8.95],[0.31,-10.38],[-0.32,-11.1],[0.26,-12.49],[-0.35,-13.23],[0.26,-14.62],[-0.36,-15.37]],"top":[[0.2,-0.83],[0.55,-0.65],[-0.17,0.52],[0.31,0.74],[-0.32,1.93],[0.26,2.16],[-0.35,3.35],[0.26,3.58],[-0.36,4.76]]},{"side":[[-0.2,6.8],[-0.55,8.26],[0.17,8.95],[-0.31,10.38],[0.32,11.1],[-0.26,12.49],[0.35,13.23],[-0.26,14.62],[0.36,15.37]],"top":[[-0.2,0.83],[-0.55,0.65],[0.17,-0.52],[-0.31,-0.74],[0.32,-1.93],[-0.26,-2.16],[0.35,-3.35],[-0.26,-3.58],[0.36,-4.76]]}],"mx":[0.8686,0.4722,-0.1501],"nx":[-0.4668,0.8815,0.0716],"at":[-2.2,-0.799,-5.044,-1.983,-0.519,-6.375,1.716,0.905,-0.85,-0.56,-0.273,-0.303,-0.556,-0.201,-1.733,-1.486,-0.633,-2.674,-1.268,-0.389,-4.049,-0.833,0.2,-6.804,0.098,0.591,-5.858,-0.077,0.307,-4.478,0.882,0.715,-3.516,0.646,0.461,-2.182,-0.645,0.553,-8.262,0.52,-0.174,-8.952,0.737,0.314,-10.385,1.933,-0.322,-11.095,2.163,0.255,-12.494,3.355,-0.354,-13.235,3.584,0.26,-14.618,4.759,-0.362,-15.371,-1.716,-0.905,0.85,0.56,0.273,0.303,0.556,0.201,1.733,1.486,0.633,2.674,1.268,0.389,4.049,0.833,-0.2,6.804,-0.098,-0.591,5.858,0.077,-0.307,4.478,-0.882,-0.715,3.516,-0.646,-0.461,2.182,0.645,-0.553,8.262,-0.52,0.174,8.952,-0.737,-0.314,10.385,-1.933,0.322,11.095,-2.163,-0.255,12.494,-3.355,0.354,13.235,-3.584,-0.26,14.618,-4.759,0.362,15.371,2.2,0.799,5.044,1.983,0.519,6.375],"el":"CCSCCCCCCCCCCCCCCCCCSCCCCCCCCCCCCCCCCCCC","core":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1],"bd":[0,1,0,6,1,7,2,11,2,21,3,4,3,20,3,21,4,5,4,11,5,6,6,9,7,8,7,12,8,9,9,10,10,11,12,13,13,14,14,15,15,16,16,17,17,18,18,19,20,29,21,22,22,23,22,29,23,24,24,27,24,38,25,26,25,30,25,39,26,27,27,28,28,29,30,31,31,32,32,33,33,34,34,35,35,36,36,37,38,39]},"B":{"side":[[-0.8,5.04],[-0.91,-0.85],[-0.59,-5.86],[-0.2,-6.8],[0.52,-6.38],[0.8,-5.04],[0.91,0.85],[0.59,5.86],[0.2,6.8],[-0.52,6.38]],"top":[[0.8,-2.2],[0.91,-1.72],[0.59,-0.1],[0.2,0.83],[-0.52,1.98],[-0.8,2.2],[-0.91,1.72],[-0.59,0.1],[-0.2,-0.83],[0.52,-1.98]],"ax":[0.166,-0.008,0.986],"ch":[{"side":[[-0.2,-6.8],[-0.55,-8.26],[0.17,-8.95],[-0.31,-10.38],[0.32,-11.1],[-0.26,-12.49],[0.35,-13.23],[-0.26,-14.62],[0.36,-15.37]],"top":[[-0.2,-0.83],[-0.55,-0.65],[0.17,0.52],[-0.31,0.74],[0.32,1.93],[-0.26,2.16],[0.35,3.35],[-0.26,3.58],[0.36,4.76]]},{"side":[[0.2,6.8],[0.55,8.26],[-0.17,8.95],[0.31,10.38],[-0.32,11.1],[0.26,12.49],[-0.35,13.23],[0.26,14.62],[-0.36,15.37]],"top":[[0.2,0.83],[0.55,0.65],[-0.17,-0.52],[0.31,-0.74],[-0.32,-1.93],[0.26,-2.16],[-0.35,-3.35],[0.26,-3.58],[-0.36,-4.76]]}],"mx":[0.8686,-0.4722,-0.1501],"nx":[0.4668,0.8815,-0.0716],"at":[-0.833,-0.2,-6.804,0.098,-0.591,-5.858,-0.077,-0.307,-4.478,-0.645,-0.553,-8.262,0.737,-0.314,-10.385,2.163,-0.255,-12.494,-1.933,-0.322,11.095,-3.355,-0.354,13.235,-4.759,-0.362,15.371,-0.56,0.273,-0.303,-0.556,0.201,-1.733,-1.486,0.633,-2.674,-1.268,0.389,-4.049,-2.2,0.799,-5.044,-1.983,0.519,-6.375,0.52,0.174,-8.952,-1.716,0.905,0.85,-0.882,0.715,3.516,-0.646,0.461,2.182,-3.584,0.26,14.618,1.716,-0.905,-0.85,0.882,-0.715,-3.516,0.646,-0.461,-2.182,3.584,-0.26,-14.618,0.56,-0.273,0.303,0.556,-0.201,1.733,1.486,-0.633,2.674,1.268,-0.389,4.049,2.2,-0.799,5.044,1.983,-0.519,6.375,-0.52,-0.174,8.952,1.933,0.322,-11.095,3.355,0.354,-13.235,4.759,0.362,-15.371,0.833,0.2,6.804,-0.098,0.591,5.858,0.077,0.307,4.478,0.645,0.553,8.262,-0.737,0.314,10.385,-2.163,0.255,12.494],"el":"CCCCCCCCCCCCCCCCSCCCSCCCCCCCCCCCCCCCCCCC","core":[1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,0,0,0],"bd":[0,1,0,3,0,14,1,2,2,12,2,21,3,15,4,15,4,31,5,31,5,32,6,38,6,39,7,19,7,39,8,19,9,10,9,16,9,24,10,11,10,22,11,12,12,13,13,14,16,18,17,18,17,36,18,25,20,22,20,24,21,22,23,32,23,33,24,25,25,26,26,27,27,28,27,36,28,29,29,34,30,37,30,38,34,35,34,37,35,36]},"motion":{"rM":0.757,"rN":0.692,"kL":19.43,"kM":8.24,"kN":7.49,"src_uL":0.2103,"src_lib_deg":[4.09,1.73,1.57],"src":"DNTT values (C8-DNTT-C8 CIF has only a common isotropic U)"}},"mtp":{"a":[5.512,0.138,3.542],"b":[3.232,-0.438,-7.302],"c":[-3.51,8.525,1.639],"top":[[5.42,-2.31],[5.41,2.31],[3.68,2.76],[-3.69,2.76],[-5.42,2.31],[-5.41,-2.31],[-3.68,-2.76],[3.69,-2.76]],"side":[[-3.69,-0.06],[5.42,-0.08],[5.41,-0.04],[3.69,0.06],[-5.42,0.08],[-5.41,0.04]],"ext":[10.83,5.53,0.16],"motion":{"rM":0.979,"rN":1.038,"kL":19.09,"kM":10.17,"kN":8.46,"src_uL":0.1743,"src_lib_deg":[3.33,1.77,1.48],"src":"MT-pyrene 300 K, mean of the ZL and CL series"},"at":[-3.685,2.757,-0.059,-3.678,-2.764,-0.018,-1.429,1.238,-0.011,-1.424,-1.239,-0.015,-0.716,-0.002,-0.011,-2.837,-1.215,-0.031,-2.842,1.205,-0.034,0.677,-2.456,0.002,-3.514,-0.001,-0.041,-0.669,-2.456,-0.017,-5.411,-2.312,0.045,-5.416,2.312,0.078,3.685,-2.757,0.059,3.678,2.764,0.018,1.429,-1.238,0.011,1.424,1.239,0.015,0.716,0.002,0.011,2.837,1.215,0.031,2.842,-1.205,0.034,-0.677,2.456,-0.002,3.514,0.001,0.041,0.669,2.456,0.017,5.411,2.312,-0.045,5.416,-2.312,-0.078],"el":"SSCCCCCCCCCCSSCCCCCCCCCC","core":[0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,0,0],"bd":[0,6,0,11,1,5,1,10,2,4,2,6,2,19,3,4,3,5,3,9,4,16,5,8,6,8,7,9,7,14,12,18,12,23,13,17,13,22,14,16,14,18,15,16,15,17,15,21,17,20,18,20,19,21]}};
+
+/* =====================================================================
+   2. THE CHAIN
+   ===================================================================== */
+function u2A2(T,C44,m){
+  /* <u^2> = kB T/(M w_sh^2) with w_sh = 2 v_T/a: kB T a^2/(4 V C44), in A^2. This is, to 1 %, the exact
+     single-molecule mean-square displacement of a 3D harmonic lattice (Watson integral). */
+  return KB*T*Math.pow(m.aeff*1e-10,2)/(4*m.V*1e-30*C44*1e9)*1e20;
+}
+/* Neighbouring molecules in a harmonic lattice: <du^2> = (4/3)<u^2> (equipartition over the bonds).
+   sigma_J = g du. g (meV per A of neighbour slide) is computed, not fitted: DFT transfer integrals
+   (B3LYP/6-31G*, dimer projection) of every network bond with the partner molecule displaced along and
+   rotated about its own axes; the six gradients are combined with the measured proportions of the
+   rigid-body motion (CIF displacement parameters): g_b^2 = sum_q (dJ_b/dq)^2 (q_rms/u_rms)^2. Scaled by
+   J_lit/J_DFT of the reference bond. TLT.<key>.alpha = g of the reference (largest) bond; the other bonds
+   carry sigma_b = r_b sigma (TLT.<key>.ratios), already built into the tables. See ti/ratios.py. */
+/* Lindemann guard: the softest setting keeps sqrt<u^2> below 10 % of the nearest-neighbour distance at 400 K. */
+function c44Floor(m){var u2max=Math.pow(0.1*m.dNN,2);
+  return Math.ceil(KB*400*Math.pow(m.aeff*1e-10,2)/(4*m.V*1e-30*u2max*1e-20)/1e9/0.005)*0.005;}
+['dntt','c8','mtp'].forEach(function(k){MAT[k].c44min=c44Floor(MAT[k]);});
+MAT.dntt.c44=MAT.dntt.c44min;      // DNTT's DFT value (0.095 GPa) lies below its floor
+
+function axisPos(v,lo,step,n){
+  var f=(Math.log(v)/Math.LN10-lo)/step;
+  if(!(f>0))f=0; if(f>n-1)f=n-1;
+  var i=Math.min(n-2,Math.floor(f));
+  return [i,f-i];
+}
+function crw(t){var t2=t*t,t3=t2*t;                        // Catmull-Rom weights: C1-smooth curves
+  return [(-t3+2*t2-t)/2,(3*t3-5*t2+2)/2,(-3*t3+4*t2+t)/2,(t3-t2)/2];}
+function tltL2(tab,D,th,w){
+  var G=TLT, a=axisPos(D,G.d0,G.dd,G.nd), b=axisPos(th,G.t0,G.dt,G.nt), c=axisPos(w,G.w0,G.dw,G.nw);
+  var wa=crw(a[1]), wb=crw(b[1]), wc=crw(c[1]), out=[0,0];
+  for(var s=0;s<2;s++){
+    var arr=s?tab.y:tab.x, acc=0;
+    for(var di=0;di<4;di++){var ia=Math.min(G.nd-1,Math.max(0,a[0]+di-1));
+      for(var ti=0;ti<4;ti++){var it=Math.min(G.nt-1,Math.max(0,b[0]+ti-1)), wab=wa[di]*wb[ti];
+        for(var wi=0;wi<4;wi++){var iw=Math.min(G.nw-1,Math.max(0,c[0]+wi-1));
+          acc+=wab*wc[wi]*arr[(ia*G.nt+it)*G.nw+iw];}}}
+    out[s]=Math.pow(10,acc);
   }
-  window.addEventListener('resize',sizeAll);
-  requestAnimationFrame(function(){sizeAll();update();requestAnimationFrame(loop);});
+  return out;
+}
+function chainOf(T,C44,J,m){
+  var vT=Math.sqrt(C44*1e9/(m.rho*1e3));                    // shear sound velocity, m/s
+  var hw=1e3*HBAR*2*vT/(m.aeff*1e-10)/QE;                   // hbar*omega_sh = 2 hbar v_T/a, meV
+  var u2=u2A2(T,C44,m);                                     // A^2
+  var urms=Math.sqrt(u2), du=Math.sqrt(4/3*u2);             // A
+  var sigma=m.tab.alpha*du;                                 // meV, reference bond
+  var Delta=sigma/J;
+  var w=hw/J, ws=m.tab.cs*Delta*Delta;                      // lattice rate and Born scattering rate, units of J
+  var L2=tltL2(m.tab,Delta,KB_MEV*T/J,w);                  // A^2, along the two network axes
+  /* Weak disorder: once the lattice moves faster than the carrier scatters (x = w/ws > 1), the
+     relaxation-time form would let the lattice motion itself relax the current. In that limit the table
+     obeys w L^2 = A/(w + ws), so the band (Born) limit needs a factor 1 + x. K = 1 + x tanh x reaches it
+     and stays 1 + O(x^2) where transient localisation applies; in the crossover it is an interpolation
+     (up to 18 % below 1 + x near x = 0.5). */
+  var x=w/ws, K=1+x*Math.tanh(x);
+  L2=[L2[0]*K,L2[1]*K];
+  var L2m=0.5*(L2[0]+L2[1]);
+  var tau=HBAR_MEVPS/hw;                                    // ps
+  var f=1e-16/(2*(T/K_PER_V)*tau*1e-12);                    // A^2 -> cm^2/Vs
+  return {vT:vT,hw:hw,u2:u2,urms:urms,du:du,sigma:sigma,Delta:Delta,L2x:L2[0],L2y:L2[1],
+          LT:Math.sqrt(L2m)/10,Lx:Math.sqrt(L2[0])/10,Ly:Math.sqrt(L2[1])/10,tau:tau,
+          mu:L2m*f,mux:L2[0]*f,muy:L2[1]*f,kap:Math.pow(C44/m.c44,1.5)/(T/300),band:(x>1),K:K};
+}
+function c44ForMu(target,m,T,J){        // smallest C44 at which the chain reaches a given mobility
+  var lo=Math.log(m.c44min), hi=Math.log(5);
+  if(chainOf(T,Math.exp(hi),J,m).mu<target) return null;
+  for(var i=0;i<50;i++){var mid=(lo+hi)/2; if(chainOf(T,Math.exp(mid),J,m).mu<target) lo=mid; else hi=mid;}
+  return Math.exp(hi);
+}
+var c44D=c44ForMu(8,MAT.dntt,300,118);
+MAT.dntt.desc='DNTT &middot; herringbone, upright &middot; a = b/2 = 3.83 &#197; &middot; opens at its Lindemann floor, '
+  +MAT.dntt.c44min.toFixed(3)+' GPa (DFT 0.095 GPa lies below); its single-crystal &mu; &asymp; 8 cm&#178;V&#8315;&#185;s&#8315;&#185; needs C&#8324;&#8324; &#8819; '
+  +(c44D?c44D.toFixed(1):'5')+' GPa here';
+MAT.c8.desc='C8-DNTT-C8 &middot; herringbone, upright, octyl ends &middot; a = b/2 = 3.93 &#197; &middot; default C&#8324;&#8324; 0.796 GPa (DFT)';
+MAT.mtp.desc='MT-pyrene &middot; brickwork, &pi;-planes &parallel; substrate &middot; a = d<sub>&pi;</sub> = 3.54 &#197; &middot; default C&#8324;&#8324; 2.674 GPa (DFT)';
+
+/* =====================================================================
+   3. STATE AND READOUTS
+   ===================================================================== */
+var MP=MAT.mtp, T=300, C44=MP.c44, J=114, chain=chainOf(T,C44,J,MP);
+var shearOnly=false, VIS=6;
+var temp=document.getElementById('temp'), c44=document.getElementById('c44'), jint=document.getElementById('jint');
+var ACC={temp:'#FF9A52',c44:'#9C8CFF',jint:'#54D6FF'};
+function fill(el,key){var mn=+el.min,mx=+el.max,p=(+el.value-mn)/(mx-mn)*100;
+  el.style.background='linear-gradient(90deg,'+ACC[key]+' 0%,'+ACC[key]+' '+p+'%, #2A3552 '+p+'%, #2A3552 100%)';}
+function $(id){return document.getElementById(id);}
+function setT(id,v){$(id).textContent=v;}
+function sig2(x){ // two significant figures, plain decimal (the TLT tables carry a few % uncertainty)
+  var r=+x.toPrecision(2), d=Math.max(0,1-Math.floor(Math.log10(Math.abs(r)||1))); return r.toFixed(Math.min(4,d));}
+function p3(x){ // three significant figures, plain decimal (rounded first, so 9.996 shows as 10.0, not 10.00)
+  var r=+x.toPrecision(3), d=Math.max(0,2-Math.floor(Math.log10(Math.abs(r)||1))); return r.toFixed(Math.min(5,d));}
+function localExponent(){
+  var a=1.20,m1=chainOf(T*a,C44,J,MP).mu,m0=chainOf(T/a,C44,J,MP).mu;   // +-20 % in T: local power law, insensitive to table ripple
+  return -(Math.log(m1)-Math.log(m0))/(2*Math.log(a));
+}
+function update(){
+  T=+temp.value; C44=+c44.value; J=+jint.value; chain=chainOf(T,C44,J,MP);
+  fill(temp,'temp'); fill(c44,'c44'); fill(jint,'jint');
+  setT('tVal',T); setT('cVal',C44.toFixed(3)); setT('jVal',J);
+  setT('vC44',C44.toFixed(3)); setT('vOmega',chain.hw.toFixed(2));
+  setT('vKappa',p3(chain.kap)); setT('vU2',p3(chain.u2));
+  setT('vSigma',p3(chain.sigma)); setT('vDelta',p3(chain.Delta));
+  setT('vLT',sig2(chain.LT)); setT('vMu',sig2(chain.mu));
+  $('muLab').innerHTML='electronic face &middot; &tau; = 1/&omega;<sub>sh</sub>'+(chain.band?' &middot; <span style="color:var(--amber)">band limit</span>':'');
+  $('ltLab').textContent=chain.band?'band limit: diffusion length over \u03C4':'transient localisation length';
+  var isHB=(MP.key!=='mtp');
+  $('latcap').innerHTML=MP.desc+'<br>'
+    +'&radic;&#10216;u&#178;&#10217; <b>'+chain.urms.toFixed(3)+'</b> &#197; &middot; '
+    +'neighbour slide &delta;u <b>'+chain.du.toFixed(3)+'</b> &#197; &middot; '
+    +'drawn <b>&times;'+VIS+'</b> (rms; rocking true size) &middot; '
+    +'<span class="c">halo</span> L<sub>&tau;</sub> <b>'+sig2(chain.Lx)+'</b> &times; <b>'+sig2(chain.Ly)+'</b> nm, '
+    +'&mu; <b>'+sig2(chain.mux)+'</b> / <b>'+sig2(chain.muy)+'</b> '
+    +(isHB?'(along a / b)':'(along the long axis / stack normal)');
+  var n=localExponent(), ns=Math.abs(n).toFixed(1);
+  var trend = n>0.05 ? 'locally <b>&mu; &prop; T<sup>&minus;'+ns+'</sup></b>, falling as the lattice warms: band-like'
+            : (n<-0.05 ? 'locally <b>&mu; &prop; T<sup>+'+ns+'</sup></b>: disorder so strong that warming helps'
+                       : 'locally &mu; is nearly flat in T');
+  $('pcap').innerHTML='Log&ndash;log, '+MP.name+'. Solid: current C&#8324;&#8324;; dashed: C&#8324;&#8324; = 5 GPa. Here '+trend+'.';
+  drawPlot();
+  if(reduce) drawLattice();
+}
+temp.addEventListener('input',update); c44.addEventListener('input',update); jint.addEventListener('input',update);
+
+/* =====================================================================
+   4. LATTICE DRAWING  (both panels share one pixels-per-angstrom scale)
+   ===================================================================== */
+var cs=$('cs'), sx=cs.getContext('2d'), ct=$('ct'), tx=ct.getContext('2d');
+var SW=0,SH=0,TW=0,TH=0,PXA=8, SIDE_A=66;
+var PHZ=0, PHT=0, lastNow=0, SQ2=Math.SQRT2;    // shear amplitude sqrt2*U gives an rms of U
+var molsSide=[], molsTop=[];
+
+function hash(i,j,k,s){var x=Math.sin(i*127.1+j*311.7+k*74.7+s*19.19)*43758.5453; return x-Math.floor(x);}
+function randoms(i,j,k){   // per-molecule phases and frequencies: slide jitter, M, N, rocking about L, M, N
+  var r=[]; for(var s=0;s<12;s++) r.push(hash(i,j,k,s+1));
+  return {ph:[r[0]*6.2832,r[1]*6.2832,r[2]*6.2832,r[3]*6.2832,r[4]*6.2832,r[5]*6.2832],
+          fr:[0.7+0.8*r[6],0.7+0.8*r[7],0.7+0.8*r[8],0.6+0.6*r[9],0.6+0.6*r[10],0.6+0.6*r[11]]};
+}
+function sizeLat(){
+  var dp=Math.min(window.devicePixelRatio||1,2);
+  var a=cs.getBoundingClientRect(); SW=Math.max(40,a.width); SH=Math.max(40,a.height);
+  cs.width=Math.round(SW*dp); cs.height=Math.round(SH*dp); sx.setTransform(dp,0,0,dp,0,0);
+  var b=ct.getBoundingClientRect(); TW=Math.max(40,b.width); TH=Math.max(40,b.height);
+  ct.width=Math.round(TW*dp); ct.height=Math.round(TH*dp); tx.setTransform(dp,0,0,dp,0,0);
+  PXA=(SH*0.84)/SIDE_A;
+  var w=Math.round(10*PXA)+'px'; $('sb1').style.width=w; $('sb2').style.width=w;
+  buildLists();
+}
+function bgFill(g,W,H){var r=g.createRadialGradient(W*.5,H*.45,0,W*.5,H*.45,Math.max(W,H)*.75);
+  r.addColorStop(0,'#0E1426'); r.addColorStop(1,'#070A14'); g.fillStyle=r; g.fillRect(0,0,W,H);}
+
+/* polygon outline (A coordinates) placed at (x,y) px, rotated by ang, scale px/A */
+function poly(g,pts,x,y,ang,px){
+  var c=Math.cos(ang), s=Math.sin(ang);
+  g.beginPath();
+  for(var i=0;i<pts.length;i++){var u=pts[i][0]*px, v=pts[i][1]*px;
+    var X=x+u*c-v*s, Y=y+u*s+v*c; if(i)g.lineTo(X,Y); else g.moveTo(X,Y);}
+  g.closePath();
+}
+function line(g,pts,x,y,ang,px){
+  var c=Math.cos(ang), s=Math.sin(ang);
+  g.beginPath();
+  for(var i=0;i<pts.length;i++){var u=pts[i][0]*px, v=pts[i][1]*px;
+    var X=x+u*c-v*s, Y=y+u*s+v*c; if(i)g.lineTo(X,Y); else g.moveTo(X,Y);}
+}
+function halo(g,cx,cy,rx,ry,rot){
+  rx=Math.max(rx,2); ry=Math.max(ry,2);
+  g.save(); g.globalCompositeOperation='lighter';
+  g.translate(cx,cy); g.rotate(rot||0); g.scale(rx,ry);
+  var gr=g.createRadialGradient(0,0,0,0,0,1);
+  gr.addColorStop(0,'rgba(84,214,255,0.42)'); gr.addColorStop(0.5,'rgba(84,214,255,0.16)'); gr.addColorStop(1,'rgba(84,214,255,0)');
+  g.fillStyle=gr; g.beginPath(); g.arc(0,0,1,0,6.2832); g.fill(); g.restore();
+}
+var COL_A={fill:'rgba(40,52,82,0.92)',stroke:'rgba(236,242,252,0.92)'};
+var COL_B={fill:'rgba(48,40,96,0.92)',stroke:'rgba(156,140,255,1)'};
+
+/* ---------------- equilibrium positions, rebuilt only on resize or material change ---------------- */
+function buildLists(){
+  molsSide=[]; molsTop=[];
+  var px=PXA;
+  if(MP.key!=='mtp'){
+    var G=GEO[MP.key], nL=(MP.key==='dntt')?3:2;
+    /* SIDE (look along a): x = b, y = -n. Molecule A at b = j*b, B at j*b + B_b, raised by B_n. */
+    var nlo=1e9,nhi=-1e9;
+    ['A','B'].forEach(function(s){G[s].side.forEach(function(p){nlo=Math.min(nlo,p[1]);nhi=Math.max(nhi,p[1]);});
+      G[s].ch.forEach(function(c){c.side.forEach(function(p){nlo=Math.min(nlo,p[1]);nhi=Math.max(nhi,p[1]);});});});
+    var stackLo=nlo+Math.min(0,G.off[2]), stackHi=(nL-1)*G.d+nhi+Math.max(0,G.off[2]);
+    var y0=SH/2+((stackLo+stackHi)/2)*px;            // centre the stack vertically
+    var insX=SW*0.04+2*px;
+    var jmax=Math.ceil(SW/(G.b*px))+2;
+    for(var k=0;k<nL;k++)for(var j=-jmax;j<=jmax;j++)for(var s=0;s<2;s++){
+      var bb=j*G.b+(s?G.off[1]:0), nn=k*G.d+(s?G.off[2]:0);
+      var x=SW/2+bb*px, y=y0-nn*px;
+      if(x-1.2*px<insX||x+1.2*px>SW-insX) continue;      // whole molecule inside the inset: no edge popping
+      if(!isFinite(x)||!isFinite(y)) continue;
+      var R=randoms(j,k,s); R.x=x; R.y=y; R.s=s; R.sg=s?-1:1; molsSide.push(R);
+    }
+    /* TOP (look down n): x = b, y = a. One layer. */
+    var imax=Math.ceil(TH/(G.a*px))+2; jmax=Math.ceil(TW/(G.b*px))+2;
+    var best=1e9;
+    for(var i=-imax;i<=imax;i++)for(var j2=-jmax;j2<=jmax;j2++)for(var s2=0;s2<2;s2++){
+      var aa=i*G.a+(s2?G.off[0]:0), b2=j2*G.b+(s2?G.off[1]:0);
+      var x2=TW/2+b2*px, y2=TH/2+aa*px;
+      if(x2<-4*px||x2>TW+4*px||y2<-4*px||y2>TH+4*px) continue;
+      var R2=randoms(i,j2,s2+7); R2.x=x2; R2.y=y2; R2.s=s2; R2.sg=s2?-1:1; molsTop.push(R2);
+      if(s2===0&&i===0&&j2===0) R2.centre=true;
+    }
+  } else {
+    var g=GEO.mtp, A=g.a, B=g.b, C=g.c;
+    /* SIDE (look along S): one brickwork sheet, points k a + m b; screen (L,-Z) rotated so the row 2a+b is level */
+    var rL=2*A[0]+B[0], rZ=2*A[2]+B[2];
+    var rot=-Math.atan2(-rZ,rL); if(rot>Math.PI/2)rot-=Math.PI; if(rot<-Math.PI/2)rot+=Math.PI;
+    var cR=Math.cos(rot), sR=Math.sin(rot);
+    molsSide.rot=rot;
+    var hl=g.ext[0]/2, insX2=SW*0.06, insY=SH*0.14;
+    var KX=Math.ceil(SW/px/4)+6, MX=Math.ceil(SH/px/4)+6;
+    for(var m=-MX;m<=MX;m++)for(var k2=-KX;k2<=KX;k2++){
+      var L=k2*A[0]+m*B[0], Z=k2*A[2]+m*B[2];
+      var ex=L*px, ey=-Z*px;
+      var xs=SW/2+ex*cR-ey*sR, ys=SH/2+ex*sR+ey*cR;
+      if(xs-hl*px<insX2||xs+hl*px>SW-insX2||ys-2*px<insY||ys+2*px>SH-insY) continue;
+      var R3=randoms(k2,m,3); R3.x=xs; R3.y=ys; R3.Z=Z; R3.k=k2; molsSide.push(R3);
+      if(k2===0&&m===0) R3.centre=true;
+    }
+    /* TOP (look down Z): a depth slab |Z| < 3.9 A; screen (L,S) rotated so the same row is level */
+    var qL=2*A[0]+B[0], qS=2*A[1]+B[1];
+    var trot=-Math.atan2(qS,qL); if(trot>Math.PI/2)trot-=Math.PI; if(trot<-Math.PI/2)trot+=Math.PI;
+    var cT=Math.cos(trot), sT=Math.sin(trot);
+    molsTop.rot=trot;
+    var KT=Math.ceil(TW/px/5)+6, LT_=Math.ceil(TH/px/7)+4;
+    for(var l=-LT_;l<=LT_;l++)for(var k3=-KT;k3<=KT;k3++){
+      var z0=(k3*A[2]+l*C[2]);
+      var mlo=Math.ceil((z0-3.9)/(-B[2])), mhi=Math.floor((z0+3.9)/(-B[2]));   // B[2] < 0
+      for(var m3=mlo;m3<=mhi;m3++){
+        var Z3=k3*A[2]+m3*B[2]+l*C[2]; if(Math.abs(Z3)>=3.9) continue;
+        var L3=k3*A[0]+m3*B[0]+l*C[0], S3=k3*A[1]+m3*B[1]+l*C[1];
+        var X3=TW/2+(L3*cT-S3*sT)*px, Y3=TH/2+(L3*sT+S3*cT)*px;
+        if(X3<-hl*px||X3>TW+hl*px||Y3<-4*px||Y3>TH+4*px) continue;
+        var R4=randoms(k3,m3,l+11); R4.x=X3; R4.y=Y3; R4.Z=Z3; R4.k=k3; R4.fade=1-Math.min(0.78,Math.abs(Z3)/4.4);   // depth cue: the central plane bright, stacked planes faint
+        molsTop.push(R4);
+      }
+    }
+    molsTop.sort(function(u,v){return v.fade<u.fade?1:(v.fade>u.fade?-1:0);});   // faint (deep) first
+    molsTop.rot=trot;
+  }
+}
+
+/* ---------------- per-frame drawing: the real molecules from the CIFs ---------------- */
+/* Each molecule is drawn from its CIF heavy atoms and bonds (GEO.<key>.A/B or GEO.mtp: at, el, core, bd), in its
+   crystal orientation, moved as a rigid body: translation d and rotation vector w (rad), both in the drawing frame
+   ((a,b,n) for the herringbones, (L,S,Z) for MT-pyrene), then projected onto the view's two screen axes P0, P1. */
+function rotm(wx,wy,wz){var p=Math.sqrt(wx*wx+wy*wy+wz*wz); if(p<1e-12) return [1,0,0,0,1,0,0,0,1];
+  var x=wx/p,y=wy/p,z=wz/p,c=Math.cos(p),s=Math.sin(p),q=1-c;
+  return [q*x*x+c,q*x*y-s*z,q*x*z+s*y, q*x*y+s*z,q*y*y+c,q*y*z-s*x, q*x*z-s*y,q*y*z+s*x,q*z*z+c];}
+var ATP=[];   // scratch: projected atom positions
+/* bonds and sulfur dots are collected per colour into Path2D groups and stroked once per frame */
+var GRP={};
+function grp(col,colEnd){var k=col+'|'+colEnd; if(!GRP[k]) GRP[k]={col:col,colEnd:colEnd,core:new Path2D(),end:colEnd?new Path2D():null,dot:new Path2D()}; return GRP[k];}
+function flush(g,dot){for(var k in GRP){var q=GRP[k];
+    if(q.end){g.strokeStyle=q.colEnd; g.stroke(q.end);}
+    g.strokeStyle=q.col; g.stroke(q.core); g.fillStyle=q.col; g.fill(q.dot);}
+  GRP={};}
+function drawMol(g,m,R,d,P0,P1,x0,y0,px,colCore,colEnd,dot){
+  // screen rows: Q = P R, offset = P d
+  var q00=P0[0]*R[0]+P0[1]*R[3]+P0[2]*R[6], q01=P0[0]*R[1]+P0[1]*R[4]+P0[2]*R[7], q02=P0[0]*R[2]+P0[1]*R[5]+P0[2]*R[8];
+  var q10=P1[0]*R[0]+P1[1]*R[3]+P1[2]*R[6], q11=P1[0]*R[1]+P1[1]*R[4]+P1[2]*R[7], q12=P1[0]*R[2]+P1[1]*R[5]+P1[2]*R[8];
+  var ox=x0+(P0[0]*d[0]+P0[1]*d[1]+P0[2]*d[2])*px, oy=y0+(P1[0]*d[0]+P1[1]*d[1]+P1[2]*d[2])*px;
+  var at=m.at, n=at.length/3, k;
+  for(k=0;k<n;k++){var a=at[3*k],b=at[3*k+1],c=at[3*k+2];
+    ATP[2*k]=ox+(q00*a+q01*b+q02*c)*px; ATP[2*k+1]=oy+(q10*a+q11*b+q12*c)*px;}
+  var bd=m.bd, co=m.core, q=grp(colCore,colEnd);   // no colEnd: every bond in the core colour
+  for(k=0;k<bd.length;k+=2){var i1=bd[k],i2=bd[k+1], P=(q.end&&!co[i1]&&!co[i2])?q.end:q.core;  // alkyl ends fainter
+    P.moveTo(ATP[2*i1],ATP[2*i1+1]); P.lineTo(ATP[2*i2],ATP[2*i2+1]);}
+  if(dot) for(k=0;k<n;k++) if(m.el.charAt(k)==='S'){q.dot.moveTo(ATP[2*k]+dot,ATP[2*k+1]); q.dot.arc(ATP[2*k],ATP[2*k+1],dot,0,6.2832);}
+}
+var COLA='rgba(236,242,252,0.92)', COLA2='rgba(236,242,252,0.42)', COLB='rgba(156,140,255,1)', COLB2='rgba(156,140,255,0.48)';
+function drawLattice(){
+  var U=chain.urms*VIS;                 // drawn rms displacement (translations), A
+  var cc=Math.cos(PHZ);                 // phase of the shear phonon
+  // amplitude so that the drawn rms along the slide is exactly VIS x sqrt<u2>: sqrt2 alone, or with the 0.55U jitter added
+  var AS=shearOnly?SQ2:Math.sqrt(2-0.55*0.55);
+  var px=PXA, lw=Math.max(1.1,0.32*px), dot=Math.max(1.3,0.4*px);
+  /* the rest of the rigid-body motion, in its measured proportions (the same proportions that enter g):
+     translations along M and N (rms ratios rM, rN to the slide) at the same magnification; rocking about L, M, N
+     (kL, kM, kN degrees per A of true slide) at true size */
+  var MO=(MP.key==='mtp'?GEO.mtp:GEO[MP.key]).motion, u0=chain.urms, D2R=Math.PI/180;
+  var tL=SQ2*MO.kL*u0*D2R, tM=SQ2*MO.kM*u0*D2R, tN=SQ2*MO.kN*u0*D2R;
+  bgFill(sx,SW,SH); bgFill(tx,TW,TH);
+  sx.lineJoin=tx.lineJoin='miter'; sx.lineCap=tx.lineCap='butt'; sx.lineWidth=tx.lineWidth=lw;
+  var I3=[1,0,0,0,1,0,0,0,1], d=[0,0,0];
+  function motion(M,S,uS){   // S: molecule axes in the frame (ax=L, mx=M, nx=N); uS: shear part of the slide
+    var u=uS, uM=0, uN=0, R=I3;
+    if(!shearOnly){
+      u+=0.55*U*Math.sin(M.ph[0]+M.fr[0]*PHT);
+      uM=MO.rM*SQ2*U*Math.sin(M.ph[1]+M.fr[1]*PHT);
+      uN=MO.rN*SQ2*U*Math.sin(M.ph[2]+M.fr[2]*PHT);
+      var aL=tL*Math.sin(M.ph[3]+M.fr[3]*PHT), aM=tM*Math.sin(M.ph[4]+M.fr[4]*PHT), aN=tN*Math.sin(M.ph[5]+M.fr[5]*PHT);
+      R=rotm(aL*S.ax[0]+aM*S.mx[0]+aN*S.nx[0], aL*S.ax[1]+aM*S.mx[1]+aN*S.nx[1], aL*S.ax[2]+aM*S.mx[2]+aN*S.nx[2]);
+    }
+    for(var c=0;c<3;c++) d[c]=u*S.ax[c]+uM*S.mx[c]+uN*S.nx[c];
+    return R;
+  }
+  if(MP.key!=='mtp'){
+    var G=GEO[MP.key];
+    /* side (look along a): screen x = b, y = -n; shear = slide along each molecule's long axis, A and B in antiphase */
+    for(var i=0;i<molsSide.length;i++){
+      var M=molsSide[i], S=G[M.s?'B':'A'];
+      var R=motion(M,S,M.sg*AS*U*cc);
+      drawMol(sx,S,R,d,[0,1,0],[0,0,-1],M.x,M.y,px,M.s?COLB:COLA,M.s?COLB2:COLA2,dot);
+    }
+    flush(sx);
+    /* top (look down n): screen x = b, y = a; the same motion seen from above */
+    var cen=null;
+    for(var j=0;j<molsTop.length;j++){
+      var N=molsTop[j], S2=G[N.s?'B':'A'];
+      var R2=motion(N,S2,N.sg*AS*U*cc);
+      drawMol(tx,S2,R2,d,[0,1,0],[1,0,0],N.x,N.y,px,N.s?COLB:COLA,N.s?COLB2:COLA2,dot);
+      if(N.centre) cen=N;
+    }
+    flush(tx);
+    if(cen) halo(tx,cen.x,cen.y,chain.Ly*10*px,chain.Lx*10*px,0);   // x on screen = b, y = a
+  } else {
+    var g=GEO.mtp, rot=molsSide.rot, cR=Math.cos(rot), sR=Math.sin(rot), dpi=g.a[2];
+    var AX={ax:[1,0,0],mx:[0,1,0],nx:[0,0,1]};           // frame (L,S,Z) = the molecule's own axes
+    var cenS=null;
+    /* side (look along S): screen (L,-Z) rotated by rot; a wave along the pi-plane normal: planes d_pi apart slide in antiphase along L */
+    var PS0=[cR,0,sR], PS1=[sR,0,-cR];
+    for(var i3=0;i3<molsSide.length;i3++){
+      var P=molsSide[i3];
+      var R3=motion(P,AX,Math.cos(Math.PI*P.Z/dpi)*AS*U*cc);
+      drawMol(sx,g,R3,d,PS0,PS1,P.x,P.y,px,COLA,null,dot);
+      if(P.centre) cenS={x:P.x,y:P.y};
+    }
+    flush(sx);
+    if(cenS) halo(sx,cenS.x,cenS.y,chain.Lx*10*px,chain.Ly*10*px,rot);
+    /* top (look down Z): screen (L,S) rotated by trot; deeper planes fainter */
+    var trot=molsTop.rot, cT=Math.cos(trot), sT=Math.sin(trot), PT0=[cT,-sT,0], PT1=[sT,cT,0];
+    for(var j3=0;j3<molsTop.length;j3++){
+      var Q=molsTop[j3];
+      var R4=motion(Q,AX,Math.cos(Math.PI*Q.Z/dpi)*AS*U*cc);
+      var a=(0.92*Math.round(Q.fade*20)/20).toFixed(3);       // depth in 5 % steps: one path per step
+      drawMol(tx,g,R4,d,PT0,PT1,Q.x,Q.y,px,'rgba(236,242,252,'+a+')',null,dot);
+    }
+    flush(tx);
+  }
+}
+
+/* =====================================================================
+   5. MOBILITY VERSUS TEMPERATURE  (fixed axes)
+   ===================================================================== */
+var pc=$('p'), pg=pc.getContext('2d');
+var PLW=0,PLH=0,padL=60,padR=14,padT=14,padB=36,plotW=0,plotH=0;
+var Tmn=50,Tmx=400,Mmn=0.1,Mmx=1000;
+function pbuild(){var dp=Math.min(window.devicePixelRatio||1,2), r=pc.getBoundingClientRect();
+  PLW=Math.max(40,r.width); PLH=Math.max(40,r.height);
+  pc.width=Math.round(PLW*dp); pc.height=Math.round(PLH*dp); pg.setTransform(dp,0,0,dp,0,0);
+  plotW=PLW-padL-padR; plotH=PLH-padT-padB;}
+function PX(t){return padL+(Math.log(t)-Math.log(Tmn))/(Math.log(Tmx)-Math.log(Tmn))*plotW;}
+function PY(m){return padT+(1-(Math.log(m)-Math.log(Mmn))/(Math.log(Mmx)-Math.log(Mmn)))*plotH;}
+function drawPlot(){
+  pg.clearRect(0,0,PLW,PLH); pg.fillStyle='#0C1120'; pg.fillRect(0,0,PLW,PLH);
+  pg.font='11px "IBM Plex Mono", monospace';
+  var decs=[]; for(var e=Math.ceil(Math.log10(Mmn));e<=Math.floor(Math.log10(Mmx));e++) decs.push(Math.pow(10,e));
+  pg.textAlign='right'; pg.textBaseline='middle';
+  for(var i=0;i<decs.length;i++){var y=PY(decs[i]);
+    pg.strokeStyle='rgba(42,53,82,0.9)'; pg.lineWidth=1; pg.beginPath(); pg.moveTo(padL,y); pg.lineTo(PLW-padR,y); pg.stroke();
+    pg.fillStyle='#B4BCD2'; pg.fillText(decs[i]>=1?String(decs[i]):String(+decs[i].toPrecision(1)),padL-8,y);}
+  var xt=[50,100,200,400]; pg.textAlign='center'; pg.textBaseline='top';
+  for(var k=0;k<xt.length;k++){var x=PX(xt[k]);
+    pg.strokeStyle='rgba(42,53,82,0.6)'; pg.beginPath(); pg.moveTo(x,padT); pg.lineTo(x,PLH-padB); pg.stroke();
+    pg.fillStyle='#B4BCD2'; pg.fillText(String(xt[k]),x,PLH-padB+7);}
+  pg.font='12px "IBM Plex Mono", monospace'; pg.fillStyle='#EAEEF8';
+  pg.textAlign='center'; pg.textBaseline='top'; pg.fillText('T (K)',padL+plotW/2,PLH-16);
+  pg.save(); pg.translate(15,padT+plotH/2); pg.rotate(-Math.PI/2); pg.textBaseline='middle';
+  pg.fillText('μ  (cm² V⁻¹ s⁻¹)',0,0); pg.restore();
+  pg.save(); pg.beginPath(); pg.rect(padL,padT,plotW,plotH); pg.clip();
+  pg.strokeStyle='rgba(84,214,255,0.40)'; pg.setLineDash([5,5]); pg.lineWidth=1.5; curve(5); pg.stroke(); pg.setLineDash([]);
+  pg.strokeStyle='rgba(84,214,255,0.95)'; pg.lineWidth=2.2; curve(C44); pg.stroke();
+  pg.restore();
+  function curve(cc){var pen=false; pg.beginPath();
+    for(var t=Tmn;t<=Tmx+1e-9;t*=1.02){var m=chainOf(t,cc,J,MP).mu;
+      if(!(m>=Mmn&&m<=Mmx)){pen=false;continue;}
+      var X=PX(t),Y=PY(m); if(pen)pg.lineTo(X,Y); else {pg.moveTo(X,Y); pen=true;}}}
+  if(chain.mu>=Mmn&&chain.mu<=Mmx){
+    pg.fillStyle='#0C1120'; pg.strokeStyle='rgba(84,214,255,1)'; pg.lineWidth=2.5;
+    pg.beginPath(); pg.arc(PX(T),PY(chain.mu),6,0,6.2832); pg.fill(); pg.stroke();}
+}
+
+/* =====================================================================
+   6. WIRING
+   ===================================================================== */
+function pick(ids,i){ids.forEach(function(id,k){$(id).setAttribute('aria-pressed',k===i?'true':'false');});}
+var HEAD={hb:['side view &middot; long-axis slide','top view &middot; transport layer &middot; <span style="color:var(--cyan)">halo</span> = L<sub>&tau;</sub>'],
+          bw:['side view &middot; &pi;-planes slide &middot; <span style="color:var(--cyan)">halo</span> = L<sub>&tau;</sub>','top view &middot; molecules face-on']};
+function setMaterial(key){
+  MP=MAT[key];
+  c44.min=String(MP.c44min); $('c44lo').textContent=MP.c44min.toFixed(3)+' GPa \u00B7 soft';
+  c44.value=String(MP.c44); jint.value=String(Math.round(MP.J0));
+  var h=HEAD[key==='mtp'?'bw':'hb']; $('hSide').innerHTML=h[0]; $('hTop').innerHTML=h[1];
+  $('chainMat').textContent=MP.name;
+  buildLists(); update(); if(!reduce) drawLattice();
+}
+['mD','mC','mP'].forEach(function(id,i){$(id).onclick=function(){pick(['mD','mC','mP'],i);setMaterial(['dntt','c8','mtp'][i]);};});
+['mAll','mShear'].forEach(function(id,i){$(id).onclick=function(){pick(['mAll','mShear'],i);shearOnly=(i===1);if(reduce)drawLattice();};});
+['x1','x6','x15'].forEach(function(id,i){$(id).onclick=function(){pick(['x1','x6','x15'],i);VIS=[1,6,15][i];update();};});
+
+function slideRange(){var a=[];['dntt','c8','mtp'].forEach(function(k){a=a.concat(MAT[k].tab.slide);});
+  return Math.round(100*Math.min.apply(null,a))+'&ndash;'+Math.round(100*Math.max.apply(null,a))+' %';}
+(function(){var d=$('confDlg'); if(!d||!d.showModal) return;
+  $('confBtn').onclick=function(){d.showModal();};
+  $('confClose').onclick=function(){d.close();};
+  d.addEventListener('click',function(e){var r=d.getBoundingClientRect();
+    if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) d.close();});})();
+$('modelnote').innerHTML='<b>Model.</b> Harmonic lattice. L<sub>&tau;</sub>: transient localisation, relaxation-time form, on each crystal&rsquo;s J network. '
+  +'g ('+MAT.dntt.tab.alpha.toFixed(0)+', '+MAT.c8.tab.alpha.toFixed(0)+', '+MAT.mtp.tab.alpha.toFixed(0)+' meV &#197;&#8315;&#185;: DNTT, C8-DNTT-C8, MT-pyrene) is computed: '
+  +'DFT gradients of each bond&rsquo;s J for neighbours slid, shifted and rocked, weighted by the CIF rigid-body motion (C8-DNTT-C8: DNTT&rsquo;s), all taken to scale with &delta;u. '
+  +'The slide alone gives '+slideRange()+' of &sigma;<sub>J</sub>&sup2;. '
+  +'C8-DNTT-C8, 300 K: &sigma;<sub>J</sub> = J/'+(MAT.c8.J0/chainOf(300,MAT.c8.c44,MAT.c8.J0,MAT.c8).sigma).toFixed(1)+' (largest bond); molecular dynamics: J/4&ndash;5. '
+  +'&mu;, L<sub>&tau;</sub>: mean of two axes; traps (not included) lower &mu;. '
+  +'<b>Drawing.</b> CIF molecules, S dotted; slide &radic;&#10216;u&#178;&#10217; &times; factor, other motion in measured proportions, rocking true size.';
+
+function omegaVis(){return 0.0016*chain.hw/4;}          // rad per ms: one shear period ~4 s at 4 meV
+var PAUSE=false; window.__pause=function(v){PAUSE=!!v;};
+function loop(now){
+  if(!reduce&&!PAUSE){ if(!lastNow) lastNow=now;
+    var dt=Math.min(60,now-lastNow); lastNow=now;
+    PHZ+=omegaVis()*dt; PHT+=0.83*omegaVis()*dt; }
+  drawLattice(); requestAnimationFrame(loop);
+}
+function sizeAll(){sizeLat(); pbuild(); drawPlot(); drawLattice();}
+if(window.ResizeObserver){
+  new ResizeObserver(function(){sizeLat(); drawLattice();}).observe(cs);
+  new ResizeObserver(function(){pbuild(); drawPlot();}).observe(pc);
+}
+window.addEventListener('resize',sizeAll);
+window.__frame=function(ph){PHZ=ph; PHT=ph; drawLattice();};       // test hook
+window.__chain=function(T_,C_,J_,k){return chainOf(T_,C_,J_,MAT[k]);};
+window.__dbg=function(){return {side:molsSide.length,top:molsTop.length,s0:molsSide[0],SW:SW,SH:SH,PXA:PXA};};
+requestAnimationFrame(function(){sizeAll(); pick(['mD','mC','mP'],2); setMaterial('mtp'); requestAnimationFrame(loop);});
 })();
 </script>
 </body>
