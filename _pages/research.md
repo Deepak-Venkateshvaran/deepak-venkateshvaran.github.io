@@ -45,7 +45,7 @@ I run the core program with Dr Ki-Hwan Hwang and Mr Mateo Cervantes in Cambridge
 
 Beyond electronically active materials, we work closely with [Prof Ljiljana Fruk](https://www.fruk-lab.com/) and [Dr Leszek J. Spalek](https://uk.linkedin.com/in/leszekspalek) to extend our methods to biological and biocompatible matter.  
 
-Since 2024, I have jointly run a program on molecular thermoelectrics with [Dr Guillaume Schweicher](https://chimpoly.ulb.be/pi-guillaume-schweicher/) at ULB in Belgium and [Prof Kazuo Takimiya](https://cems.riken.jp/en/laboratory/emfrg) at RIKEN in Japan, seed-funded by the Wiener Anspach Foundation.  
+Since 2024, I jointly run a research programme on molecular thermoelectrics together with [Dr Guillaume Schweicher](https://chimpoly.ulb.be/pi-guillaume-schweicher/) (ULB Belgium) and [Prof Kazuo Takimiya](https://cems.riken.jp/en/laboratory/emfrg) (RIKEN Japan), seed-funded by the Wiener Anspach Foundation.  
 
 **Funding**  
 The program is supported by multiple research grants from the Royal Society, for which I am deeply grateful.
