@@ -16,7 +16,7 @@ My name is Deepak Venkateshvaran. I use these pages to document my main professi
 I'm an academic at the University of Cambridge, with responsibilities spanning research, teaching, institutional leadership, and science policy.
 
 **Research**   
-I hold a Royal Society University Research Fellowship at the Cavendish Laboratory, where my group develops novel force mapping techniques to measure mechanics at the nanoscale. We study multifunctional soft systems, from organic semiconductors to biological matter.
+I hold a Royal Society University Research Fellowship at the Cavendish Laboratory, where my group applies novel force mapping techniques to measure mechanics at the nanoscale. We study multifunctional soft systems, from organic semiconductors to biological matter.
 
 **Teaching**  
 I'm a Fellow and Director of Studies in Physics at Selwyn College, Cambridge. My role covers undergraduate admissions and interviews, organising tutorials, and overseeing students' academic progress through the Natural Sciences Tripos. I also teach master's-level courses at the University on energy harvesting and energy generation technologies.
