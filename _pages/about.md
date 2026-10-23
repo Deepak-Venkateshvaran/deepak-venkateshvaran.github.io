@@ -11,7 +11,7 @@ redirect_from:
 
 Welcome — happy to have you here.  
 
-My name is Deepak Venkateshvaran. I use these pages to document my main professional interests.  
+My name is Deepak Venkateshvaran. I use these pages to document my professional interests.  
 
 I'm an academic at the University of Cambridge, with responsibilities spanning research, teaching, institutional leadership, and science policy.
 
