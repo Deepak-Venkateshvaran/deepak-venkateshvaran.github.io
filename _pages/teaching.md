@@ -9,4 +9,4 @@ author_profile: true
 
 2. I also co-teach a course on Materials, Electronics & Renewable Energy (course code IDP3). This is a Part III Physics lecture course at the Cavendish Laboratory of Cambridge University. My lectures focus on fuel cells, hydrogen as an energy source, and the hydrogen economy.
 
-3.  I am the Director of Studies in Physics at Selwyn College Cambridge with responsibilities for students doing the Part 1B (second year), Part II (third year), and Part III (fourth year/masters level) in Physics. I also supervise 1B Physics B (Electromechanics, Classical Dynamics and Thermodynamics) for Selwyn College students.
+3.  I am the Director of Studies in Physics at Selwyn College Cambridge with responsibilities for students doing the Part 1B (second year), Part II (third year), and Part III (fourth year/masters level) in Physics. I supervise 1B Physics B (Electromagnetism, Classical Dynamics, and Thermodynamics) for Selwyn College students.
