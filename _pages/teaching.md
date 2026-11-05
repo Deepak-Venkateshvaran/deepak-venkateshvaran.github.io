@@ -9,8 +9,8 @@ author_profile: true
 
     **Supervision of 1B Physics B** (Electromagnetism, Classical Dynamics, and Thermodynamics).  
     ***Note to current students***: Below is a recap of material we covered so far.  
-   (a) [1B Physics B Electromagnetism problems and solutions 1 to 20](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Solutions_P1-20.pdf)  
-   (b) [Extension problems and solutions linked with the first problems sheet](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Extension_Solutions.pdf)  
+   (a) [1B Physics B Electromagnetism problems and solutions 1 to 20](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Solutions_P1-20-password-protected.pdf)  
+   (b) [Extension problems and solutions linked with the first problems sheet](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Extension_Solutions-password-protected.pdf)  
    (c) [A Green's function approach to problem 8](https://deepak-venkateshvaran.github.io/files/EM_Problem8_Greens_Function_Solution.pdf)  
    (d) [A general note on Green's functions in electrostatics](https://deepak-venkateshvaran.github.io/files/EM_Greens_Functions_Guide.pdf)  
    
