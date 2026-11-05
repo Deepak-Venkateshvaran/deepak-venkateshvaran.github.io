@@ -8,9 +8,9 @@ author_profile: true
 1. I am the Director of Studies in Physics at Selwyn College Cambridge with responsibilities for students doing the Part 1B (second year), Part II (third year), and Part III (fourth year/masters level) in Physics.
 
     **Supervision of 1B Physics B** (Electromagnetism, Classical Dynamics, and Thermodynamics).  
-    ***Note to current students***: Below is a recap of material we covered so far.  
-   (a) [1B Physics B Electromagnetism problems and solutions 1 to 20](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Solutions_P1-20-password-protected.pdf) (password required)  
-   (b) [Extension problems and solutions linked with the first problems sheet](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Extension_Solutions-password-protected.pdf) (password required)  
+    ***Note to current students***: Below is a recap of material covered so far.
+   (a) [1B Physics B Electromagnetism problems and solutions 1 to 20](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Solutions_P1-20-password-protected.pdf) (*password required*)  
+   (b) [Extension problems and solutions linked with the first problems sheet](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Extension_Solutions-password-protected.pdf) (*password required*)  
    (c) [A Green's function approach to problem 8](https://deepak-venkateshvaran.github.io/files/EM_Problem8_Greens_Function_Solution.pdf)  
    (d) [A general note on Green's functions in electrostatics](https://deepak-venkateshvaran.github.io/files/EM_Greens_Functions_Guide.pdf)  
    
