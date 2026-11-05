@@ -9,10 +9,10 @@ author_profile: true
 
     Supervision of 1B Physics B (Electromagnetism, Classical Dynamics, and Thermodynamics).  
     *Note to current students*: Below is a recap of material we covered so far.  
-   [1B Physics B Electromagnetism problems and solutions 1 to 20](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Solutions_P1-20.pdf)  
-   [Extension problems and solutions linked with the first problems sheet](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Extension_Solutions)  
-   [A Green's function approach to problem 8](https://deepak-venkateshvaran.github.io/files/EM_Problem8_Greens_Function_Solution)  
-   [A general note on Green's functions in electrostatics](https://deepak-venkateshvaran.github.io/files/EM_Greens_Functions_Guide)  
+   (a) [1B Physics B Electromagnetism problems and solutions 1 to 20](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Solutions_P1-20.pdf)  
+   (b) [Extension problems and solutions linked with the first problems sheet](https://deepak-venkateshvaran.github.io/files/EM_Sheet1_Extension_Solutions)  
+   (c) [A Green's function approach to problem 8](https://deepak-venkateshvaran.github.io/files/EM_Problem8_Greens_Function_Solution)  
+   (d) [A general note on Green's functions in electrostatics](https://deepak-venkateshvaran.github.io/files/EM_Greens_Functions_Guide)  
    
 2. I co-teach a course on Energy Harvesting (course code NE.10) within the [MPhil Programme in Micro- & Nanotechnology Enterprise](https://www.msm.cam.ac.uk/pg-study/mphil-programme-micro-nanotechnology-enterprise). My lectures focus on thermal energy harvesting (thermoelectrics and pyroelectrics), mechanical energy harvesting (piezoelectrics), and an introduction to science policy in government. Our global roadmap for energy harvesting materials was published by the Institute of Physics in 2023, and can be accessed [here](https://iopscience.iop.org/article/10.1088/2515-7639/acc550).
 
