@@ -12,7 +12,10 @@ author_profile: true
 
 Broadly, we study the physics of disordered semiconductors using precision nanoscale measurements and prototype devices. We investigate the mechanical, thermal, and electrical properties of these materials — and the way those properties interrelate — across a wide range of systems used for energy applications. Our work also feeds into UK Government science policy.  
 
-Below is a selection of key publications where I played a major role. <sup>§</sup> denotes corresponding author.
+Below is a selection of key publications where I played a major role. <sup>§</sup> denotes corresponding author.  
+
+* Ki-Hwan Hwang, Shun-ichiro Ito, ... Deepak Venkateshvaran<sup>§</sup>, **Science Advances** (2026) - accepted.  
+*Spatially resolved nanomechanics links domain connectivity to charge transport in a semiconducting polymer*
 
 * Ki-Hwan Hwang, Dorothée Brandt, ... Deepak Venkateshvaran<sup>§</sup>, **Nature Communications** 17, 1621 (2026) [article](https://www.nature.com/articles/s41467-026-68328-0)  
 *Measuring the molecular origins of stiffness in organic semiconductors* [press release](https://www.cam.ac.uk/research/news/what-does-flexibility-actually-look-like)  
