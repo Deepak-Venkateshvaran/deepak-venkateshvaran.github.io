@@ -14,7 +14,7 @@ Broadly, we study the physics of disordered semiconductors using precision nanos
 
 Below is a selection of key publications where I played a major role. <sup>§</sup> denotes corresponding author.  
 
-* Ki-Hwan Hwang, Shun-ichiro Ito, ... Deepak Venkateshvaran<sup>§</sup>, **Science Advances** (2026) - accepted.  
+* Ki-Hwan Hwang, Shun-ichiro Ito, ... Deepak Venkateshvaran<sup>§</sup>, **Science Advances** (2026) - accepted manuscript  
 *Spatially resolved nanomechanics links domain connectivity to charge transport in a semiconducting polymer*
 
 * Ki-Hwan Hwang, Dorothée Brandt, ... Deepak Venkateshvaran<sup>§</sup>, **Nature Communications** 17, 1621 (2026) [article](https://www.nature.com/articles/s41467-026-68328-0)  
