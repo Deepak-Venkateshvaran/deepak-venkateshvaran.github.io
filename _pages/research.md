@@ -12,7 +12,9 @@ author_profile: true
 Why does this matter? The materials behind flexible displays, wearable sensors, and printed solar cells are soft, disordered, and only nanometres thick — and how stiff or pliable they are at that scale governs how well they work and how long they last. By measuring mechanics on the molecular level, we connect a material's physical structure to the way it carries charge and heat, which helps in designing better devices.
 
 **Techniques**  
-We implement cutting-edge force mapping using atomic force microscopes, based on multifrequency intermodulation, higher eigenmodes, and quasi-static nanoindentation. We have visualised high-contrast elasticity at the scale of a few nanometres [see Nature Communications 13, 3076 (2022)], resolved the elastic contribution of individual molecules within a molecular lattice [see Nature Communications 17, 1621 (2026)], and mapped the spatially resolved nanomechanics across temperature-induced phase transitions in polymers [see Science Advances (2026)]. Current projects track elastic gradient driven phenomena across cooperative phase transitions on the nanoscale, as well as stiffness modulation through generative crystal design, at the limits of charge conduction, and within prototype microfabricated devices.  
+We implement cutting-edge force mapping using atomic force microscopes, based on multifrequency intermodulation, higher eigenmodes, and quasi-static nanoindentation. We have visualised high-contrast elasticity at the scale of a few nanometres [Nature Communications 13, 3076 (2022)], resolved the elastic contribution of individual molecules within a molecular lattice [Nature Communications 17, 1621 (2026)], and used spatially-resolved nanomechanics to link domain connectivity with charge transport in polymers [Science Advances (2026)].  
+
+Our current projects track nanoscale elastic phenomena across cooperative phase transitions in crystals, at the limits of charge conduction, and within prototype microfabricated devices.  
 
 **Stiffness of a macroscale surface is judged by prodding it with a stick**  
 **Similar point-by-point measurement principles are applied at the nanoscale**
